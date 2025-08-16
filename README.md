@@ -3,47 +3,10 @@
 > Reference and Recommend hello-algo By krahets：https://www.hello-algo.com/en
 >
 > GitHub：https://github.com/krahets/hello-algo
-
-## VSCode Config
-
-VSCode插件安装
-
-- Language Server for Java by Apache NetBeans-netbeans
-- leetcode-ccagml
-
-VSCode调试Java：.vscode/launch.json
-
-```json
-{
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "java+",
-            "request": "launch",
-            "name": "Launch Java App"
-        }
-    ]
-}
-```
-
-leetcode账户：cyce-13
+> 
+> leetcode: cyce-13
 
 ## 核心篇
-
-### 分支判断
-
-卫语句
-
-* 优先考虑失败、异常、中断、退出等直接返回的情况。
-* if条件尽可能变得简短，这样else也会更加清晰，除非你清楚所有的可能性
-
-德摩根定律
-
-* `if/while(b1||b2||b3) + if/while(!b1&&!b2&&!b3) == 1`
-* `if/while(b1&&b2&&b3) + if/while(!b1||!b2||!b3) == 1`
 
 ### 递归问题 `Recursion`
 
