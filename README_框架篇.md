@@ -1,10 +1,8 @@
 ## 算法框架
 
-### 二叉检索树
-
 ### 回溯框架
 
-回溯框架0：
+#### 回溯框架0：
 
 - state，是trial共享待回溯变量，如共享路径变量
 - choices，是输入集合，如树节点集合集合
@@ -24,7 +22,7 @@ void backtrack(State state, List<Choice> choices, List<State> res) {
     for (Choice choice : choices) {
         // Prune: check if the choice is valid
         if (!isValid(state, choice)) {
-	    continue/break;
+	        continue/break;
         }
         // Trial: make a choice, update the state
         makeChoice(state, choice);
@@ -35,7 +33,7 @@ void backtrack(State state, List<Choice> choices, List<State> res) {
 }
 ```
 
-回溯框架1：全排列
+#### 回溯框架1：全排列
 
 - 求解不含重复数字的输入数组的所有 **不重复全排列**
 
@@ -52,7 +50,7 @@ void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List
         int choice = choices[i];
         // Pruning: do not allow repeated selection of elements
         if (selected[i]) {
-	    continue;
+	        continue;
         }
         // Attempt: make a choice, update the state
         selected[i] = true;
@@ -73,7 +71,7 @@ List<List<Integer>> permutationsI(int[] nums) {
 }
 ```
 
-回溯框架2：全排列Ⅱ
+#### 回溯框架2：全排列Ⅱ
 
 - 求解包含重复数字的输入数组的所有 **不重复全排列**
 
@@ -96,7 +94,7 @@ void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List
         int choice = choices[i];
         // Pruning: do not allow repeated selection of elements and do not allow repeated selection of equal elements
         if (selected[i] || duplicated.contains(choice)) {
-	    continue;
+	        continue;
         }
         // Attempt: make a choice, update the state
 	// 由于递归回溯时会返回到上一级，而上一级别有自己的 duplicated 集合，因此不需要从duplicated集合中移除元素。对duplicated来说不用回溯retreat
@@ -119,7 +117,7 @@ List<List<Integer>> permutationsII(int[] nums) {
 }
 ```
 
-回溯框架3：子集和问题Ⅰ
+#### 回溯框架3：子集和问题Ⅰ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组没有重复的元素，每个元素可以多次选择。
 
@@ -167,7 +165,7 @@ List<List<Integer>> subsetSumI(int[] nums, int target) {
 }
 ```
 
-回溯框架4：子集和问题Ⅱ
+#### 回溯框架4：子集和问题Ⅱ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组可能包含重复的元素，每个元素只能选择一次。请将这些组合作为列表返回，该列表不应包含重复的组合。
 
@@ -227,17 +225,36 @@ List<List<Integer>> subsetSumII(int[] nums, int target) {
 }
 ```
 
-### 手写堆
+### 手写堆结构
+给定一个数组Heap<Integer>默认平铺开作为初始二叉树,  数组索引为i, 基本算数api如下
+```java
+/* 获取左子节点的索引 */
+int left(int i) {
+    return 2 * i + 1;
+}
+/* 获取右子节点的索引 */
+int right(int i) {
+    return 2 * i + 2;
+}
+/* 获取父节点的索引 */
+int parent(int i) {
+    return (i - 1) / 2; // 向下整除
+}
+/* 访问堆顶元素 */
+int peek() {
+    return maxHeap.get(0);
+}
+```
+#### 建堆
+通过调整给定的初始二叉树, 建堆方式如下, 大根堆/小根堆没有本质差别: 
+- 从最后一个非叶子节点`parent(size() - 1)`开始逆序迭代节点，原因是由于叶节点没有子节点，因此它们天然就是合法的子堆，无须堆化, 无须下沉
+- 迭代执行节点下沉shift down，直到索引为0的节点下沉完成
 
-下面以大根堆为例手写堆的插入操作，取出操作，以及建堆操作。小根堆同理
+上述过程是自底向上的方式建堆(Floyd算法, 逆序shift down), 当高层节点调整时，其子树已经是堆了，效率高, 因此高层节点下沉次数极小。
 
-自底向上的方式建堆(Floyd算法)效率要高于默认的自顶向下建堆，方式如下
+自底向上建堆效率要高于传统的自顶向下建堆(借助入堆操作shift up, 默认插入n次, nlogn)
 
-- 从末尾节点的父节点 `parent(size() - 1)`开始逆序迭代节点，因为末尾节点的left和right必然大于size，无法下沉
-- 迭代执行节点下沉shiftDown，直到索引为0的节点下沉完成
-
-原因是自底向上建堆利用了完全二叉树的特性，大部分节点位于底层，下沉次数极小。数学证明自底向上建堆复杂度为线性On
-
+数学证明自底向上建堆复杂度为线性On
 ```java
 /* Constructor, build heap based on input list */
 MaxHeap(List<Integer> nums) {
@@ -249,3 +266,69 @@ MaxHeap(List<Integer> nums) {
     }
 }
 ```
+其中siftDown(i)的具体逻辑见下文的出堆操作
+#### 入堆
+堆建好之后, 如何入堆? 首先给数组add元素, 然后通过shiftup维护堆结构, logn
+```java
+/* 元素入堆 */
+void push(int val) {
+    // 添加节点
+    maxHeap.add(val);
+    // 从底至顶堆化
+    siftUp(size() - 1);
+}
+
+/* 从节点 i 开始，从底至顶堆化 */
+void siftUp(int i) {
+    while (true) {
+        // 获取节点 i 的父节点
+        int p = parent(i);
+        // 当“越过根节点”或“节点无须修复”时，结束堆化
+        if (p < 0 || maxHeap.get(i) <= maxHeap.get(p))
+            break;
+        // 交换两节点
+        swap(i, p);
+        // 循环向上堆化
+        i = p;
+    }
+}
+```
+#### 出堆
+堆建好之后, 如何出堆? 为了尽量减少元素索引的变动, 先交换堆顶元素与末元素。记录好堆顶元素，然后将末元素从列表中删除 ,最后通过shiftdown维护堆结构, logn, 最后返回记录的堆顶元素
+```java
+/* 元素出堆 */
+int pop() {
+    // 判空处理
+    if (isEmpty())
+        throw new IndexOutOfBoundsException();
+    // 交换根节点与最右叶节点（交换首元素与尾元素）
+    swap(0, size() - 1);
+    // 删除节点
+    int val = maxHeap.remove(size() - 1);
+    // 从顶至底堆化
+    siftDown(0);
+    // 返回堆顶元素
+    return val;
+}
+
+/* 从节点 i 开始，从顶至底堆化 */
+void siftDown(int i) {
+    while (true) {
+        // 判断节点 i, l, r 中值最大的节点，记为 ma
+        int l = left(i), r = right(i), ma = i;
+        if (l < size() && maxHeap.get(l) > maxHeap.get(ma))
+            ma = l;
+        if (r < size() && maxHeap.get(r) > maxHeap.get(ma))
+            ma = r;
+        // 若节点 i 最大或索引 l, r 越界，则无须继续堆化，跳出
+        if (ma == i)
+            break;
+        // 交换两节点
+        swap(i, ma);
+        // 循环向下堆化
+        i = ma;
+    }
+}
+```
+
+### TODO 二叉检索树
