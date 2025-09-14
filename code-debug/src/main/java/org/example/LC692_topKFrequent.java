@@ -1,9 +1,6 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author hasee
@@ -21,7 +18,8 @@ public class LC692_topKFrequent {
             return ans;
         }
         Map<String, Integer> word2cnt = createMap(words);
-        MaxHeap maxHeap = createMaxHeap(word2cnt);
+        MaxHeap maxHeap = new MaxHeap(word2cnt);
+
         for(int i = 0;i<k;i++){
             ans.add(maxHeap.pop());
         }
@@ -41,15 +39,6 @@ public class LC692_topKFrequent {
         return map;
     }
 
-    private static MaxHeap createMaxHeap(Map<String, Integer> word2cnt){
-        MaxHeap maxHeap = new MaxHeap(word2cnt);
-        Integer n = word2cnt.keySet().size();
-        for(int i = maxHeap.parent(n-1);i>=0;i--){
-            maxHeap.shiftDown(i);
-        }
-        return maxHeap;
-    }
-
     static class MaxHeap{
         Integer i;
         String[] collection;
@@ -57,6 +46,13 @@ public class LC692_topKFrequent {
         public MaxHeap(Map<String, Integer> word2cnt){
             this.collection = word2cnt.keySet().toArray(new String[word2cnt.size()]);
             this.word2cnt = word2cnt;
+            createMaxHeap(word2cnt);
+        }
+        private void createMaxHeap(Map<String, Integer> word2cnt){
+            Integer n = word2cnt.keySet().size();
+            for(int i = parent(n-1);i>=0;i--){
+                shiftDown(i);
+            }
         }
         private Integer left(Integer i){
             return 2*i+1;
