@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * @author hasee
@@ -13,7 +14,7 @@ public class LC1985_kthLargestNumber {
         System.out.println(s);
     }
     public static String kthLargestNumber(String[] nums, int k) {
-        MaxHeap maxheap = new MaxHeap(nums);
+        MaxHeap maxheap = new MaxHeap(nums,new CustomComparator());
         if(k>nums.length){
             k = nums.length;
         }
@@ -26,9 +27,11 @@ public class LC1985_kthLargestNumber {
 
     static class MaxHeap{
         private String[] values;
+        private Comparator<String> comparator;
 
-        public MaxHeap(String[] nums){
+        public MaxHeap(String[] nums,Comparator<String> comparator){
             this.values = nums;
+            this.comparator = comparator;
             createHeap(nums);
         }
 
@@ -53,10 +56,10 @@ public class LC1985_kthLargestNumber {
             for(;;){
                 int l = left(i);
                 int r = right(i);
-                if(l<len && compare(values[index], values[l])){
+                if(l<len && comparator.compare(values[index], values[l])<0){
                     index = l;
                 }
-                if(r<len && compare(values[index], values[r])){
+                if(r<len && comparator.compare(values[index], values[r])<0){
                     index = r;
                 }
                 if(index == i){
@@ -105,6 +108,29 @@ public class LC1985_kthLargestNumber {
         }
         public Boolean isEmpty(){
             return this.values.length == 0;
+        }
+    }
+
+    static class CustomComparator implements Comparator<String>{
+
+        /**
+         * 大根堆, 返回值小于0, 代表向下移动
+         * @param o1 the first object to be compared.
+         * @param o2 the second object to be compared.
+         * @return
+         */
+        @Override
+        public int compare(String o1, String o2) {
+            if (o1.length() < o2.length()){
+                return -1;
+            }
+            else if (o1.length() > o2.length()){
+                return 1;
+            }
+            else{
+                // 长度相等时比较字符串字典序大小
+                return o1.compareTo(o2);
+            }
         }
     }
 
