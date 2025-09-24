@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Arrays;
+
 /**
  * @author hasee
  * @description V1.0
@@ -93,11 +95,11 @@ public class LC1985_kthLargestNumber {
             }
             String result = values[0];
             swap(0,values.length-1);
-            String[] newValues = new String[values.length-1];
-            for(int i = 0; i<values.length-1;i++){
-                newValues[i] = values[i];
-            }
-            this.values = newValues;
+//            String[] newValues = new String[values.length-1];
+//            for(int i = 0; i<values.length-1;i++){
+//                newValues[i] = values[i];
+//            }
+            this.values = Arrays.copyOf(values,values.length-1);//Arrays.copyOf支持泛型, 并且底层使用的native方法性能较好
             shiftDown(0);
             return result;
         }
