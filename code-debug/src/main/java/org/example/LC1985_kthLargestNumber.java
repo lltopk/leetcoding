@@ -111,6 +111,14 @@ public class LC1985_kthLargestNumber {
         }
     }
 
+    /**
+     * @description: 比较函数返回-1 0 1 , 只需要这三个数就可以了
+     * 因为传给框架用的时候 , 框架只会关注大于0  等于0  小于0  三种情况, 因此 -1 0 1 这三个数足够
+     * @author: hmly
+     * @date: 2025/9/24 16:18
+     * @param:
+     * @return:
+     **/
     static class CustomComparator implements Comparator<String>{
 
         /**
