@@ -332,6 +332,8 @@ void siftDown(int i) {
 ```
 
 ### 机灵的二分查找
+大K问题会导致堆排序klogn超时, 就要用到二分查找来优化了 
+
 区间不变量原则[left.right), 此时
 - right的初始值是n, 不是n-1
 - while的条件是left<right, 不是left<=right
