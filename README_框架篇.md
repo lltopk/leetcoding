@@ -361,6 +361,11 @@ void siftDown(int i) {
     }
 }
 ```
+[left,right)的潜在好处是, 循环退出时，唯一可能的情况就是 left == right。 原因如下
+- 每次循环:left 只会增加 (left = mid + 1)
+- 每次循环:right 只会减少或保持 (right = mid)
+所以每次循环 left 只能移动到不超过 right。
+
 
 #### 重复元素求左界
 ```java
