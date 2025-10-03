@@ -331,4 +331,77 @@ void siftDown(int i) {
 }
 ```
 
+### 机灵的二分查找
+区间不变量原则[left.right), 此时
+- right的初始值是n, 不是n-1
+- while的条件是left<right, 不是left<=right
+- if(nums[mindex]>target)的处理是right = mindex, 不是right = mindex-1
+
+```java
+    public int search(int[] nums, int target) {
+        Arrays.sort(nums);
+        int n = nums.length;
+        int left = 0;
+        //区间不变量[l,r)
+        int right = n;//①
+        while(left<right){//②
+            int mindex = (left+right) >>1;
+            if(nums[mindex]>target){
+                right = mindex;//③
+            }else if(nums[mindex]<target){
+                left = mindex+1;
+            }else {
+                left = right = mindex;
+                return left;
+            }
+        }
+        return -1;
+    }
+}
+```
+
+#### 重复元素求左界
+```java
+   private int getLBorder(int[] nums,int target){
+        int n = nums.length;
+        int left = 0;
+        int lBorder = -1;
+        //区间不变量
+        int right = n;
+        while(left<right){
+            int mIndex = (left+right)>>1;
+            //重复元素求左边界
+            if(nums[mIndex]>=target){
+                right = mIndex;
+                lBorder = mIndex;
+            }else{
+                left = mIndex+1;
+            }
+        }
+
+        return lBorder;
+    }
+```
+#### 重复元素求右界
+```java
+    private int getRBorder(int[] nums,int target){
+        int n = nums.length;
+        int left = 0;
+        //区间不变量
+        int right = n;
+        int rBoard = -1;
+        while(left<right){
+            int mIndex = (left+right)>>1;
+            //重复元素求右边界
+            if(nums[mIndex]<=target){
+                left = mIndex+1;
+                rBoard = mIndex;
+            }else {
+                right = mIndex;
+            }
+        }
+        return rBoard;
+    }
+```
+
 ### TODO 二叉检索树
