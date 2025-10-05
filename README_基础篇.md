@@ -52,8 +52,6 @@ In Example One, visiting each node starts a "trial". And passing a leaf node or 
 
 ### 哈希表 `Hashmap`
 
-* 查找
-* 缓存
 
 ### 栈 `Stack`
 
@@ -61,13 +59,14 @@ In Example One, visiting each node starts a "trial". And passing a leaf node or 
 
 ### 队列 `Queue`
 
-* `Queue`是顶级接口，实现类有 `LinkedList`，`PriorityQueue`
-* `offer/poll`
+- `Queue`是顶级接口，实现类有 `LinkedList`，`PriorityQueue`
 
 ### 动态规划 `Dynamic Programing`
 
-* 推导转移方程并填充 `dp[]`数组
+- 推导转移方程并填充 `dp[]`数组
 
 ### 排序问题 `Sorting`
+- 二分查找
+- 堆排序/优先级队列
 
 
