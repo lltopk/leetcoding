@@ -2,8 +2,7 @@
 
 ### 回溯框架
 
-#### 回溯框架0：
-
+标准的回溯框架如下:
 - state，是trial共享待回溯变量，如共享路径变量
 - choices，是输入集合，如树节点集合集合
 - res，答案收集器
@@ -33,7 +32,7 @@ void backtrack(State state, List<Choice> choices, List<State> res) {
 }
 ```
 
-#### 回溯框架1：全排列
+#### 全排列
 
 - 求解不含重复数字的输入数组的所有 **不重复全排列**
 
@@ -71,7 +70,7 @@ List<List<Integer>> permutationsI(int[] nums) {
 }
 ```
 
-#### 回溯框架2：全排列Ⅱ
+#### 全排列Ⅱ
 
 - 求解包含重复数字的输入数组的所有 **不重复全排列**
 
@@ -117,7 +116,7 @@ List<List<Integer>> permutationsII(int[] nums) {
 }
 ```
 
-#### 回溯框架3：子集和问题Ⅰ
+#### 子集和问题Ⅰ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组没有重复的元素，每个元素可以多次选择。
 
@@ -165,7 +164,7 @@ List<List<Integer>> subsetSumI(int[] nums, int target) {
 }
 ```
 
-#### 回溯框架4：子集和问题Ⅱ
+#### 子集和问题Ⅱ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组可能包含重复的元素，每个元素只能选择一次。请将这些组合作为列表返回，该列表不应包含重复的组合。
 
@@ -361,7 +360,7 @@ void siftDown(int i) {
     }
 }
 ```
-[left,right)的潜在好处是, 循环退出时，唯一可能的情况就是 left == right。 原因如下
+约定`[left,right)`而不是`[left,right]`的潜在好处是, 循环退出时，唯一可能的情况就是 left == right。 原因如下
 - 每次循环:left 只会增加 (left = mid + 1)
 - 每次循环:right 只会减少或保持 (right = mid)
 所以每次循环 left 只能移动到不超过 right。
@@ -410,5 +409,8 @@ void siftDown(int i) {
         return rBoard;
     }
 ```
+
+#### 特殊情况目标值不固定
+参见LC153, LC162, 这种题目必须初始化right为n-1, 这是有别于标准二分模板[l,r)的地方
 
 ### TODO 二叉检索树
