@@ -49,9 +49,8 @@ public class LC153_findMin {
     }
 
     /**
-     寻找旋转点
-     等价于寻找的是数组不完全连续的部分
-     调试的点在于, right一定赋值为n-1 这个地方是区别于标准的二分模板
+     寻找旋转点, 等价于寻找的是数组不完全连续的部分
+     选则右边界为比较点, 因此right一定赋值为n-1, 这个地方是区别于标准的二分模板
      */
     private static int findPivot(int[] nums) {
         int left = 0;
