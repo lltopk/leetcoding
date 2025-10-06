@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.tp.slipingWindow;
+package org.lyflexi.solutions.tp.slidingwindowtp;
 
 import java.util.*;
 //同向移动的双指针就是滑动窗口，但是大部分情况下相向移动的双指针与滑动窗口没有任何关系

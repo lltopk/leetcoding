@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.tp.slipingWindow;
+package org.lyflexi.solutions.tp.slidingwindowtp;
 
 import java.util.HashMap;
 import java.util.Iterator;
