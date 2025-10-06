@@ -1,4 +1,8 @@
 ## 算法框架
+已涵盖的算法框架如下:
+- 回溯框架
+- 手写堆结构
+- 机灵的二分查找
 
 ### 回溯框架
 
@@ -227,22 +231,22 @@ List<List<Integer>> subsetSumII(int[] nums, int target) {
 ### 手写堆结构
 给定一个数组Heap<Integer>默认平铺开作为初始二叉树,  数组索引为i, 基本算数api如下
 ```java
-/* 获取左子节点的索引 */
-int left(int i) {
-    return 2 * i + 1;
-}
-/* 获取右子节点的索引 */
-int right(int i) {
-    return 2 * i + 2;
-}
-/* 获取父节点的索引 */
-int parent(int i) {
-    return (i - 1) / 2; // 向下整除
-}
-/* 访问堆顶元素 */
-int peek() {
-    return maxHeap.get(0);
-}
+    /* 获取左子节点的索引 */
+    int left(int i) {
+        return 2 * i + 1;
+    }
+    /* 获取右子节点的索引 */
+    int right(int i) {
+        return 2 * i + 2;
+    }
+    /* 获取父节点的索引 */
+    int parent(int i) {
+        return (i - 1) / 2; // 向下整除
+    }
+    /* 访问堆顶元素 */
+    int peek() {
+        return maxHeap.get(0);
+    }
 ```
 #### 建堆
 通过调整给定的初始二叉树, 建堆方式如下, 大根堆/小根堆没有本质差别: 
@@ -411,6 +415,6 @@ void siftDown(int i) {
 ```
 
 #### 特殊情况目标值不固定
-参见LC153, LC162, 这种题目必须初始化right为n-1, 这是有别于标准二分模板[l,r)的地方
+参见LC153, LC162, 目标值一直在变化, 这种题目必须初始化right为n-1, 这是有别于标准二分模板[l,r)的地方
 
 ### TODO 二叉检索树
