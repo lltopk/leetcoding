@@ -1,12 +1,11 @@
-package org.example;
+package org.lyflexi.test;
 
-import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Test03 {
+public class Test04 {
     public static void main(String[] args) {
 
         int[] arr = {1,6,1};

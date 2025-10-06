@@ -1,4 +1,4 @@
-package org.example;
+package org.lyflexi.solutions.topk;
 
 import java.util.Arrays;
 import java.util.Comparator;

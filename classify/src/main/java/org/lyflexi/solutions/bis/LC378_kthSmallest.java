@@ -1,4 +1,4 @@
-package org.example;
+package org.lyflexi.solutions.bis;
 
 /**
  * @author hasee

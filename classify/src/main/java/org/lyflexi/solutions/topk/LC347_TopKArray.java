@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.rank;
+package org.lyflexi.solutions.topk;
 
 import java.util.*;
 
@@ -17,7 +17,7 @@ import java.util.*;
 示例 2:
 输入: nums = [1], k = 1
 输出: [1]*/
-public class Solution04_TopKArray {
+public class LC347_TopKArray {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);

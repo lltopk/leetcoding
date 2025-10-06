@@ -4,7 +4,7 @@ package org.lyflexi.solutions;
  * @Author: ly
  * @Date: 2024/3/24 10:54
  */
-public class Extra02_FirstMissingPositiveHard {
+public class LC41_FirstMissingPositiveHard {
 //    以题目中的[3, 4, -1, 1] 为例，最终的数组应当为 [1, -1, 3, 4]，我们就可以知道缺失的数为 2。
 //     那怎么将数组进行转换呢？
 

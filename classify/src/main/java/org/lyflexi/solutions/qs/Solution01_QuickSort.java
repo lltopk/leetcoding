@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.rank;
+package org.lyflexi.solutions.qs;
 
 import java.util.Arrays;
 import java.util.Scanner;

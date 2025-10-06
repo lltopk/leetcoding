@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.rank;
+package org.lyflexi.solutions.topk;
 
 import java.util.PriorityQueue;
 
@@ -22,7 +22,7 @@ import java.util.PriorityQueue;
 
 
 */
-public class Solution03_TopKth {
+public class LC215_TopKth {
     public int findKthLargest(int[] nums, int k) {
 
         int n = nums.length;

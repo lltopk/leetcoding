@@ -1,4 +1,4 @@
-package org.lyflexi;
+package org.lyflexi.test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +25,7 @@ strList={"abc", "abd", "bcd"}
 执行之后
 strList={"bcd"}
 * */
-public class ArrayListTest {
+public class Test01 {
 
     // 推荐：ArrayList使用迭代器执行删除，iterator.remove()为无参
     public static void removeByIterator(List<String> strList, char ch) {

@@ -19,7 +19,7 @@ import org.lyflexi.structDef.TreeNode;
 *
 * */
 
-public class Extra04_FlattenTree {
+public class LC114_FlattenTree {
     // 第一步，寻找左子树最右边的节点，便于将原来的右子树接回到左子树的最右边节点
     // 第二步，右子树接回到到左子树的最右边节点
     // 第三步，左子树替代右子树本来的位置

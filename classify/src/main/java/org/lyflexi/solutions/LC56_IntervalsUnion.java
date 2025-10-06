@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.rank;
+package org.lyflexi.solutions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +25,7 @@ import java.util.Scanner;
 输出：[[1,5]]
 解释：区间 [1,4] 和 [4,5] 可被视为重叠区间。
 * */
-public class Solution02_IntervalsUnion {
+public class LC56_IntervalsUnion {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         // 输入行数和列数
