@@ -350,7 +350,7 @@ void siftDown(int i) {
         //区间不变量[l,r)
         int right = n;//①
         while(left<right){//②
-            int mindex = (left+right) >>1;
+            int mindex = left + ((right-left)>>1);
             if(nums[mindex]>target){
                 right = mindex;//③
             }else if(nums[mindex]<target){
@@ -379,7 +379,7 @@ void siftDown(int i) {
         //区间不变量
         int right = n;
         while(left<right){
-            int mIndex = (left+right)>>1;
+            int mIndex = left + ((right-left)>>1);
             //重复元素求左边界
             if(nums[mIndex]>=target){
                 right = mIndex;
@@ -401,7 +401,7 @@ void siftDown(int i) {
         int right = n;
         int rBoard = -1;
         while(left<right){
-            int mIndex = (left+right)>>1;
+            int mIndex = left + ((right-left)>>1);
             //重复元素求右边界
             if(nums[mIndex]<=target){
                 left = mIndex+1;
