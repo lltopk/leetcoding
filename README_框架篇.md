@@ -369,6 +369,32 @@ void siftDown(int i) {
 - 每次循环:right 只会减少或保持 (right = mid)
 所以每次循环 left 只能移动到不超过 right。
 
+#### 找不到大于target的值
+自然排序的数组, 如果找不到大于target的值, 当循环结束的时候l==n, 见LC439
+```java
+    private Integer findTarget(int[] colume, int target){
+        int l = 0;
+        int n = colume.length;
+        int r = n;
+        int midIndex = -1;
+        while(l<r){
+            midIndex = l+((r-l)>>1);
+            if(colume[midIndex]>target){
+                r = midIndex;
+            }else if(colume[midIndex]<target){
+                l = midIndex +1;
+            }else{
+                l = r = midIndex;
+                return colume[l];
+            }
+        }
+        //没有找到, 都比target小, 则l==n
+        if(l==n){
+            return null;
+        }
+        return colume[l]>target?colume[l]:null;
+    }
+```
 
 #### 重复元素求左界
 ```java
