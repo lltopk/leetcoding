@@ -380,7 +380,7 @@ void siftDown(int i) {
         int right = n;
         while(left<right){
             int mIndex = left + ((right-left)>>1);
-            //重复元素求左边界
+            //重复元素求左边界, 当nums[mIndex]<=target继续移动右界
             if(nums[mIndex]>=target){
                 right = mIndex;
                 lBorder = mIndex;
@@ -402,7 +402,7 @@ void siftDown(int i) {
         int rBoard = -1;
         while(left<right){
             int mIndex = left + ((right-left)>>1);
-            //重复元素求右边界
+            //重复元素求右边界, 当nums[mIndex]<=target继续移动左界
             if(nums[mIndex]<=target){
                 left = mIndex+1;
                 rBoard = mIndex;
