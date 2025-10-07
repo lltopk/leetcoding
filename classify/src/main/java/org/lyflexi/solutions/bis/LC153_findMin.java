@@ -55,6 +55,7 @@ public class LC153_findMin {
     private static int findPivot(int[] nums) {
         int left = 0;
         int n = nums.length;
+        //r必须初始为n-1, 下文比较的是midIndex和right, right不能为n, 会越界
         int right = n - 1;
         while (left < right) {
             int midIndex = (left + right) >> 1;
@@ -62,7 +63,7 @@ public class LC153_findMin {
                 left = midIndex + 1;
             } else {
                 right = midIndex;
-            }
+            }//数组元素不相同, 不存在nums[midIndex] == nums[right]
         }
         return left;
     }
