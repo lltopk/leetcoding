@@ -360,7 +360,7 @@ void siftDown(int i) {
                 return left;
             }
         }
-        return -1;
+        return -1;//约定没找到target, 返回索引-1
     }
 }
 ```
