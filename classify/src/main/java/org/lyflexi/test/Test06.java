@@ -15,7 +15,7 @@ public class Test06 {
     }
 
     public String get(String key, int timestamp) {
-
+        return null;
     }
     class Entry{
         public String k;
