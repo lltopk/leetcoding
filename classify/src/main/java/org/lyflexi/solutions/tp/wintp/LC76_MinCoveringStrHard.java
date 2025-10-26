@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.tp.windowstp;
+package org.lyflexi.solutions.tp.wintp;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,7 +33,7 @@ import java.util.Scanner;
 输出: ""
 解释: t 中两个字符 'a' 均应包含在 s 的子串中，
 因此没有符合条件的子字符串，返回空字符串。*/
-public class Solution05_MinCoveringStrHard {
+public class LC76_MinCoveringStrHard {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String s = in.nextLine();

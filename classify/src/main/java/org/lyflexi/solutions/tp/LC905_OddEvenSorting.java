@@ -28,7 +28,7 @@ package org.lyflexi.solutions.tp;
 输出：[0]
 
 * */
-public class Solution11_OddEvenSorting {
+public class LC905_OddEvenSorting {
     public int[] sortArrayByParity(int[] nums) {
         int n = nums.length;
         int[] answer = new int[n];

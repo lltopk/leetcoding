@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.tp.windowstp;
+package org.lyflexi.solutions.tp.wintp;
 
 import java.util.Arrays;
 import java.util.PriorityQueue;
@@ -38,7 +38,7 @@ import java.util.Scanner;
 
 */
 
-public class Solution06_MaxWindowHard {
+public class LC239_MaxWindowHard {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

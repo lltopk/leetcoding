@@ -20,7 +20,7 @@ package org.lyflexi.solutions.tp;
 输入：nums = [2,3]
 输出：[2,3]
 * */
-public class Solution12_OddEvenSortingⅡ {
+public class LC922_OddEvenSortingⅡ {
     //双指针
     public int[] sortArrayByParityII(int[] nums) {
         int n = nums.length;

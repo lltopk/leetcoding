@@ -14,7 +14,7 @@ import java.util.List;
 两个闭区间的 交集 是一组实数，要么为空集，要么为闭区间。例如，[1, 3] 和 [2, 4] 的交集为 [2, 3] 。*/
 
 
-public class Solution09_IntervalsOverlap {
+public class LC986_IntervalsOverlap {
 
 
 

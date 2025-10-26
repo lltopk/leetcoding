@@ -28,7 +28,7 @@ package org.lyflexi.solutions.tp;
 解释：在移除非字母数字字符之后，s 是一个空字符串 "" 。
 由于空字符串正着反着读都一样，所以是回文串。
 * */
-public class Solution02_ValidPalindromeString {
+public class LC135_ValidPalindromeString {
     public boolean isPalindrome(String s) {
         StringBuffer sgood = new StringBuffer();
         int length = s.length();

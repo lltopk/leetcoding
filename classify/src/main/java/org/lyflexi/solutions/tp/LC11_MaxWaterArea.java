@@ -24,7 +24,7 @@ package org.lyflexi.solutions.tp;
 
 *
 * */
-public class Solution06_MaxWaterArea {
+public class LC11_MaxWaterArea {
 
     public int maxArea(int[] height) {
         int len = height.length;

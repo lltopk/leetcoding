@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.tp.windowstp;
+package org.lyflexi.solutions.tp.wintp;
 
 import java.util.Arrays;
 import java.util.Scanner;

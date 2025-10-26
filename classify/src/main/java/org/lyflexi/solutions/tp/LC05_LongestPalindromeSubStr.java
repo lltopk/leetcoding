@@ -5,22 +5,28 @@ import java.util.Scanner;
 /**
  * @Author: ly
  * @Date: 2024/2/5 12:37
+ * 5. 最长回文子串
+ * 已解答
+ * 中等
+ * 相关标签
+ * premium lock icon
+ * 相关企业
+ * 提示
+ * 给你一个字符串 s，找到 s 中最长的 回文 子串。
+ *
+ *
+ *
+ * 示例 1：
+ *
+ * 输入：s = "babad"
+ * 输出："bab"
+ * 解释："aba" 同样是符合题意的答案。
+ * 示例 2：
+ *
+ * 输入：s = "cbbd"
+ * 输出："bb"
  */
-
-/*最长回文子串：中心扩散法(双指针)
-给你一个字符串 s，找到 s 中最长的回文子串。
-如果字符串的反序与原始字符串相同，则该字符串称为回文字符串。
-
-示例 1：
-输入：s = "babad"
-输出："bab"
-解释："aba" 同样是符合题意的答案。
-
-示例 2：
-输入：s = "cbbd"
-输出："bb"
- */
-public class Solution04_LongestPalindromeSubStr {
+public class LC05_LongestPalindromeSubStr {
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);

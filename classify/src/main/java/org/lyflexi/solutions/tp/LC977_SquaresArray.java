@@ -23,7 +23,7 @@ package org.lyflexi.solutions.tp;
 *
 * 请你设计时间复杂度为 O(n) 的算法解决本问题
 * */
-public class Solution10_SquaresArray {
+public class LC977_SquaresArray {
     public int[] sortedSquares(int[] nums) {
         int n = nums.length;
         int[] answer = new int[n];

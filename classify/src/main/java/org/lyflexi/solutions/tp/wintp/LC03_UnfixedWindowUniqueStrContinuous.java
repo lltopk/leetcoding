@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.tp.windowstp;
+package org.lyflexi.solutions.tp.wintp;
 
 import java.util.*;
 
@@ -28,7 +28,7 @@ import java.util.*;
 输出: 3
 解释: 因为无重复字符的最长子串是 "wke"，所以其长度为 3。
      请注意，你的答案必须是 子串 的长度，"pwke" 是一个子序列，不是子串。*/
-public class Solution03_UnfixedWindowUniqueStrContinuous {
+public class LC03_UnfixedWindowUniqueStrContinuous {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();

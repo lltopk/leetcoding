@@ -22,7 +22,7 @@ package org.lyflexi.solutions.tp;
 输出：6
 解释：6个回文子串: "a", "a", "a", "aa", "aa", "aaa"
 * */
-public class Solution03_countsPalindromeSubStr {
+public class LC647_countsPalindromeSubStr {
     public int countSubstrings(String s) {
         int count = 0;
         for (int i = 0; i < s.length(); i++) {
