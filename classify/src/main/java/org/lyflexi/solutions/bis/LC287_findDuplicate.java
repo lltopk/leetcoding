@@ -33,8 +33,10 @@ package org.lyflexi.solutions.bis;
  * 输出：3
  */
 public class LC287_findDuplicate {
+
     public int findDuplicate(int[] nums) {
-        int l = 0, n = nums.length, r = n;
+        // l从1开始，目标值为中值索引midIndex
+        int l = 1, n = nums.length, r = n;
         while(l<r){
             int midIndex = l + ((r-l)>>1);
             int cnt = 0;//代表原数组中小于等于midIndex的元素个数
@@ -43,7 +45,7 @@ public class LC287_findDuplicate {
                     cnt++;
                 }
             }
-            //将所有的cnt代表为新的数组newNums, 索引是0-n, 值一定是递增的, 因此有序可以二分
+            //将所有的cnt代表为新的数组newNums, 索引是[1-n), 值一定是递增的
             //比较对象转化为, 在newNums中, 求newNums[i]>i情况下的第一个i
             if(cnt<=midIndex){
                 l = midIndex +1;
