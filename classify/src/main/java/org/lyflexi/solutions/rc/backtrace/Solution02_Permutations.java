@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.bs;
+package org.lyflexi.solutions.rc.backtrace;
 
 import java.util.ArrayList;
 import java.util.Arrays;

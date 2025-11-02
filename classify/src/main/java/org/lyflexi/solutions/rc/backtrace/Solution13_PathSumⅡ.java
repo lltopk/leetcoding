@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.bs;
+package org.lyflexi.solutions.rc.backtrace;
 
 import org.lyflexi.structDef.TreeNode;
 
@@ -21,7 +21,7 @@ import java.util.List;
 输出：[[5,4,11,2],[5,8,4,5]]
 *
 * */
-public class Solution05_PathSumⅡ {
+public class Solution13_PathSumⅡ {
     //因为需要记录路径，所以回溯
     List<List<Integer>> answer = new ArrayList<>();
     public List<List<Integer>> pathSum(TreeNode root, int sum) {

@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.qsort;
+package org.lyflexi.solutions.sort;
 
 import java.util.Arrays;
 import java.util.Scanner;
