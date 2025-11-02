@@ -45,7 +45,7 @@ public class LC287_findDuplicate {
                     cnt++;
                 }
             }
-            //将所有的cnt代表为新的数组newNums, 索引是[1-n), 值一定是递增的
+            //将所有的cnt代表为新的数组newNums, 索引是[1-n), 值一定是递增的, 说明二分
             //比较对象转化为, 在newNums中, 求newNums[i]>i情况下的第一个i
             if(cnt<=midIndex){
                 l = midIndex +1;
