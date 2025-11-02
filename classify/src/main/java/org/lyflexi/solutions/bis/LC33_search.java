@@ -66,6 +66,7 @@ public class LC33_search {
 
     }
 
+    @Deprecated
     private int binarySearch(int[] nums, int left, int right, int target) {
 
         while (left < right) {
@@ -84,7 +85,13 @@ public class LC33_search {
 
     }
 
-    //题目要求直接logn, 就意味着只能在一个二分模板中排序
+    /**
+     * 题目要求直接logn, 就意味着只能在一个二分模板中排序
+     * compare with 0 and n-1
+     * @param nums
+     * @param target
+     * @return
+     */
     public static int search(int[] nums, int target) {
         int n = nums.length;
         int left = 0;
@@ -107,6 +114,40 @@ public class LC33_search {
                     left = midIndex + 1;
                 } else {
                     right = midIndex;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * compare with left and right-1
+     * @param nums
+     * @param target
+     * @return
+     */
+    public static int searchV2(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0;
+        int right = n;
+        //循环不变量
+        while(left<right){
+            int midIndex = (left+right)>>1;
+            if(nums[midIndex] == target){
+                return midIndex;
+            }
+            //落入大数组, 只知道左值, 先左移
+            if(nums[midIndex]>nums[left]){
+                if(nums[midIndex]>target && target>=nums[left]){
+                    right = midIndex ;
+                }else{
+                    left = midIndex +1;
+                }
+            }else{//落入小数组. 只知道右值, 先右移
+                if(nums[midIndex]<target && target<=nums[right-1]){
+                    left = midIndex +1;
+                }else{
+                    right = midIndex ;
                 }
             }
         }
