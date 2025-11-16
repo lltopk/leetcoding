@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.sort;
+package org.lyflexi.solutions;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ import java.util.Scanner;
  * @Author: ly
  * @Date: 2024/1/11 16:50
  */
-public class Solution01_QuickSort {
+public class QuickSort {
 
 //    2024.1.11题解
     public static void main(String[] args) {
