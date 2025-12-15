@@ -1,6 +1,6 @@
 package org.lyflexi.solutions;
 
-import org.lyflexi.structDef.TreeNode;
+import org.lyflexi.common.TreeNode;
 
 /**
  * @Author: ly
