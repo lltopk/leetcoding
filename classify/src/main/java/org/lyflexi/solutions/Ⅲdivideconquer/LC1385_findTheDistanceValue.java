@@ -54,6 +54,14 @@ import java.util.Arrays;
  *
  */
 public class LC1385_findTheDistanceValue {
+    /**
+     * 思路:
+     * 对于 arr1中的元素 x，如果 arr2没有在闭区间 [x−d,x+d] 中的元素，那么把答案加一。
+     * @param arr1
+     * @param arr2
+     * @param d
+     * @return
+     */
     public int findTheDistanceValue(int[] arr1, int[] arr2, int d) {
         Arrays.sort(arr2);
         int ans = 0;
@@ -63,7 +71,7 @@ public class LC1385_findTheDistanceValue {
             //两端没找到
             if (i1 == arr2.length || (i2 == 0 && arr2[i2] > x + d)) {
                 ans++;
-            }else if(arr2[i1] > x + d){//中间没找到
+            }else if(arr2[i1] > x + d){//l=r, 如果此时左边都小于x-d并且右边都大于x+d,证明中间没找到
                 ans++;
             }
 
