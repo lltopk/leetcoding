@@ -34,8 +34,9 @@ package org.lyflexi.solutions.Ⅲdivideconquer;
 public class LC2529_maximumCount {
     public int maximumCount(int[] nums) {
         int n = nums.length;
-        //0的左右边界
+        //0的左界
         int L = lowerBound(nums,0);
+        //0的右界
         int R = lowerBound(nums,1)-1;
 
         return Math.max(L,n-1-R);
