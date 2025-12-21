@@ -33,24 +33,22 @@ public class LC704_search {
         int[] nums = new int[]{1,2,3,4,5};
         System.out.println(search(nums, 4));
     }
+
     public static int search(int[] nums, int target) {
-        Arrays.sort(nums);
         int n = nums.length;
         int left = 0;
-        //区间不变量[l,r)
+        //左闭右开写法[l,r)
         int right = n;
+        //当left == right就不存在区间了因此退出循环
         while(left<right){
-            int mindex = (left+right) >>1;
-            if(nums[mindex] == target){
-                left = right = mindex;
-                return left;
-            }
-            if(nums[mindex]>target){
-                right = mindex;
-            }else if(nums[mindex]<target){
+            int mindex = left + ((right-left)>>1);
+            if(nums[mindex]<target){
                 left = mindex+1;
+            }else{
+                right = mindex;
             }
         }
-        return -1;
+
+        return (left == nums.length || target != nums[left])?-1:left;
     }
 }
