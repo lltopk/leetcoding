@@ -43,27 +43,41 @@ import java.util.Arrays;
  *
  */
 public class LC2300_successfulPairs {
+    /**
+     * 二刷灵神
+     */
     public int[] successfulPairs(int[] spells, int[] potions, long success) {
-        int m = spells.length;
-        int n = potions.length;
-        //对能量数组进行排序
         Arrays.sort(potions);
-        //答案的个数是咒语的个数
-        int [] rs = new int[m];
-        for(int i = 0;i<m;i++){
-            //对potions数组进行二分
-            int l = 0, r = n;
-            while(l<r){
-                int midIndex = l + ((r-l)>>1);
-                if((long)spells[i]*potions[midIndex]>=success){
-                    r = midIndex;
-                }else{
-                    l = midIndex+1;
-                }
-            }
-            rs[i] = n-r;
-        }
+        int[] rs = new int[spells.length];
+        for(int i = 0;i<spells.length;i++){
+            
+            int l = lowerBound(potions, spells[i], success);
 
+            rs[i] = potions.length - l;
+        }
         return rs;
+
+    }
+
+    private int lowerBound(int[] potions, int factor, long target){
+        int n = potions.length;
+        int l = 0, r = n;
+        while(l<r){
+            int mid = l + ((r-l)>>1);
+            if((long)potions[mid] * factor<target){
+                l = mid + 1;
+            }else{
+                r = mid;
+            }
+        }
+        return l;
     }
 }
+
+/**
+ * (long)potions[mid] * factor和(long)(potions[mid] * factor)的区别, 为什么后者依然会溢出?
+ * 
+ * 因为后者依然是在int范围内先进行运算, 已经溢出了之后再转long是没有意义的.
+ * 
+ * 而前者先执行 (long) potions[mid], 此时，由于左操作数是 long，Java 会自动将 factor 提升为 long（如果 factor 是 int 的话），然后进行 long(potions[mid]) * long(factor) 的乘法。
+ */
