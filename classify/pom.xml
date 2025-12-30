@@ -13,8 +13,11 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>17</java.version>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <!--  
+      Maven 警告使用单独的 maven.compiler.source 和 maven.compiler.target 属性。
+      对于 Java 9 及更高版本，建议使用 maven.compiler.release 来代替，因为它提供了更严格的兼容性检查。
+     -->
+    <maven.compiler.release>17</maven.compiler.release>
   </properties>
 
 
