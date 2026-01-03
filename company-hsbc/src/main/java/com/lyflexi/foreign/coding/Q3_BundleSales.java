@@ -1,4 +1,4 @@
-package com.lyflexi.foreigncompanyinterview.coding;
+package com.lyflexi.foreign.coding;
 
 import java.util.Scanner;
 
