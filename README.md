@@ -15,4 +15,8 @@ C:\Users\hasee\.vscode\extensions\oracle.oracle-java-25.0.0\nbcode\java\maven
 }
 ```
 
+Ctrl Shift P初始化maven项目: 
+```
+Java: New Project
+```
 F5启动调试
