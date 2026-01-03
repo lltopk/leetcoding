@@ -1,6 +1,6 @@
 ## VSCode轻量化刷题
 
-安装oracle java插件(基于netbeans), 支持并自带maven
+安装oracle java插件(基于netbeans), 支持并自带maven工具
 ```
 C:\Users\hasee\.vscode\extensions\oracle.oracle-java-25.0.0\nbcode\java\maven
 ```
