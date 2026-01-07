@@ -35,23 +35,18 @@ package org.lyflexi.solutions.Ⅲdivideconquer;
 public class LC162_findPeakElement {
     public int findPeakElement(int[] nums) {
         int n = nums.length;
-        if(n==1){
-            return 0;
-        }
         //规律是峰值两侧为有序
         int l = 0;
-        //r必须初始为n-1, 下文比较的是nums[midIndex]和nums[midIndex+1], 防止当midIndex = r-1的时候, midIndex+1越界
-        // eg nums: [2,1] 此时midIndex+1越界
+        //从题意出发初始化[l,r): [0,n-1), 当二分失败, l==n-1, 恰好是峰值, 因为数组两侧隐藏两个-∞
+        //也恰好解决了mid+1越界的问题, 下文比较的是nums[midIndex]和nums[midIndex+1], 防止当midIndex = r-1的时候, midIndex+1越界
+        // eg. nums [2,1]
         int r = n-1;
         while(l<r){
             int midIndex = (l+r)>>1;
             if(nums[midIndex]<nums[midIndex+1]){
                 l = l+1;
-            }else if (nums[midIndex]>nums[midIndex+1]){
-                r = midIndex;
             }else{
-                l=r=midIndex;
-                return l;
+                r=midIndex;
             }
         }
         return l;
