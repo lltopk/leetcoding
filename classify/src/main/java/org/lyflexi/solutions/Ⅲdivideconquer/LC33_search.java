@@ -50,7 +50,7 @@ public class LC33_search {
             }
         }
 
-        if(l == n || nums[l]!=target || (l==0 && nums[l]!=target)){
+        if(l == n || nums[l]!=target){
             return -1;
         }
 

@@ -114,7 +114,7 @@ class Solution04_LRUCacheWithRWLockAndExpiration {
                 return;
             }
 
-            if (keyToDNodeCache.size() >= capacity) {
+            if (keyToDNodeCache.re() >= capacity) {
                 DNode toRemove = dummy.next;
                 keyToDNodeCache.remove(toRemove.key);
                 removeNode(toRemove);
