@@ -63,6 +63,8 @@ public class LC1287_findSpecialInteger {
     public int findSpecialInteger(int[] arr) {
         int len = arr.length;
         int step = len/4+1;
+
+        //arr[i]恰好就是三刀右侧第一个元素
         for(int i = 0; i<len; i+=step){
             int l = lowerBound(arr, arr[i]);
             int r = lowerBound(arr, arr[i]+1);//找比arr[i]大的下一个数的位置即可
