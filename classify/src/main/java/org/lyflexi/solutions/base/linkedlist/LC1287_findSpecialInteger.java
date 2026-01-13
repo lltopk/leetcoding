@@ -58,7 +58,7 @@ public class LC1287_findSpecialInteger {
     //     return arr[0];
     // }
 
-    //砍三刀, 四等分{一,二,三,四}, 答案一定位于arr[0]和三个分割点上其一
+    //砍三刀, 四等分{一,二,三,四}, 答案一定位于arr[0]和三刀右侧元素上其一
     //因此我们用4*2次二分查找即可, 即8logn
     public int findSpecialInteger(int[] arr) {
         int len = arr.length;
