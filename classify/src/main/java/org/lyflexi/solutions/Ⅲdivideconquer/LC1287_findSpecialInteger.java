@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-package org.lyflexi.solutions.base.linkedlist;
+package org.lyflexi.solutions.Ⅲdivideconquer;
 
 /**
  *
