@@ -63,9 +63,10 @@ n == queries.length
 public class LC2476_closestNodes {
 
     /**
-     * Integer不能使用 != 比较, 因为只有当 x 在 [-128, 127] 范围内时：返回的才是缓存中的同一个 Integer 对象
+     * Integer不能使用 != 比较, 因为只有当 x1, x2 在 [-128, 127] 范围内时：返回的才是缓存中的同一个 Integer 对象, 此时x1 == x2
      * 
-     * 超过这个范围, 由于引用的原因比较失效, 导致错误
+     * 
+     * 超过这个范围, 会创建新的new Integer()引用, 导致比较错误
      */
 //    public List<List<Integer>> closestNodes(TreeNode root, List<Integer> queries) {
 //         List<Integer> sortedArray = new ArrayList<>();
