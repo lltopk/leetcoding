@@ -33,8 +33,50 @@ package org.lyflexi.solutions.Ⅲdivideconquer;
  * 输出：-1
  * @create 2025/10/5 18:06
  */
+
+/**
+ * 本题属于二分答案
+ */
 public class LC33_search {
-       //一次二分
+       //一次二分, compareInc
+    // public int search(int[] nums, int target) {
+    //     int n = nums.length;
+    //     int l = 0, r = n;
+
+    //     while(l<r){
+    //         int mid = (l+r)>>1;
+            
+    //         //自定义二分比较
+    //         if(compareInc(nums, mid, target)){
+    //             l = mid +1;
+    //         }else{
+    //             r = mid;
+    //         }
+    //     }
+
+    //     if(l == n || nums[l]!=target){
+    //         return -1;
+    //     }
+
+    //     return l;
+    // }
+
+    // private boolean compareInc(int[] nums, int mid , int target){
+    //     int n = nums.length;
+    //     int last = nums[n-1];
+
+    //     //左边有序数组
+    //     if(nums[mid]>last){
+    //         return nums[mid]<target || target<= last;
+    //     }else{//右边有序数组
+    //         return nums[mid]<target && target <= last;
+    //     }
+
+    // }
+
+
+    
+    //一次二分, compareDesc
     public int search(int[] nums, int target) {
         int n = nums.length;
         int l = 0, r = n;
@@ -42,11 +84,11 @@ public class LC33_search {
         while(l<r){
             int mid = (l+r)>>1;
             
-            //自定义二分比较
-            if(compareInc(nums, mid, target)){
-                l = mid +1;
-            }else{
+            //子定义二分比较
+            if(compareDesc(nums, mid, target)){
                 r = mid;
+            }else{
+                l = mid+1;
             }
         }
 
@@ -57,15 +99,15 @@ public class LC33_search {
         return l;
     }
 
-    private boolean compareInc(int[] nums, int mid , int target){
+    private boolean compareDesc(int[] nums, int mid , int target){
         int n = nums.length;
         int last = nums[n-1];
 
         //左边有序数组
         if(nums[mid]>last){
-            return nums[mid]<target || target<= last;
+            return nums[mid]>=target && target > last;
         }else{//右边有序数组
-            return nums[mid]<target && target <= last;
+            return nums[mid]>=target || target > last;
         }
 
     }

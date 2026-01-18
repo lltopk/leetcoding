@@ -36,27 +36,21 @@ public class LC275_hIndex {
     public int hIndex(int[] citations) {
         int l = 0, n = citations.length, r = n;
 
-        //比较关系: citations[i] > n-i, n-i代表整个数组中, 有n-i篇论文被引用的次数大于等于citations[i], 此时右指针收缩
+        //比较关系: citations[i] 和 n-i, 
+        // n-i代表整个数组中, 有n-i篇论文被引用的次数大于等于citations[i]
         while(l<r){
             int midIndex = l + ((r-l)>>1);
-            if(citations[midIndex]>n-midIndex){
-                r = midIndex;
-            }else if(citations[midIndex]<n-midIndex){
+            if(citations[midIndex]<n-midIndex){
                 l = midIndex +1;
             }else{
-                l = r = midIndex;
-                return citations[l];
+                r = midIndex;
             }
         }
 
         //没找到确切的位置
-        if(l==0){
-            return citations[0]>=n?n:0;
-        }
+        // if(l==n || citations[l] != n-l){
 
-        if(l==n){
-
-        }
+        // }
 
         return n-l;
     }
