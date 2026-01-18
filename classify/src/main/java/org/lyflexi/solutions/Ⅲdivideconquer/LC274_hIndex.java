@@ -31,6 +31,10 @@ import java.util.Arrays;
  * 输入：citations = [1,3,1]
  * 输出：1
  */
+
+/**
+ * 二分答案
+ */
 public class LC274_hIndex {
     public int hIndex(int[] citations) {
         Arrays.sort(citations);

@@ -32,6 +32,10 @@ package org.lyflexi.solutions.Ⅲdivideconquer;
  * 输出：2
  *
  */
+
+/**
+ * 二分答案
+ */
 public class LC275_hIndex {
     public int hIndex(int[] citations) {
         int l = 0, n = citations.length, r = n;
