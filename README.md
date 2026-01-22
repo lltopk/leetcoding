@@ -21,3 +21,10 @@ Ctrl Shift P初始化maven项目:
 Java: New Project
 ```
 F5启动调试
+
+## 复杂度评估
+数组长度10^3 限制O(n^2)
+
+数组长度10^5 限制O(nlogn)
+
+数组长度10^9 限制O(logn)
