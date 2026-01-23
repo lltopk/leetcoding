@@ -38,46 +38,43 @@ import java.util.Arrays;
  * Input: houses = [1,5], heaters = [2]
  * Output: 3
  */
-
-/**
- * 二分答案法
- */
-public class LC475_findRadius {
+public class LC475_findRadius2 {
 
     public int findRadius(int[] houses, int[] heaters) {
-        //供暖半径越大越能覆盖屋子, 供暖半径越小越无法覆盖屋子
-        //因此可以将半径视为有序数组, 二分对象就是半径
-        Arrays.sort(houses);
         Arrays.sort(heaters);
-        int len = houses.length;
-        int l = 0, r = Integer.MAX_VALUE;
-        while(l<r){
-            int mid = l + ((r-l)>>1);
-            if(checkInc(mid, houses, heaters)){
-                l = mid+1;
+        int m = houses.length;
+        int ans = Integer.MIN_VALUE;
+        int n = heaters.length;
+
+        //遍历屋子, 求当前屋子满足辐射的最小半径
+        for (int i = 0; i < m; i++) {
+            int minDis = Integer.MAX_VALUE;
+            int l = 0, r = n;
+            //二分炉子
+            while (l < r) {
+                int midIdx = l + ((r - l) >> 1);
+                if (heaters[midIdx] < houses[i]) {
+                    l = midIdx + 1;
+                } else {
+                    r = midIdx;
+                }
+            }
+
+            if(l==n){
+                minDis = houses[i] - heaters[n-1];
+            }else if(l==0 &&heaters[l]!=houses[i]){
+                minDis = heaters[0] - houses[i];
+            } else if(heaters[l]!=houses[i]){
+                //对于每个房屋，要么用前面的暖气，要么用后面的，二者取近的，得到距离
+                minDis = Math.min(heaters[l] - houses[i], houses[i] - heaters[l - 1]);
             }else{
-                r = mid;
+                minDis = 0;//找到了
             }
+
+            //最终求上述所有minDis中的最大值, 即为答案
+            ans = Math.max(minDis, ans);
         }
 
-        return l;
-    }
-
-    //mid就是半径
-    private boolean checkInc(int mid, int[] houses, int[] heaters){
-        int i = 0, j = 0;
-
-        while(i<houses.length && j<heaters.length){
-            int d = Math.abs(houses[i] - heaters[j]);
-            if(d<=mid){//表示被覆盖
-                i++;
-            }else{//换下一个加热器试
-                j++;
-            }
-        }
-
-        //表示用完了加热器还没有覆盖完整间屋子
-        return j == heaters.length;
-
+        return ans;
     }
 }
