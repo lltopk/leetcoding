@@ -9,7 +9,7 @@ package org.lyflexi.solutions.Ⅲdivideconquer;
  *
  * @author hasee
  */
-public class LCP_08_getTriggerTime {
+public class LCP08_getTriggerTime {
 
     public int[] getTriggerTime(int[][] increase, int[][] requirements) {
         int m = increase.length;
