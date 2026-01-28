@@ -32,10 +32,15 @@ package org.lyflexi.solutions.Ⅲdivideconquer;
  *      或者返回索引 5， 其峰值元素为 6。
  * @create 2025/10/7 15:35
  */
+
+/**
+ * 二分查找, 由于题目描述两端点也有可能是解, 因此在比较过程中需要考虑越界问题
+ */
 public class LC162_findPeakElement {
+
+    //比较nums[mid]和nums[mid+1]
     public int findPeakElement(int[] nums) {
         int n = nums.length;
-        //规律是峰值两侧为有序
         int l = 0;
         //从题意出发初始化[l,r): [0,n-1), 当二分失败, l==n-1, 恰好是峰值, 因为数组两侧隐藏两个-∞
         //也恰好解决了mid+1越界的问题, 下文比较的是nums[midIndex]和nums[midIndex+1], 防止当midIndex = r-1的时候, midIndex+1越界
@@ -44,11 +49,28 @@ public class LC162_findPeakElement {
         while(l<r){
             int midIndex = (l+r)>>1;
             if(nums[midIndex]<nums[midIndex+1]){
-                l = l+1;
+                l = midIndex+1;
             }else{
                 r=midIndex;
             }
         }
         return l;
     }
+
+    //另一种写法, 比较nums[midIndex]>nums[midIndex-1], 考虑的是左边界越界问题(题目秒数左端点也有可能是极值, 此时mid-1越界), 需要初始化l=1
+    //而且最终返回l-1
+    // public int findPeakElement(int[] nums) {
+    //     int n = nums.length;
+    //     int l = 1;
+    //     int r = n;
+    //     while(l<r){
+    //         int midIndex = (l+r)>>1;
+    //         if(nums[midIndex]>nums[midIndex-1]){
+    //             l = midIndex+1;
+    //         }else{
+    //             r=midIndex;
+    //         }
+    //     }
+    //     return l-1;
+    // }
 }
