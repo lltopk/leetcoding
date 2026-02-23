@@ -62,22 +62,22 @@ public class LC2594_repairCars2 {
         //时间是趋势的, 所以二分时间
         int len = ranks.length;
         long minV = Integer.MAX_VALUE;
-        for(int i = 0; i< len; i++){    
+        for(int i = 0; i< len; i++){
             minV = Math.min(minV, ranks[i]);
         }
         long l = 0, r = minV*cars*cars;
 
-        while(l<r){
+        while(l + 1<r){
             long mid = l + ((r-l)>>1);
             if(checkInc(mid, ranks, cars)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
 
         }
 
-        return l;
+        return r;
     }
 
     private boolean checkInc(long mid, int[] ranks, int cars){

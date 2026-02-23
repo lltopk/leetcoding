@@ -78,7 +78,13 @@ order 是从 0 到 n - 1 的整数排列。
 1 <= k <= 109
  */
 public class LC3639_minTime {
-
+    /**
+     * 开区间写法
+     * @param s
+     * @param order
+     * @param k
+     * @return
+     */
     public int minTime(String s, int[] order, int k) {
         int len = s.length();
 
@@ -88,7 +94,7 @@ public class LC3639_minTime {
             mark[i] = -1;
         }
         //时间越长, 星号越多, 带*子串数量大于k的可能性越大, 因此视时间t为二分元素
-        int l = 0, r = len;
+        int l = -1, r = len;
 
         //特殊情况, 所有字符都是* , 这是个等差数列, 即以i(lastM==i本身)为终点的连续字串的个数为i+1
         long maxProvider = (long)len*((0+1)+(len-1+1))/2;
@@ -96,28 +102,29 @@ public class LC3639_minTime {
             return -1;
         }
 
-        while(l<r){
+        while(l +1 <r){
             int mid = l + ((r-l)>>1);
             if(checkInc(mid, mark, order, k)){
-                l = mid + 1;
+                l = mid ;
             }else{
                 r = mid;
             }
         }
 
-        return l;
+        return r;
     }
 
     private boolean checkInc(int mid , int[] mark, int[] order, int k){
+        Arrays.fill(mark, -1);
         for (int i = 0; i <=mid; i++) {
-            mark[order[i]] = mid;
+            mark[order[i]] = 1;
         }
         long cnt = 0;
         int lastM = -1;
 
         //整个数组的子问题解累加
         for(int j =0; j<mark.length; j++){
-            if(mark[j] == mid){
+            if(mark[j] == 1){
                 lastM = j;
             }
             //以j(前面最近的*位置是lastM)为终点的连续子串的个数: lastM+1

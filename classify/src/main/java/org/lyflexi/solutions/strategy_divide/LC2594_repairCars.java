@@ -64,7 +64,7 @@ public class LC2594_repairCars {
         int minV = Integer.MAX_VALUE;
         //注意到题目中ranks的取值范围是[1,100]
         int [] cnt = new int[101];
-        for(int i = 0; i< len; i++){    
+        for(int i = 0; i< len; i++){
             cnt[ranks[i]]++;
             minV = Math.min(minV, ranks[i]);
         }
@@ -72,17 +72,17 @@ public class LC2594_repairCars {
         //右边界是让最快的人修车所花费的时间即可(因为可以并行修车, 实际耗时会低于右边界)
         long l = 0, r = (long)minV*cars*cars;
 
-        while(l<r){
+        while(l + 1<r){
             long mid = l + ((r-l)>>1);
             if(checkInc(mid, minV, cars, cnt)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
 
         }
 
-        return l;
+        return r;
     }
 
     private boolean checkInc(long mid, int minV, int cars, int[] cnt){

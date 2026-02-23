@@ -38,8 +38,11 @@ import java.util.Arrays;
  * Input: houses = [1,5], heaters = [2]
  * Output: 3
  */
-public class LC475_findRadius2 {
 
+/**
+ * 二分答案, 开区间写法
+ */
+public class LC475_findRadius2 {
     public int findRadius(int[] houses, int[] heaters) {
         Arrays.sort(heaters);
         int m = houses.length;
@@ -49,24 +52,25 @@ public class LC475_findRadius2 {
         //遍历屋子, 求当前屋子满足辐射的最小半径
         for (int i = 0; i < m; i++) {
             int minDis = Integer.MAX_VALUE;
-            int l = 0, r = n;
+            int l = -1, r = n;
             //二分炉子
-            while (l < r) {
+            while (l+1 < r) {
                 int midIdx = l + ((r - l) >> 1);
                 if (heaters[midIdx] < houses[i]) {
-                    l = midIdx + 1;
+                    l = midIdx;
                 } else {
                     r = midIdx;
                 }
             }
 
-            if(l==n){
+            //当前循环的二分答案就是r
+            if(r==n){
                 minDis = houses[i] - heaters[n-1];
-            }else if(l==0 &&heaters[l]!=houses[i]){
+            }else if(r==0 &&heaters[r]!=houses[i]){
                 minDis = heaters[0] - houses[i];
-            } else if(heaters[l]!=houses[i]){
+            } else if(heaters[r]!=houses[i]){
                 //对于每个房屋，要么用前面的暖气，要么用后面的，二者取近的，得到距离
-                minDis = Math.min(heaters[l] - houses[i], houses[i] - heaters[l - 1]);
+                minDis = Math.min(heaters[r] - houses[i], houses[i] - heaters[r - 1]);
             }else{
                 minDis = 0;//找到了
             }

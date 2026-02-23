@@ -62,23 +62,23 @@ package org.lyflexi.solutions.strategy_divide;
 public class LC1870_minSpeedOnTime {
     public int minSpeedOnTime(int[] dist, double hour) {
         //[1, maxDist+1)
-        int l = 1;
-        int r = Integer.MAX_VALUE;
+        int l = 0;
+        int r = 1000000000+1;
 
         //无解, 比如1.9  dist.length == 3
         if (hour <= dist.length - 1) {
             return -1;
         }
-        while(l<r){
+        while(l + 1<r){
             int mid = l + ((r-l)>>1);
             if(checkInc(mid, dist, hour)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l ;
+        return r ;
     }
 
     private boolean checkInc(int mid, int[] dist, double hour){
@@ -86,7 +86,6 @@ public class LC1870_minSpeedOnTime {
         for(int i = 0; i<dist.length-1; i++){
             sumT += (dist[i]+mid-1)/mid;
         }
-
         //最后一段要求真实值, 如2/3 = 0.66667, 此时需要2/3.0 或者 (double)2/3
         return sumT+ dist[dist.length-1]/(mid*1.0) > hour;
 

@@ -74,7 +74,7 @@ bloomDay.length == n
  * 二分答案法
  */
 public class LC1482_minDays {
-   public int minDays(int[] bloomDay, int m, int k) {
+    public int minDays(int[] bloomDay, int m, int k) {
         //等待时间是趋势的, 时间越长开的越多, 越能够达成目标花束, 因此对时间二分
         int maxT = Integer.MIN_VALUE;
         for(int i = 0 ; i< bloomDay.length; i++){
@@ -83,18 +83,18 @@ public class LC1482_minDays {
         if(bloomDay.length < (long)m*k){
             return -1;
         }
-        int l = 0, r = maxT;
+        int l = 0, r = maxT+1;
 
-        while(l<r){
+        while(l +1<r){
             int mid = l + ((r-l)>>1);
             if(checkInc(mid, bloomDay ,m, k)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l;
+        return r;
     }
 
     private boolean checkInc(int mid, int[] bloomDay, int m , int k){

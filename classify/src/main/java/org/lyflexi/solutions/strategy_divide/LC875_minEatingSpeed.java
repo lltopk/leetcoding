@@ -53,22 +53,23 @@ public class LC875_minEatingSpeed {
     public int minEatingSpeed(int[] piles, int h) {
         int len = piles.length;
         //初始化二分区间(吃速), r为piles[i]的最大值, 因为珂珂一次最多只能吃一堆
-        int l = 1;
-        int r = Integer.MIN_VALUE;
+        int l = 0;
+        int mx = Integer.MIN_VALUE;
         for(int i = 0; i< len; i++){
-            r = Math.max(r, piles[i]);
+            mx = Math.max(mx, piles[i]);
         }
+        int r = mx+1;
 
-        while(l < r){
+        while(l +1 < r){
             int mid = l + ((r-l)>>1);
             if(checkIncrease(piles, mid, h)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l;
+        return r;
     }
 
     private boolean checkIncrease(int[] piles, int mid, int h){

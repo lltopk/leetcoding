@@ -37,30 +37,34 @@ import java.util.Arrays;
  *
  * Input: houses = [1,5], heaters = [2]
  * Output: 3
+ *
+ * 提示：
+ *
+ * 1 <= houses.length, heaters.length <= 3 * 104
+ * 1 <= houses[i], heaters[i] <= 109
  */
 
 /**
  * 二分答案法
  */
 public class LC475_findRadius {
-
     public int findRadius(int[] houses, int[] heaters) {
         //供暖半径越大越能覆盖屋子, 供暖半径越小越无法覆盖屋子
         //因此可以将半径视为有序数组, 二分对象就是半径
         Arrays.sort(houses);
         Arrays.sort(heaters);
         int len = houses.length;
-        int l = 0, r = Integer.MAX_VALUE;
-        while(l<r){
+        int l = -1, r = 1000000000;//题目至多10^9
+        while(l + 1<r){
             int mid = l + ((r-l)>>1);
             if(checkInc(mid, houses, heaters)){
-                l = mid+1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l;
+        return r;
     }
 
     //mid就是半径

@@ -85,19 +85,19 @@ public class LC1482_minDays2 {
         if(bloomDay.length < (long)m*k){
             return -1;
         }
-    int l = 0, r = maxT;
+        int l = 0, r = maxT+1;
         //mark标记时间mid的时候, 盛开花的分布
         int [] mark = new int[bloomDay.length];
-        while(l<r){
+        while(l + 1<r){
             int mid = l + ((r-l)>>1);
             if(checkInc(mid, mark, bloomDay ,m, k)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l;
+        return r;
     }
 
     private boolean checkInc(int mid , int[] mark, int[] bloomDay, int m , int k){

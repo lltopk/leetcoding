@@ -93,20 +93,20 @@ public class LC3048_earliestSecondToMarkIndices {
         int m = changeIndices.length;
 
         //最小要n秒, 最大要m秒
-        //[n, m + 1)
-        int l = n, r = m + 1;
+        //(n-1, m + 1)
+        int l = n-1, r = m + 1;
 
-        while (l < r) {
+        while (l+1 < r) {
             int mid = l + ((r - l) >> 1);
             if (checkInc(mid, last, nums, changeIndices)) {
-                l = mid + 1;
+                l = mid;
             } else {
                 r = mid;
             }
         }
 
         //l == m +1 (r的最大值但不包含)表示二分失败
-        return l == m + 1 ? -1 : l;
+        return r == m+1 ? -1 : r;
     }
 
     private boolean checkInc(int mid, int[] last, int[] nums, int[] changeIndices){

@@ -66,7 +66,7 @@ premium lock icon
  * 二分答案
  */
 public class LC1011_shipWithinDays {
-   public int shipWithinDays(int[] weights, int days) {
+    public int shipWithinDays(int[] weights, int days) {
         int len = weights.length;
 
         //初始化二分区间(运载能力), 左界是weights[i]最大值, 右界是weights之和
@@ -76,17 +76,20 @@ public class LC1011_shipWithinDays {
             r +=weights[i];
             l = Math.max(l, weights[i]);//左界l必须是weights[i]最大值, 否则将无法搬走货物!
         }
-
-        while(l< r){
+        //开区间
+        l--;
+        //开区间
+        r++;
+        while(l + 1< r){
             int mid = l + ((r-l)>>1);
             if(checkIncrease(weights, mid, days)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l ;
+        return r ;
 
     }
 

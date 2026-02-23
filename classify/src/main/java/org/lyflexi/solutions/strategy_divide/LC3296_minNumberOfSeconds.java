@@ -94,18 +94,18 @@ public class LC3296_minNumberOfSeconds {
         // 初始化右界r = maxTime + 2maxTime +... (mountainHeight/n)maxTime
         // 其中, mountainHeight/n上取整
         long h = (mountainHeight+n-1)/n;
-        r = (h * maxTime*(1+h)/2);
+        r = (h * maxTime*(1+h)/2)+1;
 
-        while(l<r){
+        while(l +1 <r){
             long mid = l + ((r-l)>>1);
             if(checkIncrease(workerTimes, mid, mountainHeight)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l;
+        return r;
 
     }
 
