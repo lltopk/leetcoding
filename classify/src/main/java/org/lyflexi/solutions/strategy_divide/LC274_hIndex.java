@@ -42,7 +42,9 @@ public class LC274_hIndex {
         int l = 0, n = citations.length, r = n;
 
         //比较关系: citations[i] 和 n-i, 
-        // n-i代表整个数组中, 有n-i篇论文被引用的次数大于等于citations[i]
+        // n-i递减
+        // citations[i]递增
+        // 计算二者相等的位置
         while(l<r){
             int midIndex = l + ((r-l)>>1);
             if(citations[midIndex]<n-midIndex){
