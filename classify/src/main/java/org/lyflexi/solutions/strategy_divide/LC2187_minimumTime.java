@@ -60,20 +60,19 @@ public class LC2187_minimumTime {
         Arrays.sort(time);
 
         int len = time.length;
-        long l = 1;
-        //(long)totalTrips * time[0] + 1防止越界
+        long l = 0;
         long r = (long)totalTrips * time[0] + 1;
 
-        while(l < r){
+        while(l + 1 < r){
             long mid = l + ((r-l)>>1);
             if(checkIncrease(time, mid, totalTrips)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l;
+        return r;
     }
 
     private boolean checkIncrease(int[] time, long mid, int totalTrips){

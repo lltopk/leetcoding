@@ -56,7 +56,7 @@ nums.length <= threshold <= 10^6
 public class LC1283_smallestDivisor {
     public int smallestDivisor(int[] nums, int threshold) {
         Arrays.sort(nums);
-        int l = 1, n = nums.length;
+        int l = 0, n = nums.length;
         int r = Integer.MIN_VALUE;
 
         //计算r的右界
@@ -64,16 +64,16 @@ public class LC1283_smallestDivisor {
             r = Math.max(r , nums[i]);
         }
 
-        while(l<r){
+        while(l+1<r){
             int mid = l + ((r-l)>>1);
             if(checkIncrease(nums, mid, threshold)){
-                l = mid +1;
+                l = mid;
             }else{
                 r = mid;
             }
         }
 
-        return l;
+        return r;
     }
 
     private boolean checkIncrease(int[] nums, int mid, int threshold){
