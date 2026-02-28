@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_backtracking;
+package org.lyflexi.solutions.strategy_recursive;
 
 /**
  * @Description:

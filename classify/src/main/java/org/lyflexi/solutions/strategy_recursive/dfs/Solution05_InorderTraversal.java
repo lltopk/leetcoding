@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_backtracking.dfs;
+package org.lyflexi.solutions.strategy_recursive.dfs;
 
 import org.lyflexi.common.TreeNode;
 
