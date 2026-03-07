@@ -56,6 +56,7 @@ numbers 按 非递减顺序 排列
 public class LC167_twoSum {
     public int[] twoSum(int[] numbers, int target) {
         for(int i = 0; i<numbers.length; i++){
+            //第二个数的索引为[i+1, numbers.length)
             int l = i+1, r = numbers.length;
             while(l<r){
                 int mid = l + ((r-l)>>1);
