@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slipwindows.wintp;
+package org.lyflexi.solutions.baseAlgorithm.slipwindows.fixedWin;
 
 import java.util.ArrayList;
 import java.util.Arrays;

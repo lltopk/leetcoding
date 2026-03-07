@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slipwindows.wintp;
+package org.lyflexi.solutions.baseAlgorithm.slipwindows.fixedWin;
 
 import java.util.*;
 //同向移动的双指针就是滑动窗口，但是大部分情况下相向移动的双指针与滑动窗口没有任何关系

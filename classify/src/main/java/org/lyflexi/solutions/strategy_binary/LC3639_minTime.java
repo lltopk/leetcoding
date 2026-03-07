@@ -5,6 +5,8 @@
 
 package org.lyflexi.solutions.strategy_binary;
 
+import java.util.Arrays;
+
 /**
  *
  * @author hasee

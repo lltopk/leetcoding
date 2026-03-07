@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slipwindows.wintp;
+package org.lyflexi.solutions.baseAlgorithm.slipwindows.winFixedLength;
 
 import java.util.HashMap;
 import java.util.Iterator;
