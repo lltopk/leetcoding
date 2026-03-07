@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slipwindows;
+package org.lyflexi.solutions.baseAlgorithm.slippoints;
 
 /**
  * @Author: ly
