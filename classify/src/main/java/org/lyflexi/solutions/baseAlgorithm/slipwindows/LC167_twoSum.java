@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slipwindows.tpSameDirection;
+package org.lyflexi.solutions.baseAlgorithm.slipwindows;
 
 /**
  * @author hasee

@@ -43,6 +43,8 @@ package org.lyflexi.solutions.strategy_binary;
  * s 仅由小写英文字母组成。
  */
 
+import java.util.Arrays;
+
 /**
  * 二分答案
  */
