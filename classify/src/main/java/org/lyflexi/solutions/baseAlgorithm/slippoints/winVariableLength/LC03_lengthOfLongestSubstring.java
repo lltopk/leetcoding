@@ -39,7 +39,7 @@ public class LC03_lengthOfLongestSubstring {
         int l = 0;
         int sum = 0;//求最大长度
         for(int i = 0; i<s.length(); i++){
-            //注意ascii码的最小值是空格'space'而不是'a', 十进制是32
+            //注意ascii码的最小值是空格'space'十进制是32, 而不是'a'十进制是97
             dict[s.charAt(i) - ' '] +=1;
             //重复元素一定是右边新加入的, 此时需要收缩左边界. 否则可以跳过while直接求max
             while(dict[s.charAt(i) - ' '] > 1){
