@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.tpOppositeDirection;
 
 /**
  * @Author: ly
@@ -24,30 +24,26 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints;
 
 *
 * */
+
+/**
+ * 相向双指针
+ */
 public class LC11_MaxWaterArea {
 
     public int maxArea(int[] height) {
-        int len = height.length;
-        int left = 0;
-        int right = len-1;
-        int answer = 0;
-
-        while(left<right){
-            int leftV = height[left];
-            int rightV = height[right];
-
-            int curArea = (Math.max(leftV,rightV)-Math.abs(leftV-rightV))*(right-left);
-
-            if (leftV<rightV){
-                left++;
-            }else {
-                right--;
+        int l = 0, r = height.length -1;
+        int ans = 0; //求最大
+        //相向双指针在趋近的过程中, 想要形成更大的面积, 则必须要移动短板
+        while(l<r){
+            int area = (r-l)* Math.min(height[r], height[l]);
+            ans = Math.max(ans, area);
+            if(height[l]>height[r]){
+                r--;
+            }else{//当height[l]==height[r]无所谓移动谁
+                l++;
             }
-
-            answer = Math.max(curArea,answer);
-
         }
 
-        return answer;
+        return ans;
     }
 }
