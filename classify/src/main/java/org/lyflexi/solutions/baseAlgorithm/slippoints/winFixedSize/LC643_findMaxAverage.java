@@ -39,14 +39,14 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winFixedSize;
 public class LC643_findMaxAverage {
     public double findMaxAverage(int[] nums, int k) {
         double ans = -10000.0;//求最大
-        double sum = 0;
+        double helper = 0;
         int l = 0;
         //定长滑动窗口
         for(int i = 0; i<nums.length; i++){
-            sum+=nums[i];
+            helper+=nums[i];
             if(i-l+1 == k){
-                ans = Math.max(ans, sum/k);
-                sum -=nums[l];
+                ans = Math.max(ans, helper/k);
+                helper -=nums[l];
                 l++;
             }
         }

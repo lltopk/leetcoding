@@ -54,19 +54,19 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winFixedSize;
  */
 public class LC1456_maxVowels {
     public int maxVowels(String s, int k) {
-        int rangeCnt = 0;
+        int helper = 0;
         int ans = 0;//求最大
         int l = 0;
         for(int i= 0; i< s.length(); i++){
             //计算入
             if(checkYuanyin(s.charAt(i))){
-                rangeCnt++;
+                helper++;
             }
             //计算出, 固定窗口用if, 不用while
             if(i - l +1  == k){
-                ans = Math.max(ans, rangeCnt);
+                ans = Math.max(ans, helper);
                 if(checkYuanyin(s.charAt(l))){
-                    rangeCnt--;
+                    helper--;
                 }
                 l++;
             }

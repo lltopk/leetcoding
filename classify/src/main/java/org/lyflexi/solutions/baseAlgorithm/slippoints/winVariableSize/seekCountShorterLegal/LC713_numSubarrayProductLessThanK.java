@@ -39,14 +39,14 @@ public class LC713_numSubarrayProductLessThanK {
         if(k<=1){
             return 0;
         }
-        int product = 1;
+        int helper = 1;
         int l= 0;
         int cnt = 0;
         //滑动窗口, 以右端点为终点
         for(int i = 0; i<nums.length; i++){
-            product*=nums[i];
-            while(product>=k){
-                product/=nums[l];
+            helper*=nums[i];
+            while(helper>=k){
+                helper/=nums[l];
                 l++;
             }
             //右端点为终点, 当乘积严格小于k的时候, 连续子数组的个数为当前序列长度

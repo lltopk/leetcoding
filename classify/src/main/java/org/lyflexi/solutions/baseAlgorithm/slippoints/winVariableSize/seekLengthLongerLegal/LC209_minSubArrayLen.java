@@ -41,15 +41,15 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengt
  */
 public class LC209_minSubArrayLen {
     public int minSubArrayLen(int target, int[] nums) {
-        int sum = 0;
+        int helper = 0;
         int ans = nums.length+1;//求最小值
         int l = 0;
         //虽然是二重循环, 但由于滑动窗口, 内层循环平均移动1次, 因此最终时间复杂度为n*1 = O(n)
         for(int i = 0; i< nums.length; i ++){
-            sum +=nums[i];
-            while(sum>=target){
+            helper +=nums[i];
+            while(helper>=target){
                 ans = Math.min(ans, i-l+1);
-                sum-=nums[l];
+                helper-=nums[l];
                 l++;
             }
         }
