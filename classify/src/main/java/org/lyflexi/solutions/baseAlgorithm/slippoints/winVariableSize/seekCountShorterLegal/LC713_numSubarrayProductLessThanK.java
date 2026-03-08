@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableLength;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekCountShorterLegal;
 
 /**
  * 713. 乘积小于 K 的子数组
@@ -31,7 +31,7 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableLength;
  */
 
 /**
- * 不定长滑动窗口
+ * 不定长窗口求个数, 越短越合法
  */
 public class LC713_numSubarrayProductLessThanK {
     public int numSubarrayProductLessThanK(int[] nums, int k) {

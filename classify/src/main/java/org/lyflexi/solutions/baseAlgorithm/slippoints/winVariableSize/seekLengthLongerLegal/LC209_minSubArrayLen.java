@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableLength;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthLongerLegal;
 
 /**
  * 209. 长度最小的子数组
@@ -37,7 +37,7 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableLength;
  */
 
 /**
- * 不定长滑动窗口
+ * 不定长滑动窗口求长度, 越长越合法
  */
 public class LC209_minSubArrayLen {
     public int minSubArrayLen(int target, int[] nums) {
