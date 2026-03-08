@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_bfs.bfs;
+package org.lyflexi.solutions.strategy_retrieval_bfs;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

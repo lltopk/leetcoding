@@ -1,4 +1,10 @@
-回溯问题 `BackTracking`
+回溯`BackTracking`本质是搜索树上的DFS
+
+先理解二叉树上的回溯，再来学习一般情况下的回溯。
+
+## 二叉树上的回溯
+
+## 一般情况下的回溯
 
 In Example One, visiting each node starts a "trial". And passing a leaf node or the `return` statement to going back to the parent node suggests "retreat".
 
@@ -6,7 +12,6 @@ In Example One, visiting each node starts a "trial". And passing a leaf node or 
 - 回溯retreat，伴随着向上归的动作中复原当前状态state，一般回溯retreat语句位于程序末尾
 - 剪枝prune，通过return提前返回程序剪掉下面的枝叶，属于优化性能的手段。要注意剪枝语句return和trial语句的相对位置，但当trial语句在return语句之前，return之前必须再次retreat，因为提前trial了节点信息。当trial语句在return语句之后，那就没必要在return之前二次retreat
 - 经典应用场景有二叉树dfs，全排列permutation，子集和subSetSum
-
 
 ## 回溯框架
 标准的回溯框架如下:
