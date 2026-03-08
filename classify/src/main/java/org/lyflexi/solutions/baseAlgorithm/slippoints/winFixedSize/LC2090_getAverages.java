@@ -59,7 +59,7 @@ import java.util.Arrays;
 /**
  * 固定尺寸的滑动窗口
  */
-public class LC2098_getAverages {
+public class LC2090_getAverages {
     public int[] getAverages(int[] nums, int k) {
         int n = nums.length;
         int[] ans = new int[n];
