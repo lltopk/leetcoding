@@ -47,7 +47,7 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winFixedSize;
 /**
  * 固定尺寸的滑动窗口
  */
-public class lc2379_minimumRecolors {
+public class LC2379_minimumRecolors {
     public int minimumRecolors(String blocks, int k) {
         //固定尺寸滑动窗口, 求白色最少
         int ans = k;//返回操作次数, 求最少
