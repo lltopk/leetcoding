@@ -34,20 +34,20 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengt
  */
 public class LC03_lengthOfLongestSubstring {
     public int lengthOfLongestSubstring(String s) {
-        //s 由英文字母、数字、符号和空格组成, 总共是128个阿斯克码
-        int[] helper = new int[128];
+        //s 由英文字母、数字、符号和空格组成, 可见字符总供是95个阿斯克码
+        int[] dict = new int[95];
         int l = 0;
-        int ans = 0;//求最大长度
+        int sum = 0;//求最大长度
         for(int i = 0; i<s.length(); i++){
-            //注意ascii码的最小值是空格'space'十进制是32, 而不是'a'十进制是97
-            helper[s.charAt(i) - ' '] +=1;
-            //重复元素一定是右边新加入导致的, 此时需要收缩左边界. 否则可以跳过while直接求max
-            while(helper[s.charAt(i) - ' '] > 1){
-                helper[s.charAt(l) - ' ']--;
+            //可见字符的最小值是空格'space'而不是'a', 十进制是32
+            dict[s.charAt(i) - ' '] +=1;
+            //重复元素一定是右边新加入的, 此时需要收缩左边界. 否则可以跳过while直接求max
+            while(dict[s.charAt(i) - ' '] > 1){
+                dict[s.charAt(l) - ' ']--;
                 l++;
             }
-            ans = Math.max(ans, i-l+1);
+            sum = Math.max(sum, i-l+1);
         }
-        return ans;
+        return sum;
     }
 }

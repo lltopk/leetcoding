@@ -59,7 +59,7 @@ public class LC2841_maxSum {
         //转为数组效率高
         Integer[] arr = nums.toArray(Integer[]::new);
         for(int i = 0; i< n; i++){
-            //map.merge, 当key不存在则初始化value为1, 当key存在则value+1
+            //map.merge, 当key不存在则初始化value为newV, 当key存在则oldV+newV
             // 其中第三个参数是BiFunction remappingFunction
             helper.merge(arr[i], 1, (a,b)-> {return a+b;});
             sum+=arr[i];
