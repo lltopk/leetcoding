@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekCountShorterLegal;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekCntShorterLegal;
 
 /**
  * 713. 乘积小于 K 的子数组

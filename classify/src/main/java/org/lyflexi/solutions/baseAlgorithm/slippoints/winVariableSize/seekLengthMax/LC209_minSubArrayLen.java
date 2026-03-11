@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthLongerLegal;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMax;
 
 /**
  * 209. 长度最小的子数组

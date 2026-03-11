@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthShorterLegal;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMin;
 
 /**
  * 1493. 删掉一个元素以后全为 1 的最长子数组

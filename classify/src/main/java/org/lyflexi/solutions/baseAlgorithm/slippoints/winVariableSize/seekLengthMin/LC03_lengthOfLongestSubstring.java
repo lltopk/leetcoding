@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthShorterLegal;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMin;
 
 /**
  * @Author: ly

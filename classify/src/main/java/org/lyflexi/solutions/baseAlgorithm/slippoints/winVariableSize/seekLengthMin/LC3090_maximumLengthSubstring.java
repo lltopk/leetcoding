@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthShorterLegal;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMin;
 
 /**
  * 3090. 每个字符最多出现两次的最长子字符串
