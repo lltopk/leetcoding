@@ -70,14 +70,14 @@ public class LC3795_minLength {
         int ans = n+1;
         Map<Integer, Integer> dict = new HashMap<>();
         int helper = 0;
-        for(int i = 0; i < n ;i++){
-            int v = dict.merge(nums[i], 1, Integer::sum);
+        for(int r = 0; r < n ;r++){
+            int v = dict.merge(nums[r], 1, Integer::sum);
             if(v==1){//每个值只计算一次
-                helper+=nums[i];
+                helper+=nums[r];
             }
 
             while(helper >= k){
-                ans = Math.min(ans, i - l + 1);
+                ans = Math.min(ans, r - l + 1);
                 if(dict.get(nums[l]) == 1){
                     dict.remove(nums[l]);
                     helper-=nums[l];//每个值只计算一次, 也因此只减去一次

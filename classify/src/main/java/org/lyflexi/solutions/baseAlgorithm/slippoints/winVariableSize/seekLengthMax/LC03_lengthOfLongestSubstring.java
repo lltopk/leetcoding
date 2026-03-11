@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMin;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMax;
 
 /**
  * @Author: ly
@@ -30,7 +30,7 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengt
 
 
 /**
- * 不定长滑动窗口求长度, 越短越合法
+ * 不定长滑动窗口求长度, 求最大
  */
 public class LC03_lengthOfLongestSubstring {
     public int lengthOfLongestSubstring(String s) {
@@ -38,15 +38,15 @@ public class LC03_lengthOfLongestSubstring {
         int[] dict = new int[95];
         int l = 0;
         int sum = 0;//求最大长度
-        for(int i = 0; i<s.length(); i++){
+        for(int r = 0; r<s.length(); r++){
             //可见字符的最小值是空格'space'而不是'a', 十进制是32
-            dict[s.charAt(i) - ' '] +=1;
+            dict[s.charAt(r) - ' '] +=1;
             //重复元素一定是右边新加入的, 此时需要收缩左边界. 否则可以跳过while直接求max
-            while(dict[s.charAt(i) - ' '] > 1){
+            while(dict[s.charAt(r) - ' '] > 1){
                 dict[s.charAt(l) - ' ']--;
                 l++;
             }
-            sum = Math.max(sum, i-l+1);
+            sum = Math.max(sum, r-l+1);
         }
         return sum;
     }

@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMax;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMin;
 
 /**
  * 209. 长度最小的子数组
@@ -37,7 +37,7 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengt
  */
 
 /**
- * 不定长滑动窗口求长度, 越长越合法
+ * 不定长滑动窗口求长度, 求最小
  */
 public class LC209_minSubArrayLen {
     public int minSubArrayLen(int target, int[] nums) {
@@ -45,10 +45,10 @@ public class LC209_minSubArrayLen {
         int ans = nums.length+1;//求最小值
         int l = 0;
         //虽然是二重循环, 但由于滑动窗口, 内层循环平均移动1次, 因此最终时间复杂度为n*1 = O(n)
-        for(int i = 0; i< nums.length; i ++){
-            helper +=nums[i];
+        for(int r = 0; r< nums.length; r ++){
+            helper +=nums[r];
             while(helper>=target){
-                ans = Math.min(ans, i-l+1);
+                ans = Math.min(ans, r-l+1);
                 helper-=nums[l];
                 l++;
             }

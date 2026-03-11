@@ -60,9 +60,9 @@ public class LC904_totalFruit {
         int n = fruits.length;
         int ans = 0, l = 0;
         Map<Integer, Integer> helper = new HashMap<>();
-        for(int i = 0; i<n; i++){
-            // √ helper.put(fruits[i], helper.getOrDefault(fruits[i], 0) + 1);
-            helper.merge(fruits[i], 1, Integer::sum);
+        for(int r = 0; r<n; r++){
+            // √ helper.put(fruits[r], helper.getOrDefault(fruits[r], 0) + 1);
+            helper.merge(fruits[r], 1, Integer::sum);
 
             while(helper.size() > 2){
                 if(helper.get(fruits[l]) == 1){
@@ -73,7 +73,7 @@ public class LC904_totalFruit {
                 }
                 l++;
             }
-            ans = Math.max(ans, i - l +1);
+            ans = Math.max(ans, r - l +1);
         }
 
         return ans;

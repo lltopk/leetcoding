@@ -61,8 +61,8 @@ public class LC2875_minSizeSubarray {
         int minLen = 2*n + 1;
         int l = 0;
         long helper = 0;
-        for(int i =0; i< n*2; i++){
-            helper+=nums[i%n];
+        for(int r =0; r< n*2; r++){
+            helper+=nums[r%n];
             //窗口收缩条件
             while(helper > target%sum){
                 helper-=nums[l%n];
@@ -71,7 +71,7 @@ public class LC2875_minSizeSubarray {
 
             //由于是求最小, 这里要特判符合要求, 否则会计算错误
             if(helper == target%sum){
-                minLen = Math.min(minLen, i - l + 1);
+                minLen = Math.min(minLen, r - l + 1);
             }
         }
 

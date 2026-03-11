@@ -44,10 +44,10 @@ public class LC1695_maximumUniqueSubarray {
         int ans = 0, l = 0;
         int[] dict = new int[10001];
         int helper = 0;
-        for(int i = 0; i<n; i++){
-            dict[nums[i]]++;
-            helper+=nums[i];
-            while(dict[nums[i]] > 1){
+        for(int r = 0; r<n; r++){
+            dict[nums[r]]++;
+            helper+=nums[r];
+            while(dict[nums[r]] > 1){
                 helper-=nums[l];
                 dict[nums[l]]--;
                 l++;

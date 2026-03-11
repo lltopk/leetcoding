@@ -60,9 +60,9 @@ public class LC2958_maxSubarrayLength {
         int ans = 0, l = 0;
         // int[] dict = new int[1000000001]; OOM
         Map<Integer, Integer> helper = new HashMap<>();
-        for(int i = 0; i<n; i++){
-            helper.merge(nums[i], 1, Integer::sum);
-            while(helper.get(nums[i]) > k){
+        for(int r = 0; r<n; r++){
+            helper.merge(nums[r], 1, Integer::sum);
+            while(helper.get(nums[r]) > k){
                 if(helper.get(nums[l]) == 1){
                     helper.remove(nums[l]);
                 }else{
@@ -71,7 +71,7 @@ public class LC2958_maxSubarrayLength {
 
                 l++;
             }
-            ans = Math.max(ans, i - l +1);
+            ans = Math.max(ans, r - l +1);
         }
 
         return ans;

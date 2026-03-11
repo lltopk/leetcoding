@@ -72,13 +72,13 @@ public class LC3634_minRemoval {
         int n = nums.length;
         int maxRemained = 0;
         int l = 0;
-        for(int i = 0; i<n; i++){
+        for(int r = 0; r<n; r++){
             //数组已经排过序， 所以直接和nums[l]比较即可
-            while(nums[i] > (long)nums[l]*k){
+            while(nums[r] > (long)nums[l]*k){
                 l++;
             }
             //求得maxRemained, 最后舍弃n-maxRemained, 因此每个当前窗口不用考虑后面的i
-            maxRemained = Math.max(maxRemained, i - l + 1);
+            maxRemained = Math.max(maxRemained, r - l + 1);
         }
 
         return n - maxRemained;

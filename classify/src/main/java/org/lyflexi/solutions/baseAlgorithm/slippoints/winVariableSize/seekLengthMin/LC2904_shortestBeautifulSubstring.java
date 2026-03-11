@@ -77,8 +77,8 @@ public class LC2904_shortestBeautifulSubstring {
         int helper = 0;
         int l = 0;
         String ans = s;
-        for(int i = 0; i<n; i++){
-            helper+=arr[i] - '0';
+        for(int r = 0; r<n; r++){
+            helper+=arr[r] - '0';
 
             //窗口收缩条件
             while(helper>k || arr[l] == '0'){
@@ -88,7 +88,7 @@ public class LC2904_shortestBeautifulSubstring {
 
             // 越长越合法，因为是求最小，所以最后需要加额外的判断当满足题意helper == k， 否则会求解错误
             if(helper == k){
-                String s0 = s.substring(l, i+1);
+                String s0 = s.substring(l, r+1);
                 if(s0.length() < ans.length() || (s0.length() == ans.length() && s0.compareTo(ans)==-1)){
                     ans = s0;
                 }

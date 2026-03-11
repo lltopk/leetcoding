@@ -57,8 +57,8 @@ public class LC2024_maxConsecutiveAnswers {
         int n = arr.length;
         int ans = 0, l = 0;
         int[] dict = new int[26];//记录出现次数， 从A开始， 这里我们只用F T, 对应索引分别为5 19
-        for(int i = 0 ; i <n; i++){
-            dict[arr[i] - 'A']++;
+        for(int r = 0 ; r <n; r++){
+            dict[arr[r] - 'A']++;
 
             //如果 T 和 F 的出现次数都超过 k，那么必须不断移动左端点 left
             while(dict[5] > k && dict[19] >k){
@@ -67,7 +67,7 @@ public class LC2024_maxConsecutiveAnswers {
                 l++;
             }
 
-            ans = Math.max(ans, i - l +1);
+            ans = Math.max(ans, r - l +1);
         }
 
         return ans;

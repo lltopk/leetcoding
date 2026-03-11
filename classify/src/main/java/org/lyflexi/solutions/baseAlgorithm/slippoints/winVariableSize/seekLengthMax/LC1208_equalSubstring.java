@@ -55,13 +55,13 @@ public class LC1208_equalSubstring {
         int ans = 0;
         int l = 0;
         int helper = 0;
-        for(int i = 0; i<n ;i++){
-            helper+=Math.abs(t.charAt(i) - s.charAt(i));
+        for(int r = 0; r<n ;r++){
+            helper+=Math.abs(t.charAt(r) - s.charAt(r));
             while(helper > maxCost){
                 helper-=Math.abs(t.charAt(l) - s.charAt(l));
                 l++;
             }
-            ans = Math.max(ans, i - l +1);
+            ans = Math.max(ans, r - l +1);
         }
 
         return ans;

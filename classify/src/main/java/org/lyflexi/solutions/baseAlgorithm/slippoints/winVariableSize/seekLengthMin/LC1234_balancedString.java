@@ -73,12 +73,12 @@ public class LC1234_balancedString {
         }
 
         //正难则反, 我们关注窗口外元素， 然后动态调整窗口外元素个数
-        for(int i= 0; i<n; i++){
-            dict[arr[i] - 'A']--;//窗口外元素个数减少
+        for(int r= 0; r<n; r++){
+            dict[arr[r] - 'A']--;//窗口外元素个数减少
 
             //窗口收缩条件， 当窗口外元素个数都不超过n/4的时候， 才意味者窗口内可以完成字符替换
             while(dict[16] <=n/4 && dict[22] <=n/4 && dict[4] <=n/4 && dict[17] <=n/4){
-                ans = Math.min(ans, i-l + 1);
+                ans = Math.min(ans, r-l + 1);
                 dict[arr[l] - 'A']++;//窗口外元素个数增加
                 l++;
             }

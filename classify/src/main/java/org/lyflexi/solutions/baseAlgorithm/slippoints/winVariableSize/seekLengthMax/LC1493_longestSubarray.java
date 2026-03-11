@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMin;
+package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengthMax;
 
 /**
  * 1493. 删掉一个元素以后全为 1 的最长子数组
@@ -40,23 +40,23 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengt
  */
 
 /**
- * 不定尺寸的滑动窗口, 越短越合法
+ * 不定尺寸的滑动窗口, 求最大
  */
 public class LC1493_longestSubarray {
     public int longestSubarray(int[] nums) {
-        //不定长滑动窗口求长度, 越短越合法, 条件是窗口内至多有1个0
+        //不定长滑动窗口求长度, 求最大, 条件是窗口内至多有1个0
         int n = nums.length;
         int ans = 0;//求最大
         int l = 0;
         int cnt0 = 0;
-        for(int i = 0; i< n ; i++){
-            cnt0+=nums[i] == 0? 1:0;
+        for(int r = 0; r< n ; r++){
+            cnt0+=nums[r] == 0? 1:0;
             while(cnt0 > 1){
                 cnt0-=nums[l] ==0? 1:0;
                 l++;
             }
 
-            ans = Math.max(i - l, ans);//由于不算0, 因此求窗口长度就不用+1了
+            ans = Math.max(r - l, ans);//由于不算0, 因此求窗口长度就不用+1了
         }
         return ans;
     }
