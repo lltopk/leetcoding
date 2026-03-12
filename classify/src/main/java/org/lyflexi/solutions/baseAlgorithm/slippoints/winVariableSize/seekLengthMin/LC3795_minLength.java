@@ -60,7 +60,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 不定长话滑动窗口求最小
+ * 不定长滑动窗口求最小
  */
 public class LC3795_minLength {
     public int minLength(int[] nums, int k) {
