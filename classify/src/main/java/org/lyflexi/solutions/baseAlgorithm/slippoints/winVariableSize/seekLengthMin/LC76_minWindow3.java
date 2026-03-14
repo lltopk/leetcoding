@@ -46,9 +46,12 @@ package org.lyflexi.solutions.baseAlgorithm.slippoints.winVariableSize.seekLengt
 /**
  * 不定长滑动窗口求最小
  *
- * 多维护int geCnt = 0, 滑动窗口的收缩条件为geCnt == kinds即为覆盖, 让时间复杂度从O(95*m + n) 优化为O(n + m)
+ *
+ * 进一步合并两个dict数组为一个
+ *
+ * 差距字典diff[], 表示原有的任意字符在dictS中出现的次数, 比dictT中出现的少的次数
  */
-public class LC76_minWindow2 {
+public class LC76_minWindow3 {
     public String minWindow(String s, String t) {
         char[] sArray = s.toCharArray();
         char[] tArray = t.toCharArray();
@@ -59,25 +62,27 @@ public class LC76_minWindow2 {
         int l = 0;
         //方法一每次收缩窗口的时候都要循环dict来判断是否覆盖, 总的时间复杂度为O(95*m + n), 其中95是字典字符集的大小
         //判断覆盖能否优化呢?
-        //其实如果我们有一个变量geCnt代表窗口内共有geCnt种字符的次数大于等于t中的, 那么当geCnt == kinds即为覆盖, 其中kinds为t的字符种类
+        //其实如果我们有一个变量geCnt代表窗口内共有geCnt种字符的次数大于等于t中的, 那么滑动窗口的收缩条件为geCnt == kinds即为覆盖, 其中kinds为t的字符种类
         int geCnt = 0;
-        int[] dictS = new int[95];
-        int[] dictT = new int[95];
+        // int[] dictS = new int[95];
+        // int[] dictT = new int[95];
+        // 同时可以把两个字典合并为一个, 我们叫差距字典diff
+        int[] diff = new int[95];
 
+        //初始化差距字典内元素值为最大差距
         int kinds = 0;
-        for(int i = 0; i<n; i++){
-            dictT[tArray[i] - ' ']++;
-            if(dictT[tArray[i] - ' '] == 1){
+        for(int i = 0 ;i<n; i++){
+            if(diff[tArray[i] - ' '] == 0){
                 kinds++;
             }
+            //t比s多的字符统计
+            diff[tArray[i] - ' ']++;
         }
 
         for(int r = 0; r<m; r++){
-            //进入, 维护dictS
-            dictS[sArray[r] - ' ']++;
-
-            //当二者出现频率相等, geCnt++
-            if(dictS[sArray[r] - ' '] == dictT[sArray[r] - ' ']){//注意不能是>=, 否则会重复计算geCnt
+            //进入, 缩小差距
+            diff[sArray[r] - ' ']--;
+            if(diff[sArray[r] - ' '] == 0){//注意不能是>=0, 否则会重复计算geCnt
                 geCnt++;
             }
 
@@ -88,10 +93,11 @@ public class LC76_minWindow2 {
                     ans = sub;
                 }
 
-                if(dictS[sArray[l] - ' '] == dictT[sArray[l] - ' ']){// 同理, 只有 == 的时候, 才意味着窗口即将移出有效的sArray[l]
+
+                if(diff[sArray[l] - ' '] == 0){// 同理, 只有==0的时候, 才意味着窗口即将损失有效的sArray[l]
                     geCnt--;
                 }
-                dictS[sArray[l] - ' ']--;
+                diff[sArray[l] - ' ']++;//离开, 增加差距
                 l++;
             }
         }
@@ -99,5 +105,4 @@ public class LC76_minWindow2 {
         return ans.equals(s+" ")? "":ans;
 
     }
-
 }
