@@ -74,8 +74,6 @@ public class LC3584_maximumProduct {
             long y = (long)nums[r];//防止下面乘法越界
             ans = Math.max(ans, Math.max(mn*y, mx*y));
         }
-
         return ans;
-
     }
 }
