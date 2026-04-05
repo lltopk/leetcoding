@@ -59,12 +59,12 @@ public class LC2909_minimumSum {
         //预计算 j: [2, n-1]
         sufMin[n-1] = nums[n-1];
         //后缀最小公式: sufMin[j] = Math.min(nums[j], sufMin[j+1]);
-        for(int j = n-2; j>1; j--){
+        for(int j = n-2; j>=2; j--){
             sufMin[j] = Math.min(nums[j], sufMin[j+1]);
         }
 
         //三元素, 枚举中间
-        for(int j = 1; j< n-1; j++){
+        for(int j = 0; j< n-1; j++){
 
             if(nums[j] > preMin && nums[j] > sufMin[j+1]){
                 ans = Math.min(ans, preMin+nums[j]+sufMin[j+1]);
