@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.enumerate;
+package org.lyflexi.solutions.baseAlgorithm.enumerate.enum_right_and_maintain_left._01_last_update_cnt_helper;
 
 /**
  * 2441. 与对应负数同时存在的最大正整数

@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.enumerate;
+package org.lyflexi.solutions.baseAlgorithm.enumerate.enum_right_and_maintain_left._01_last_update_cnt_helper;
 
 /**
  * 3371. 识别数组中的最大异常值

@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.enumerate;
+package org.lyflexi.solutions.baseAlgorithm.enumerate.enum_right_and_maintain_left._01_last_update_cnt_helper;
 
 /**
  * 2016. 增量元素之间的最大差值
