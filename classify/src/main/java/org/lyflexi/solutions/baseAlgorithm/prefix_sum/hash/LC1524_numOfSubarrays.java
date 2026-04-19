@@ -54,7 +54,7 @@ package org.lyflexi.solutions.baseAlgorithm.prefix_sum.hash;
 public class LC1524_numOfSubarrays {
     public int numOfSubarrays(int[] arr) {
         //(s2 - s1) % 2 ==1, 由于取模运算, 不好利用二数之和
-        // 换个思路, 分别记录偶数前缀s10和 与 奇数前缀和s11的个数, 这可以用int[2] cnt来表示
+        // 换个思路, 分别记录偶数前缀和s10 与 奇数前缀和s11的个数, 这可以用int[2] cnt来表示
         //  当下一个前缀和s2是奇数的时候, 说明s2-s10也是奇数, 用int[0]累加结果
         //  当下一个前缀和s2是偶数的时候, 说明s2-s11也是奇数, 用int[1]累加结果
         int n = arr.length;
