@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.recursive.sub_conquer_question;
+package org.lyflexi.solutions.baseAlgorithm.recursive.recursion_sub_conquer_question;
 
 import org.lyflexi.common.TreeNode;
 

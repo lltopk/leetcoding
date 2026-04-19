@@ -39,7 +39,7 @@ x^2 +x -2m/d = 0
 此时根`x=( - + sqrt(1 + 8m/d) / 2`
 
 ### 取模
-`+-*`法取模, 根据带余除法定理, 任意整数 `a` 都可以表示为 `a=qm+r (m!=0)`，其中整数 `q` 为 `a` 除以 `m` 的商（quotient），整数 `r` 为 `a` 除以 `m` 的余数（remainder），即 `r = a mod m`
+1. `+-*`法取模, 根据带余除法定理, 任意整数 `a` 都可以表示为 `a=qm+r (m!=0)`，其中整数 `q` 为 `a` 除以 `m` 的商（quotient），整数 `r` 为 `a` 除以 `m` 的余数（remainder），即 `r = a mod m`
 ```text
 //根据带余除法定理, 设整数 a = q1*m + r1, b = q2*m + r2 。可证明
 (a+b) % m = ((a % m) + (b % m)) % m
@@ -57,10 +57,12 @@ x^2 +x -2m/d = 0
 一般的, 镜像`y = x % m + m`, 因此在代码实现时，如果被模数存在负数的可能, 需要先将被模数`x`转化为 `x % m + m` 再对 m 求模
 
 
-TODO 除法取模, 需要用到二项式定义与费马小定理
+2. `/`除法取模, 如果 p 是一个质数，a 是 b 的倍数, 且 b 和 p 互质（b 不是 p 的倍数），那么有
 ```text
+//推导过程需要用到二项式定义与费马小定理: 见: https://leetcode.cn/discuss/post/3584387/fen-xiang-gun-mo-yun-suan-de-shi-jie-dan-7xgu/
 (a/b) % p = (a * b^(p-2)) % p
 ```
+由于`1_000_000_007`是一个质数，所以上式可用于要求对`1_000_000_007`取模的题目, 如果推导出了包含除法的式子，可以用上式转换成乘法，
 
 ### 快速幂
 如何计算`x`的`n`次幂`pow(x,n)`, 快速幂推导如下
@@ -91,5 +93,44 @@ TODO 除法取模, 需要用到二项式定义与费马小定理
         return ans;
     }
 ```
+
+### 排列组合公式
+求排列总数
+```text
+A(a,b) = !a/!(a-b) 
+= a* !(a-1)/!((a-1) - (b-1)) 
+= a*A(a-1, b-1)
+```
+根据该递推式, 可以用递归实现
+```java
+    private static Integer permutation(Integer a, Integer b) {
+        //递归出口 A(a, 0) = 1
+        if (b == 0) {
+            return 1;
+        }
+        return a * permutation(a - 1, b-1);
+    }
+```
+
+求组合总数 
+```text
+C(a,b) = !a/(!b!(a-b)) 
+= a* !(a-1)/(!b!(a-b))
+= (a-b)* !(a-1)/(!b!(a-b)) + b* !(a-1)/(!b!(a-b))
+= !(a-1)/(!b!(a-b-1)) + !(a-1)/(!(b-1)!(a-b))
+= C(a-1,b) + C(a-1, b-1)
+```
+根据该递推式, 可以用递归实现
+```java
+    private static Integer combination(Integer a, Integer b) {
+        //递归出口 C(a, 0) 和 C(a, a)都直接等于1
+        if (b == 0 || a.equals(b)) {
+            return 1;
+        }
+        b = Math.min(b, a - b);//利用组合的对称性C(a, b) == C(a, a-b), 降低递归深度
+        return combination(a - 1, b) + combination(a - 1, b -1 );
+    }
+```
+
 
 ## 位运算

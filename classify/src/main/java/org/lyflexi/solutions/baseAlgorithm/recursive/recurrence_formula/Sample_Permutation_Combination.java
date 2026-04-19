@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.recursive.recursion_formula;
+package org.lyflexi.solutions.baseAlgorithm.recursive.recurrence_formula;
 
 public class Sample_Permutation_Combination {
     public static void main(String[] args) {
