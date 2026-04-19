@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
+package org.lyflexi.solutions.baseAlgorithm.prefix_sum.circle;
 
 /**
  * 3361. 两个字符串的切换距离

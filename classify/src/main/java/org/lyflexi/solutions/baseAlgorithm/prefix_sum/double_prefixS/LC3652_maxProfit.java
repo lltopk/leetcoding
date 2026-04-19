@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
+package org.lyflexi.solutions.baseAlgorithm.prefix_sum.double_prefixS;
 
 /**
  * 3652. 按策略买卖股票的最佳时机

@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
+package org.lyflexi.solutions.baseAlgorithm.prefix_sum.greed;
 
 /**
  * 53. 最大子数组和
@@ -38,20 +38,19 @@ package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
  */
 
 /**
- * 前缀和, 贪心计算
+ * 前缀和空间优化, 贪心计算
  */
-public class LC53_maxSubArray {
+public class LC53_maxSubArray2 {
     public int maxSubArray(int[] nums) {
         int n = nums.length, ans = Integer.MIN_VALUE;
         int minPreS = 0;//贪心
-        int[] preS = new int[n+1];
+        int preS = 0;//前缀和空间优化
         for(int i =0; i<n; i++){
-            preS[i+1] = preS[i] + nums[i];
-            //以preS[]为基, 计算121.买卖股票的最佳时机
-            ans = Math.max(ans, preS[i+1] - minPreS);
-            minPreS = Math.min(minPreS, preS[i+1]);
+            preS += nums[i];
+            //以preS为基, 计算121.买卖股票的最佳时机
+            ans = Math.max(ans, preS - minPreS);
+            minPreS = Math.min(minPreS, preS);
         }
-
         return ans;
     }
 }

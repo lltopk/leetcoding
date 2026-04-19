@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
+package org.lyflexi.solutions.baseAlgorithm.prefix_sum.preprocess;
 
 /**
  * 3151. 特殊数组 I

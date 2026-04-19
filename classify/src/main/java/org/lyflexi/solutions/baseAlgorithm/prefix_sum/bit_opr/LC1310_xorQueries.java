@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
+package org.lyflexi.solutions.baseAlgorithm.prefix_sum.bit_opr;
 
 /**
  * 1310. 子数组异或查询

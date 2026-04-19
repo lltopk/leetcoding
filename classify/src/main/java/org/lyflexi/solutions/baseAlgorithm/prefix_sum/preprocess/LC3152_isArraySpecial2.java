@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
+package org.lyflexi.solutions.baseAlgorithm.prefix_sum.preprocess;
 
 /**
  * 3152. 特殊数组 II
@@ -48,15 +48,17 @@ package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
  */
 
 /**
- * 前缀和+预处理数组
+ * 前缀和+预处理数组+位运算
  */
-public class LC3152_isArraySpecial {
+public class LC3152_isArraySpecial2 {
     public boolean[] isArraySpecial(int[] nums, int[][] queries) {
         int n = nums.length, newLen = n-1;
         //预处理数组, 将长度为n的nums数组转换为n-1对奇偶对判断
         int[] a = new int[newLen];
         for(int i = 0; i<n-1;i++){
-            a[i] = nums[i+1]%2==nums[i]%2?1: 0;
+            //第二个^1操作是对末尾的二进制位取反
+            //最后的&1操作是用来对两次异或后的结果求模2
+            a[i] = (nums[i+1] ^ nums[i] ^1) & 1;
         }
 
         //左闭右开公式

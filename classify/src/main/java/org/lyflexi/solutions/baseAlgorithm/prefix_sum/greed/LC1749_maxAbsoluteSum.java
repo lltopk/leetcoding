@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
+package org.lyflexi.solutions.baseAlgorithm.prefix_sum.greed;
 
 /**
  * 1749. 任意子数组和的绝对值的最大值
@@ -37,29 +37,26 @@ package org.lyflexi.solutions.baseAlgorithm.prefix_sum;
  */
 
 /**
- * 前缀和空间优化, 数学特性
- *
- * 给你一组数据, 计算连续子数组和绝对值的最大值:
- *
- * 答案就是: max(preS)−min(preS), 无需考虑正负数, 原因如下
- *
- * - 如果最大前缀和出现在最小前缀和的右边，那么上式算的是最大子数组和。
- * - 如果最大前缀和出现在最小前缀和的左边，那么上式恰好算的是最小子数组和的绝对值。
- *
- * 因此我们只要求出max(preS)以及min(preS), 就能得出答案
+ * 前缀和, 贪心计算
  */
-public class LC1749_maxAbsoluteSum3 {
+public class LC1749_maxAbsoluteSum {
     public int maxAbsoluteSum(int[] nums) {
         //迭代计算
         int n = nums.length;
-        //最大前缀和 与 最小前缀和
-        int preMx = 0, preMn = 0;
-        int preS = 0;
+        //求最大子数组和
+        int subMxs = Integer.MIN_VALUE, mnPreS = 0;
+        //求最小子数组和
+        int subMns = Integer.MAX_VALUE, mxPreS = 0;
+        int[] preS = new int[n+1];
         for(int i = 0; i<n; i++){
-            preS += nums[i];
-            preMx = Math.max(preMx, preS);
-            preMn = Math.min(preMn, preS);
+            preS[i+1] = preS[i] + nums[i];
+            subMxs = Math.max(subMxs, preS[i+1] - mnPreS);
+            subMns = Math.min(subMns, preS[i+1] - mxPreS);
+
+            mnPreS = Math.min(mnPreS, preS[i+1]);
+            mxPreS = Math.max(mxPreS, preS[i+1]);
         }
-        return preMx - preMn;
+
+        return Math.max(subMxs, -subMns);
     }
 }
