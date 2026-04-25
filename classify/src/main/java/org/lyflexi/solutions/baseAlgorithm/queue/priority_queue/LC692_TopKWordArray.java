@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.heap;
+package org.lyflexi.solutions.baseAlgorithm.queue.priority_queue;
 
 import java.util.*;
 
