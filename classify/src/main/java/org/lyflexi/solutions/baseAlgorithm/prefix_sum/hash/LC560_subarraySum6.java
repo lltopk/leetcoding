@@ -40,7 +40,7 @@ import java.util.TreeMap;
  *
  * 改成元素和至多为 k，要怎么做？
  *
- * 即s1 >= preS - k, 用红黑树哈希, 天然有序
+ * s2 - s1 <= k, 即s1 >= preS - k, 用红黑树哈希, 天然有序
  */
 public class LC560_subarraySum6 {
     public int subarraySumAtMostK(int[] nums, int k) {
