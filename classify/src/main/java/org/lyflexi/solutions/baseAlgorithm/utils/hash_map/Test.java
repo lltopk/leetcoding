@@ -1,8 +1,6 @@
-package org.lyflexi.solutions.baseAlgorithm.dict;
+package org.lyflexi.solutions.baseAlgorithm.utils.hash_map;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Test {
