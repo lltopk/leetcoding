@@ -36,7 +36,7 @@ package org.lyflexi.solutions.baseAlgorithm.diff;
  */
 
 /**
- * 差分数组, 性质1
+ * 差分数组
  */
 public class LC1094_carPooling {
     //差分数组

@@ -39,7 +39,7 @@ package org.lyflexi.solutions.baseAlgorithm.diff;
  */
 
 /**
- * 差分数组性质2
+ * 差分数组
  */
 public class LC1893_isCovered {
     public boolean isCovered(int[][] ranges, int left, int right) {

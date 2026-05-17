@@ -36,7 +36,7 @@ package org.lyflexi.solutions.baseAlgorithm.diff;
 import java.util.List;
 
 /**
- * 差分数组, 性质2
+ * 差分数组
  */
 public class LC2848_numberOfPoints {
     public int numberOfPoints(List<List<Integer>> nums) {
