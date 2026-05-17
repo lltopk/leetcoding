@@ -45,16 +45,17 @@ public class LC1094_carPooling {
         int N = 1001;
         int[] diff = new int[1001];
 
-        //2. 计算差分数组
-        //差分数组只关注from和to点位, 其他点位无需计算因为是保持不变的
-        // 由于差分数组的用处是累加还原回原数组, 因此非from和to的点位用0表示即可
+        //2. 利用性质2计算差分数组
+        //差分数组只关注from和to点位, 其他点位无需计算因为车内状态没有变化
+        // 车上人trip[0], 意味着从[from, to-1]都多trip[0]人
+        // 车下人trip[0], 意味着从[to]开始车内减trip[0]人
         for(int[] trip: trips){
             int x = trip[0], from = trip[1], to = trip[2];
             diff[from] += x;
-            diff[to] -=x;
+            diff[to] -= x;//这里其实是j=to-1, j+1=to
         }
 
-        //3. 差分数组求和, 还原原数组
+        //3. 差分数组求和, 利用性质1还原原数组
         int s = 0;//空间优化, 不需要完全存储原数组
         for(int x: diff){
             s+=x;

@@ -35,7 +35,7 @@ import java.util.Map;
  *
  * 前缀和数组空间优化
  */
-public class LCFace_17_05_findLongestSubarray2 {
+public class LCInterview_classic_17_05_findLongestSubarray2 {
     public String[] findLongestSubarray(String[] array) {
         //把 数字 看成 −1，把字母看成 1, 计算和为 0 的最长子数组。这样就有了子数组和的比较对象target == 0
         int n = array.length, preS = 0;//前缀和空间优化

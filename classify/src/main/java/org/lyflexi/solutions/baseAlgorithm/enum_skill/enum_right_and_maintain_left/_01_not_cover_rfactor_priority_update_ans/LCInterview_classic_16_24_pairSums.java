@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * 枚举技巧： 枚举右维护左
  */
-public class LCFace_16_24_pairSums {
+public class LCInterview_classic_16_24_pairSums {
     public List<List<Integer>> pairSums(int[] nums, int target) {
         int n = nums.length;
         Map<Integer, Integer> map = new HashMap<>();
