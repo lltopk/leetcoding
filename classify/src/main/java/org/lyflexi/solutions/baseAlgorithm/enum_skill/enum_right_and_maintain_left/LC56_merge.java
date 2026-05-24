@@ -54,6 +54,7 @@ public class LC56_merge {
                 continue;
             }
 
+            //修改引用数组的值即可
             ans.get(ans.size() - 1)[1] = Math.max(interval[1], ans.get(ans.size() - 1)[1]);
         }
         return ans.toArray(new int[ans.size()][2]);
