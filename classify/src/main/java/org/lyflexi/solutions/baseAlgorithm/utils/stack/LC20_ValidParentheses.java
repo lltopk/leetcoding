@@ -27,7 +27,7 @@ import java.util.*;
 输入：s = "(]"
 输出：false
 * */
-public class Solution06_ValidParentheses {
+public class LC20_ValidParentheses {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String s = scanner.nextLine();

@@ -46,7 +46,7 @@ import java.util.LinkedList;
 = 22
 
 * */
-public class Solution07_CalculateReversePolish {
+public class LC150_CalculateReversePolish {
     public int evalRPN(String[] tokens) {
         LinkedList<Integer> stack = new LinkedList<>();
         for (String item:tokens){
