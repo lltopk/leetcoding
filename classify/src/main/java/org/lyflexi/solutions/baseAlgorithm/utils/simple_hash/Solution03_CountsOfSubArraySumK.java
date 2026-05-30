@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.hash_simple;
+package org.lyflexi.solutions.baseAlgorithm.utils.simple_hash;
 
 import java.util.HashMap;
 
