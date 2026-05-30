@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.stack;
+package org.lyflexi.solutions.baseAlgorithm.utils.stack.list_simulation;
 
 /**
  * 1472. 设计浏览器历史记录
@@ -49,41 +49,44 @@ package org.lyflexi.solutions.baseAlgorithm.utils.stack;
  * 最多调用 5000 次 visit， back 和 forward 函数。
  */
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 栈
  */
-public class LC1472_BrowserHistory {
-    Stack<String> backStack;
-    Stack<String> forwardStack;
-
-    public LC1472_BrowserHistory(String homepage) {
-        backStack = new Stack<>();
-        forwardStack = new Stack<>();
-        //约定只有1个URL的时候放在后退栈中
-        backStack.push(homepage);
+public class LC1472_BrowserHistory2 {
+    //用列表/数组模拟栈， 支持随机访问性能更高
+    final List<String> history = new ArrayList<>();
+    //游标卡尺
+    int cur = 0;
+    public LC1472_BrowserHistory2(String homepage) {
+        history.add(homepage);
     }
 
     public void visit(String url) {
-        forwardStack.clear();
-        backStack.push(url);
+        //SubList内部持有的仍然是完整list的引用
+        history.subList(++cur, history.size()).clear();
+        history.add(url);
     }
 
+    /**
+     * 缩回卡尺
+     * @param steps
+     * @return
+     */
     public String back(int steps) {
-        //不能用backStack.isEmpty(), 因为要保证b中至少有一个url，以此来考虑后退到只剩初始页面的情况
-        while(backStack.size()>1 && steps>0){
-            forwardStack.push(backStack.pop());
-            steps--;
-        }
-        return backStack.peek();
+        cur = Math.max(0, cur-steps);
+        return history.get(cur);
     }
 
+    /**
+     * 前进卡尺
+     * @param steps
+     * @return
+     */
     public String forward(int steps) {
-        while(!forwardStack.isEmpty() && steps>0){
-            backStack.push(forwardStack.pop());
-            steps--;
-        }
-        return backStack.peek();
+        cur = Math.min(history.size()-1, cur+steps);
+        return history.get(cur);
     }
 }
