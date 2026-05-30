@@ -78,7 +78,7 @@ public class LC2132_possibleToStamp3 {
                 int j0 = j - stampWidth + 1;
                 int subS = preS[i+1][j+1] - preS[i+1][j0] - preS[i0][j+1] + preS[i0][j0];
                 if(subS == 0){
-                    //维护差分数组的四个顶点, 注意不从0开始, 1-based
+                    //维护差分数组的四个顶点, 注意不从0开始, 现在是1-based
                     int iNew = i+1;
                     int jNew = j+1;
                     int i0New = i0+1;
@@ -93,7 +93,6 @@ public class LC2132_possibleToStamp3 {
 
         //二维差分数组求和空间优化
         //以右下角(>0, >0)作为顶点的前缀和, 都依赖左 上 左上, 因此二维差分数组也可以就地求和
-        int s = 0;
         for(int i = 0; i<m; i++){
             for(int j = 0; j<n; j++){
                 // 在二维差分求和过程中, 我们可以用差分和替换差分值, 这样就可以利用历史求和数据计算新的差分和, 这不影响新的差分和计算
