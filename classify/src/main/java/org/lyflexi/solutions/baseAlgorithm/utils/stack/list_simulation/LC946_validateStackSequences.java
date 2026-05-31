@@ -50,7 +50,6 @@ public class LC946_validateStackSequences {
                 j++;
             }
         }
-
         return i == 0;
     }
 }
