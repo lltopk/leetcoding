@@ -62,16 +62,13 @@ import java.util.*;
 public class LC3412_calculateScore2 {
     public long calculateScore(String s) {
         //26个栈, 每个栈存储一个字符的所有索引记录
-        Stack<Integer>[] stacks = new Stack[26];
-        // for(int i = 0; i< 26; i++){
-        //     stacks[i] = new Stack<Integer>();
-        // }
-        Arrays.setAll(stacks, i -> new Stack<Integer>());
+        Deque<Integer>[] stacks = new ArrayDeque[26];
+        Arrays.setAll(stacks, i -> new ArrayDeque<Integer>());
         char[] sa = s.toCharArray();
         long ans = 0;
         for(int i= 0; i<sa.length; i++){
             int idxOfStacks = 122 - 'a' - (sa[i] - 'a') ;
-            if(!stacks[idxOfStacks].isEmpty()){
+            if(! stacks[idxOfStacks].isEmpty()){
                 int l = stacks[idxOfStacks].pop();
                 ans += i - l;
             }else{
