@@ -2,8 +2,6 @@ package org.lyflexi.solutions.baseAlgorithm.utils.queue.monotonic_queue;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 /**
  * 239. 滑动窗口最大值
@@ -48,34 +46,35 @@ import java.util.Queue;
 /**
  * 由于每个元素入堆最多1次, 出队最多1次, 因此总的时间复杂度是2*N, 即On
  */
-public class LC239_maxSlidingWindow {
-    //固定长度滑动窗口 + 优先级队列(堆)
+public class LC239_maxSlidingWindow2 {
     public int[] maxSlidingWindow(int[] nums, int k) {
         int n = nums.length;
-        //用双端队列实现单调队列, (单调递减队列)
-        Deque<Integer> q = new ArrayDeque<>();
         int[] ans = new int[n - k + 1];
+        int[] q = new int[n];
+        //q[tail] === null, 即tail永远指向尾部下一个
+        int head = 0, tail = 0;
+        //维护单调递减的单调队列
         for(int r = 0; r<n ; r++){
             // 1. 右边入
             //当队尾元素与nums[r]相等时, 也移除队尾元素, 这不影响答案, 还能够保证单调队列元素不重复
-            while(!q.isEmpty() && nums[q.getLast()] <= nums[r]){
-                q.removeLast();
+            while(tail != head && nums[q[tail-1]] <= nums[r]){
+                tail--;
                 //单调队列中元素个数可能会小于窗口大小, 这是正常的比如4 2 1遇到了3, 就会剩下4 3
             }
 
-            //单调队列中一般存储的是元素下标, 方便下面和窗口左界l0进行判断
-            q.addLast(r);
+            //单调队列中一般存储的是元素下标, 方便下面和窗口左界l进行判断
+            q[tail++] = r;
 
             //2. 左边出
             int l = r - k + 1;
             //窗口左边界每次只会向右移动 1 格, 因此每轮循环至多只有一个下标过期。
-            if(q.getFirst() < l){
-                q.removeFirst();
+            if(q[head] < l){
+                head++;
             }
 
             //3. 当存在左端点时候(>=0), 记录答案
             if(l >=0){
-                ans[l] = nums[q.getFirst()];
+                ans[l] = nums[q[head]];
             }
         }
 

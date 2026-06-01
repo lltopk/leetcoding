@@ -58,35 +58,29 @@ import java.util.List;
 public class LC1472_BrowserHistory2 {
     //用列表/数组模拟栈， 支持随机访问性能更高
     final List<String> history = new ArrayList<>();
-    //游标卡尺
-    int cur = 0;
+    //游标卡尺, tail指向peek+1位置, 因此本题索引范围是[0, tail-1]
+    int tail = 0;//和jdk源码一样, tail永远指向实际位置的下个位置
     public LC1472_BrowserHistory2(String homepage) {
         history.add(homepage);
+        tail++;
     }
 
     public void visit(String url) {
         //SubList内部持有的仍然是完整list的引用
-        history.subList(++cur, history.size()).clear();
+        history.subList(tail, history.size()).clear();
         history.add(url);
+        tail++;
     }
 
-    /**
-     * 缩回卡尺
-     * @param steps
-     * @return
-     */
     public String back(int steps) {
-        cur = Math.max(0, cur-steps);
+        int cur = Math.max(0, tail-1-steps);
+        tail = cur+1;
         return history.get(cur);
     }
 
-    /**
-     * 前进卡尺
-     * @param steps
-     * @return
-     */
     public String forward(int steps) {
-        cur = Math.min(history.size()-1, cur+steps);
+        int cur = Math.min(history.size()-1, tail - 1 +steps);
+        tail = cur + 1;
         return history.get(cur);
     }
 }
