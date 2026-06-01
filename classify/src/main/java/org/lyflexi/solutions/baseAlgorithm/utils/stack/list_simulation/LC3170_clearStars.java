@@ -63,6 +63,15 @@ import java.util.List;
  * 列表模拟栈
  */
 public class LC3170_clearStars {
+    /**
+     * 题目要求最终返回字典序最小的结果 -> 因此每次遇到*移除的元素一定是距离*最近的最小元素
+     *
+     * 反之就会让较大的元素往左偏移, 这会导致结果字符串的字典序变大.
+     *
+     * 上述证明过程是反证法, 因此本题目我们贪心的移除距离*最近的最小元素即可
+     * @param s
+     * @return
+     */
     public String clearStars(String s) {
         List<Integer>[] stacks =  new ArrayList[26];
         Arrays.setAll(stacks, i-> new ArrayList<>());
