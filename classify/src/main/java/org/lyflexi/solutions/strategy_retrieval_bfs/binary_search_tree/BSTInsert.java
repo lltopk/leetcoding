@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_bfs.bst;
+package org.lyflexi.solutions.strategy_retrieval_bfs.binary_search_tree;
 
 import org.lyflexi.common.TreeNode;
 

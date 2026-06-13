@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.recursive.recursion_sub_conquer_question;
+package org.lyflexi.solutions.strategy_retrieval_dfs.recursion.recursion_sub_conquer_question;
 
 /**
  * 50. Pow(x, n)

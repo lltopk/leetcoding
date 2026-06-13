@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.lc;
+package org.lyflexi.solutions.strategy_retrieval_dfs;
 
 import org.lyflexi.common.TreeNode;
 

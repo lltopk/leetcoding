@@ -1,11 +1,116 @@
 二叉树深度优先遍历
+## 递归问题
+明白一个函数的作用并相信它能完成这个任务，千万不要跳进这个函数里面企图探究更多细节， 否则就会陷入无穷的细节无法自拔，人脑能压几个栈啊．
 
-## DFS深度优先
+递归, 通过函数调用自身来解决问题，从实现角度来看，它包括三要素：
+1. 终止条件
+2. 递归调用（递），程序不断深入的调用自身，通常传入更小或更简化的参数，直至达到上述的终止条件
+3. 返回结果（归），由递达到终止条件之后，程序开始由最深层次的递函数开始逐层返回（归），汇聚每一层的结果
+
+如求1+2+3+...+n的和，推导过程
+```java
+S(n) = n + S(n-1);
+```
+以上是递推式, 所以见以下代码：
+```java
+public int recur(int n){
+    //终止条件
+    if (n==1){
+        return 1;
+    }
+    //递归调用（递）
+    int rec = recur(n-1);
+    //返回结果（归）
+    return n+rec;
+}
+```
+需要注意的事项
+- 属于“自上而下”的解决问题，由大到小拆解问题递归三要素，终止条件、递归调用（子问题）、返回结果（归）
+- 当递归函数有返回值，子递归调用必须return，请注意这有别于终止条件的返回
+- 当递归函数无返回值，收集结果（归）应当在递归参数当中体现
+- 禁止状态变量的自增自减++--或者v=v+n或者v=v-n，即使v不是引用变量。因为会导致本来修改后的状态变量值按理是要传递给下一层递归的，结果在传递之前你把上一层（当前层）的状态变量也给修改了。正确的传参姿势是v+n/v-n直接塞给递归函数
+- 禁止定义局部变量，由于反复递归导致局部变量被反复初始化，最终局部变量将毫无意义
+
+### 深入理解递推式
+高中数学排列组合问题
+- 如求A(a,b), a中随机取b个元素, 取数顺序可以不同
+- 如求C(a,b), a中随机取b个元素, 不要求取数顺序
+
+只要能够推导出递推公式如`f(x,y) = f(x-1, y-1)`, 就一定可以用递归解决数学问题
+
+### 分治&&子问题
+_分治算法很大程度上是基于递归的，一种解决问题的思维方式_
+
+**要注意分治与后面学的二分无关, 分治强调治, 二分强调分**
+
+如何治很关键? 套路是 分解 -> 子问题解决（触底）-> 合并（回溯），先左右分解，再处理合并，回溯就是在退栈，
+```java
+class MergeSort {
+
+    public void sort(int[] arr) {
+        mergeSort(arr, 0, arr.length - 1);
+    }
+
+    private void mergeSort(int[] arr, int l, int r) {
+        if (l >= r) return;
+
+        int mid = (l + r) / 2;
+
+        mergeSort(arr, l, mid);
+        mergeSort(arr, mid + 1, r);
+        //合并两个有序链表
+        merge(arr, l, mid, r);
+    }
+
+    private void merge(int[] arr, int l, int mid, int r) {
+        int[] temp = new int[r - l + 1];
+
+        int i = l, j = mid + 1, k = 0;
+
+        while (i <= mid && j <= r) {
+            if (arr[i] <= arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                temp[k++] = arr[j++];
+            }
+        }
+
+        while (i <= mid) temp[k++] = arr[i++];
+        while (j <= r) temp[k++] = arr[j++];
+
+        for (int p = 0; p < temp.length; p++) {
+            arr[l + p] = temp[p];
+        }
+    }
+}
+```
+
+### 迭代模拟等价
+一般而言，递归算法可以用迭代法模拟解决，达到去递归的效果, 比如计算`sum(n)`模拟如下
+```java
+public int recur(int n){
+    int res = 0;
+    if (n==0){
+        return 0;
+    }
+    for (int i = 1; i <=n; i++) {
+        res = res + i;
+    }
+    return res;
+}
+```
+
+## 二叉树DFS
+
+
+## DFS回溯框架
 回溯`BackTracking`本质是搜索树上的DFS
 
 先理解二叉树上的回溯，再来学习一般情况下的回溯。
 
-## DFS回溯框架
+### 二叉树回溯
+
+### 通用回溯框架
 
 In Example One, visiting each node starts a "trial". And passing a leaf node or the `return` statement to going back to the parent node suggests "retreat".
 
@@ -44,7 +149,7 @@ void backtrack(State state, List<Choice> choices, List<State> res) {
 }
 ```
 
-### 全排列
+#### 全排列
 
 - 求解不含重复数字的输入数组的所有 **不重复全排列**
 
@@ -82,7 +187,7 @@ List<List<Integer>> permutationsI(int[] nums) {
 }
 ```
 
-### 全排列Ⅱ
+#### 全排列Ⅱ
 
 - 求解包含重复数字的输入数组的所有 **不重复全排列**
 
@@ -128,7 +233,7 @@ List<List<Integer>> permutationsII(int[] nums) {
 }
 ```
 
-### 子集和问题Ⅰ
+#### 子集和问题Ⅰ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组没有重复的元素，每个元素可以多次选择。
 
@@ -176,7 +281,7 @@ List<List<Integer>> subsetSumI(int[] nums, int target) {
 }
 ```
 
-### 子集和问题Ⅱ
+#### 子集和问题Ⅱ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组可能包含重复的元素，每个元素只能选择一次。请将这些组合作为列表返回，该列表不应包含重复的组合。
 
@@ -235,3 +340,5 @@ List<List<Integer>> subsetSumII(int[] nums, int target) {
     return res;
 }
 ```
+
+## 网格图DFS
