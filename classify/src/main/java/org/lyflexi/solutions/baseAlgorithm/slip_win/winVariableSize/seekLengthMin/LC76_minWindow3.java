@@ -1,0 +1,108 @@
+package org.lyflexi.solutions.baseAlgorithm.slip_win.winVariableSize.seekLengthMin;
+
+/**
+ * 76. 最小覆盖子串
+ * 已解答
+ * 困难
+ * 相关标签
+ * premium lock icon
+ * 相关企业
+ * 提示
+ * 给定两个字符串 s 和 t，长度分别是 m 和 n，返回 s 中的 最短窗口 子串，使得该子串包含 t 中的每一个字符（包括重复字符）。如果没有这样的子串，返回空字符串 ""。
+ *
+ * 测试用例保证答案唯一。
+ *
+ *
+ *
+ * 示例 1：
+ *
+ * 输入：s = "ADOBECODEBANC", t = "ABC"
+ * 输出："BANC"
+ * 解释：最小覆盖子串 "BANC" 包含来自字符串 t 的 'A'、'B' 和 'C'。
+ * 示例 2：
+ *
+ * 输入：s = "a", t = "a"
+ * 输出："a"
+ * 解释：整个字符串 s 是最小覆盖子串。
+ * 示例 3:
+ *
+ * 输入: s = "a", t = "aa"
+ * 输出: ""
+ * 解释: t 中两个字符 'a' 均应包含在 s 的子串中，
+ * 因此没有符合条件的子字符串，返回空字符串。
+ *
+ *
+ * 提示：
+ *
+ * m == s.length
+ * n == t.length
+ * 1 <= m, n <= 105
+ * s 和 t 由英文字母组成
+ *
+ *
+ * 进阶：你能设计一个在 O(m + n) 时间内解决此问题的算法吗？
+ */
+
+/**
+ * 不定长滑动窗口求最小
+ *
+ *
+ * 进一步合并两个dict数组为一个
+ *
+ * 差距字典diff[], 表示原有的任意字符在dictS中出现的次数, 比dictT中出现的少的次数
+ */
+public class LC76_minWindow3 {
+    public String minWindow(String s, String t) {
+        char[] sArray = s.toCharArray();
+        char[] tArray = t.toCharArray();
+        int m = sArray.length;
+        int n = tArray.length;
+
+        String ans = s + " ";
+        int l = 0;
+        //方法一每次收缩窗口的时候都要循环dict来判断是否覆盖, 总的时间复杂度为O(95*m + n), 其中95是字典字符集的大小
+        //判断覆盖能否优化呢?
+        //其实如果我们有一个变量geCnt代表窗口内共有geCnt种字符的次数大于等于t中的, 那么滑动窗口的收缩条件为geCnt == kinds即为覆盖, 其中kinds为t的字符种类
+        int geCnt = 0;
+        // int[] dictS = new int[95];
+        // int[] dictT = new int[95];
+        // 同时可以把两个字典合并为一个, 我们叫差距字典diff
+        int[] diff = new int[95];
+
+        //初始化差距字典内元素值为最大差距
+        int kinds = 0;
+        for(int i = 0 ;i<n; i++){
+            if(diff[tArray[i] - ' '] == 0){
+                kinds++;
+            }
+            //t比s多的字符统计
+            diff[tArray[i] - ' ']++;
+        }
+
+        for(int r = 0; r<m; r++){
+            //进入, 缩小差距
+            diff[sArray[r] - ' ']--;
+            if(diff[sArray[r] - ' '] == 0){//注意不能是>=0, 否则会重复计算geCnt
+                geCnt++;
+            }
+
+            //O(1)判断
+            while(geCnt == kinds){
+                String sub = s.substring(l, r+1);
+                if(sub.length()<ans.length()){
+                    ans = sub;
+                }
+
+
+                if(diff[sArray[l] - ' '] == 0){// 同理, 只有==0的时候, 才意味着窗口即将损失有效的sArray[l]
+                    geCnt--;
+                }
+                diff[sArray[l] - ' ']++;//离开, 增加差距
+                l++;
+            }
+        }
+
+        return ans.equals(s+" ")? "":ans;
+
+    }
+}
