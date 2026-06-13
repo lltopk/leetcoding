@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff.interval;
+package org.lyflexi.solutions.baseAlgorithm.difference.interval;
 
 /**
  * 2406. 将区间分为最少组数

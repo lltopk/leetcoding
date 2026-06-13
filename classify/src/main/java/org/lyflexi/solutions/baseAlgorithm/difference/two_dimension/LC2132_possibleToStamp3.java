@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff.two_dimension;
+package org.lyflexi.solutions.baseAlgorithm.difference.two_dimension;
 
 /**
  * 2132. 用邮票贴满网格图
@@ -51,8 +51,9 @@ package org.lyflexi.solutions.baseAlgorithm.diff.two_dimension;
 /**
  * 二维差分数组
  */
-public class LC2132_possibleToStamp2 {
+public class LC2132_possibleToStamp3 {
     //二维差分题目, 还原覆盖次数矩阵的时候空间优化
+    //灵神对二维差分数组下标的处理1-based, 最终能够让其还原覆盖次数矩阵的时候代码更加的优雅.
     public boolean possibleToStamp(int[][] grid, int stampHeight, int stampWidth) {
         //两个关键点
         //1. 如何判断邮票可放, 这用二维前缀和为0判断, 如果可放, 批量更新覆盖次数矩阵visit[][]中与被贴住范围对应的格子
@@ -68,36 +69,36 @@ public class LC2132_possibleToStamp2 {
         }
 
         //定义差分数组长度, 因为要用到性质2, 所以长度都要加1
-        int[][] diff = new int[m+1][n+1];
+        //为了统一最后还原覆盖次数矩阵的计算方式, 我们对差分数组额外补充第一行和第一列全部保留为0值, 因此再对长度加1
+        //最终差分数组长度+2
+        int[][] diff = new int[m+2][n+2];
         for(int i = stampHeight-1; i<m; i++){//枚举邮票右下角
             for(int j = stampWidth-1; j<n; j++){
                 int i0 = i - stampHeight + 1;
                 int j0 = j - stampWidth + 1;
                 int subS = preS[i+1][j+1] - preS[i+1][j0] - preS[i0][j+1] + preS[i0][j0];
                 if(subS == 0){
-                    //维护差分数组的四个顶点
-                    diff[i0][j0]++;
-                    diff[i0][j+1]--;
-                    diff[i+1][j0]--;
-                    diff[i+1][j+1]++;
+                    //维护差分数组的四个顶点, 注意不从0开始, 现在是1-based
+                    int iNew = i+1;
+                    int jNew = j+1;
+                    int i0New = i0+1;
+                    int j0New = j0+1;
+                    diff[i0New][j0New]++;
+                    diff[i0New][jNew+1]--;//jNew是实际枚举右顶点j+1(1-based), 这里再对jNew+1(性质2), 因此diff数组长度初始为m+2,n+2
+                    diff[iNew+1][j0New]--;//iNew是实际枚举下顶点i+1(1-based), 这里再对iNew+1(性质2), 因此diff数组长度初始为m+2,n+2
+                    diff[iNew+1][jNew+1]++;
                 }
             }
         }
 
         //二维差分数组求和空间优化
         //以右下角(>0, >0)作为顶点的前缀和, 都依赖左 上 左上, 因此二维差分数组也可以就地求和
-        //那么第一列和第一行怎么办? 当作一维数组处理
         for(int i = 0; i<m; i++){
             for(int j = 0; j<n; j++){
                 // 在二维差分求和过程中, 我们可以用差分和替换差分值, 这样就可以利用历史求和数据计算新的差分和, 这不影响新的差分和计算
                 //此时 diff 已经不再是差分数组, 而是恢复后的覆盖次数矩阵
-                if(i > 0) diff[i][j] += diff[i-1][j];
-
-                if(j > 0) diff[i][j] += diff[i][j-1];
-
-                if(i > 0 && j > 0)
-                    diff[i][j] -= diff[i-1][j-1];
-                if(diff[i][j] == 0 && grid[i][j] == 0){
+                diff[i+1][j+1] += diff[i][j+1] +  diff[i+1][j] - diff[i][j];
+                if(diff[i+1][j+1] == 0 && grid[i][j] == 0){
                     return false;
                 }
             }

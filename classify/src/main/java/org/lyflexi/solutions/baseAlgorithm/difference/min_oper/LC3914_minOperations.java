@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff.min_oper;
+package org.lyflexi.solutions.baseAlgorithm.difference.min_oper;
 
 /**
  * 3914. 使数组非递减需要的最小累计值

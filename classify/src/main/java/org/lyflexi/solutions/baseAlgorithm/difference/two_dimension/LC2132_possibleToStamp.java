@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff.two_dimension;
+package org.lyflexi.solutions.baseAlgorithm.difference.two_dimension;
 
 /**
  * 2132. 用邮票贴满网格图

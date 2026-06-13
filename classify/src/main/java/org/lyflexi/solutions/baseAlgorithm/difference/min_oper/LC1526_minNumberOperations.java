@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff.min_oper;
+package org.lyflexi.solutions.baseAlgorithm.difference.min_oper;
 
 /**
  * 1526. 形成目标数组的子数组最少增加次数

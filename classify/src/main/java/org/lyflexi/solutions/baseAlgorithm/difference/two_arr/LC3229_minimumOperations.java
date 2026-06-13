@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff.two_arr;
+package org.lyflexi.solutions.baseAlgorithm.difference.two_arr;
 
 /**
  * 3229. 使数组等于目标数组所需的最少操作次数

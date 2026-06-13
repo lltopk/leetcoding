@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff;
+package org.lyflexi.solutions.baseAlgorithm.difference;
 
 /**
  * 2960. 统计已测试设备

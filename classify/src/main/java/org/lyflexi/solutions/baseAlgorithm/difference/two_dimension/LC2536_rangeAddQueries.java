@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff.two_dimension;
+package org.lyflexi.solutions.baseAlgorithm.difference.two_dimension;
 
 /**
  * 2536. 子矩阵元素加 1

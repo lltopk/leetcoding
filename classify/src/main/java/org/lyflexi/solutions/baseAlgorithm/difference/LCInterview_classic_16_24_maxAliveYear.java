@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff;
+package org.lyflexi.solutions.baseAlgorithm.difference;
 
 /**
  * 面试题 16.10. 生存人数

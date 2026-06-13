@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff;
+package org.lyflexi.solutions.baseAlgorithm.difference;
 
 /**
  * 1893. 检查是否区域内所有整数都被覆盖

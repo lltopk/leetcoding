@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff;
+package org.lyflexi.solutions.baseAlgorithm.difference;
 
 /**
  * 2848. 与车相交的点

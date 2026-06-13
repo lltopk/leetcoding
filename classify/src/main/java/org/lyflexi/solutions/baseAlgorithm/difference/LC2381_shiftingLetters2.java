@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff;
+package org.lyflexi.solutions.baseAlgorithm.difference;
 
 /**
  * 2381. 字母移位 II
@@ -42,20 +42,17 @@ package org.lyflexi.solutions.baseAlgorithm.diff;
 
 /**
  * 差分数组
+ *
+ * 通过2*shift[2] - 1统一差分数组贡献值, 避免对directioni分类讨论
  */
-public class LC2381_shiftingLetters {
+public class LC2381_shiftingLetters2 {
     public String shiftingLetters(String s, int[][] shifts) {
         int n = s.length();
         char[] ans = new char[n];
         int[] diff = new int[n+1];
         for(int[] shift: shifts){
-            if(shift[2]==1){
-                diff[shift[0]]++;
-                diff[shift[1]+1]--;
-            }else{
-                diff[shift[0]]--;
-                diff[shift[1]+1]++;
-            }
+            diff[shift[0]] += 2*shift[2] - 1;
+            diff[shift[1]+1] -= 2*shift[2] - 1;
         }
 
         int sum = 0;

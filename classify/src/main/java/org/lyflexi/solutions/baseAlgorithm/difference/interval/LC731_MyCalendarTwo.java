@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.diff.interval;
+package org.lyflexi.solutions.baseAlgorithm.difference.interval;
 
 /**
  * 731. 我的日程安排表 II
