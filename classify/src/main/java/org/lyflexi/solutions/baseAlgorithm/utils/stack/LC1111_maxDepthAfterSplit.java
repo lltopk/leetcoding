@@ -94,9 +94,10 @@ import java.util.Deque;
  * [1,1,1,0,0,1,1,1]
  */
 public class LC1111_maxDepthAfterSplit {
+    //题目要求输出的两个VPS深度尽可能接近, 因此让一半的'('属于A, 一半的'('属于B
+    //因为题目给出的seq本身就是个VPS, 因此通过栈维护'(', '('的个数就代表深度, 且一定存在子VPS
+    //最终结论: 按照'('深度的奇偶性进行分配就行了
     public int[] maxDepthAfterSplit(String seq) {
-        //题目要求输出的两个VPS深度尽可能接近, 因此让一半的'('属于A, 一半的'('属于B
-        //这可以通过遍历, 按照深度的奇偶性进行分配就行了
         int[] ret = new int[seq.length()];
         //存储'(', 则栈大小就是VPS深度
         Deque<Character> stack = new ArrayDeque<>();
@@ -104,8 +105,8 @@ public class LC1111_maxDepthAfterSplit {
             char c = seq.charAt(i);
             //计算深度的奇偶性
             if(! stack.isEmpty() && c == ')'){
-                //奇数深度都赋值为1
-                //偶数深度都赋值为0
+                //奇数深度都赋值为1, 代表A
+                //偶数深度都赋值为0. 代表B
                 ret[i] = stack.size() & 1;
                 stack.pop();
                 continue;
