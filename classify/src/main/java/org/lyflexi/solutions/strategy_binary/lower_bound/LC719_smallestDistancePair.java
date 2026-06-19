@@ -42,42 +42,48 @@ public class LC719_smallestDistancePair {
         int[] nums = new int[]{1,2,3,4,5,6,7,8,9};
         System.out.println(smallestDistancePair(nums,5));
     }
+    /**
+     检查函数逻辑为: 满足绝对差值 ≤mid 的数对数 与 k进行比较
+
+     由于是求第k小, 并且距离不连续, 但是二分答案是连续的, 因此二分答案的逻辑等号≥应该给到right
+     */
     public static int smallestDistancePair(int[] nums, int k) {
         Arrays.sort(nums);
         int n = nums.length;
-        //左右指针的值分别是min_dist和max_dist
-        int left = 0;
-        int right = nums[n-1] -nums[0];
-        while(left<right){
-            int mid = (left+right)/2;
-            if(countLessMid(nums,mid)>=k){
+        //左右指针(left, right)
+        int left = -1;
+        int right = nums[n-1] -nums[0] + 1;
+        //二分答案推荐开区间写法
+        while(left + 1 < right){
+            int mid = (right + left) >> 1;
+            if(checkDes(nums, mid, k)){
                 right = mid;
             }else{
-                left = mid+1;
+                left = mid;
             }
         }
-        return left;
+        return right;
     }
 
     /**
-     两重循环要优化成双指针才行
-
-     通过将内循环for改成while来优化
+     逻辑小于k
      */
-    private static int countLessMid(int []nums,int mid){
+    private static boolean checkDes(int[] nums,int mid, int k){
         int rs = 0;
         int n = nums.length;
         int j = 1;
-        for(int i= 0;i<n-1;i++){
+        for(int i= 0; i<n-1; i++){
+            //双指针优化
             if(i==j){
                 j++;
             }
             while(i<j && j<n && nums[j]- nums[i] <=mid){
                 j++;
             }
-            rs = rs+j-i-1;
+            rs += j-i-1;
         }
-        return rs;
+        //逻辑大于等于
+        return rs >= k;
     }
 
 }
