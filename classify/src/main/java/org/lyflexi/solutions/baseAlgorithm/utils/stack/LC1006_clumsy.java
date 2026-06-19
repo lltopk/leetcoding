@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.stack.expression;
+package org.lyflexi.solutions.baseAlgorithm.utils.stack;
 
 /**
  * 1006. 笨阶乘

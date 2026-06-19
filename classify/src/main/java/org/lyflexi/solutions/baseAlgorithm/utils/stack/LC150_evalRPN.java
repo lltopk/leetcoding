@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.stack.expression;
+package org.lyflexi.solutions.baseAlgorithm.utils.stack;
 
 /**
  * 150. 逆波兰表达式求值
