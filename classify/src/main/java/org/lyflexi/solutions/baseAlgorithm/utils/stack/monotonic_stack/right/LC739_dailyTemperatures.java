@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.stack.monotonic_stack;
+package org.lyflexi.solutions.baseAlgorithm.utils.stack.monotonic_stack.right;
 
 /**
  * 739. 每日温度

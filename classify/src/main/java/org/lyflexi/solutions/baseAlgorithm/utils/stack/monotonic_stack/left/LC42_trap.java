@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.stack.monotonic_stack;
+package org.lyflexi.solutions.baseAlgorithm.utils.stack.monotonic_stack.left;
 
 /**
  * 42. 接雨水
