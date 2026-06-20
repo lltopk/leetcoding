@@ -9,11 +9,21 @@ public class ListNode {
     public int val;
     public ListNode next;
 
+    public ListNode(){
+
+    }
+
     public ListNode(int value){
         this.val = value;
         next = null;
     }
-    public ListNode(){
 
+    /**
+     * 同时初始化next
+     * @param val
+     * @param next
+     */
+    public ListNode(int val, ListNode next) {
+        this.val = val; this.next = next;
     }
 }
