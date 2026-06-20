@@ -45,6 +45,8 @@ import java.util.Deque;
 
 /**
  * 单调栈: 计算水泥板
+ *
+ * 从左向右遍历, 目的是输出left[]数组
  */
 public class LC42_trap {
     //单调栈, 栈顶存储最小元素下标, 如遇大元素, 则循环退栈再入栈
