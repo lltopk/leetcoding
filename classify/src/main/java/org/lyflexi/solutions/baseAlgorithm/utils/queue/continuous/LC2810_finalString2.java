@@ -1,0 +1,87 @@
+package org.lyflexi.solutions.baseAlgorithm.utils.queue.continuous;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+
+/**
+ * 2810. 故障键盘
+ * 已解答
+ * 简单
+ * 相关标签
+ * premium lock icon
+ * 相关企业
+ * 提示
+ * 你的笔记本键盘存在故障，每当你在上面输入字符 'i' 时，它会反转你所写的字符串。而输入其他字符则可以正常工作。
+ *
+ * 给你一个下标从 0 开始的字符串 s ，请你用故障键盘依次输入每个字符。
+ *
+ * 返回最终笔记本屏幕上输出的字符串。
+ *
+ *
+ *
+ * 示例 1：
+ *
+ * 输入：s = "string"
+ * 输出："rtsng"
+ * 解释：
+ * 输入第 1 个字符后，屏幕上的文本是："s" 。
+ * 输入第 2 个字符后，屏幕上的文本是："st" 。
+ * 输入第 3 个字符后，屏幕上的文本是："str" 。
+ * 因为第 4 个字符是 'i' ，屏幕上的文本被反转，变成 "rts" 。
+ * 输入第 5 个字符后，屏幕上的文本是："rtsn" 。
+ * 输入第 6 个字符后，屏幕上的文本是： "rtsng" 。
+ * 因此，返回 "rtsng" 。
+ * 示例 2：
+ *
+ * 输入：s = "poiinter"
+ * 输出："ponter"
+ * 解释：
+ * 输入第 1 个字符后，屏幕上的文本是："p" 。
+ * 输入第 2 个字符后，屏幕上的文本是："po" 。
+ * 因为第 3 个字符是 'i' ，屏幕上的文本被反转，变成 "op" 。
+ * 因为第 4 个字符是 'i' ，屏幕上的文本被反转，变成 "po" 。
+ * 输入第 5 个字符后，屏幕上的文本是："pon" 。
+ * 输入第 6 个字符后，屏幕上的文本是："pont" 。
+ * 输入第 7 个字符后，屏幕上的文本是："ponte" 。
+ * 输入第 8 个字符后，屏幕上的文本是："ponter" 。
+ * 因此，返回 "ponter" 。
+ *
+ *
+ * 提示：
+ *
+ * 1 <= s.length <= 100
+ * s 由小写英文字母组成
+ * s[0] != 'i'
+ */
+
+/**
+ * 反转队列: 时间优化, 定义一个方向标志True, 默认从队尾入队, 如果遇到'i'则改变方向从对头入队
+ *
+ * 如果最终方向为True, 则队列就是答案
+ * 如果最终方向为FALSE, 则将队列一次性反转就是答案
+ */
+public class LC2810_finalString2 {
+    public String finalString(String s) {
+        Deque<Character> q = new ArrayDeque<>();
+        boolean dir = true;//表示正常的入队方向
+        for(char c: s.toCharArray()){
+            if(c == 'i'){
+                dir = !dir;
+                continue;
+            }
+            if(dir){
+                q.offer(c);
+            }else{
+                q.addFirst(c);
+            }
+
+        }
+
+        StringBuilder ret = new StringBuilder();
+        for(char c: q){
+            ret.append(c);
+        }
+
+        return dir? ret.toString(): ret.reverse().toString();
+    }
+}
