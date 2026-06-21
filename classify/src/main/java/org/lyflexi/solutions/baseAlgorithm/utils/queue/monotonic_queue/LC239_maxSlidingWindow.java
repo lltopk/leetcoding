@@ -49,7 +49,7 @@ import java.util.Queue;
  * 由于每个元素入堆最多1次, 出队最多1次, 因此总的时间复杂度是2*N, 即On
  */
 public class LC239_maxSlidingWindow {
-    //固定长度滑动窗口 + 优先级队列(堆)
+    //固定长度滑动窗口 + 单调减队列
     public int[] maxSlidingWindow(int[] nums, int k) {
         int n = nums.length;
         //用双端队列实现单调队列, (单调递减队列)
