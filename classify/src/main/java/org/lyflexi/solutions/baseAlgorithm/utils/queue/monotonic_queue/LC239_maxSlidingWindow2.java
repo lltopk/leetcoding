@@ -44,7 +44,7 @@ import java.util.Deque;
  */
 
 /**
- * 由于每个元素入堆最多1次, 出队最多1次, 因此总的时间复杂度是2*N, 即On
+ * 摊还分析: 由于每个元素出队最多1次, 内层循环中这句代码`tail--;`最多执行N次, 因此总的时间复杂度是N, 即O(N)
  */
 public class LC239_maxSlidingWindow2 {
     public int[] maxSlidingWindow(int[] nums, int k) {
