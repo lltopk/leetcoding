@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.recursion.recurrence_formula;
+package org.lyflexi.solutions.baseAlgorithm.recursion.recurrence_formula;
 
 public class Sample_Permutation_Combination {
     public static void main(String[] args) {

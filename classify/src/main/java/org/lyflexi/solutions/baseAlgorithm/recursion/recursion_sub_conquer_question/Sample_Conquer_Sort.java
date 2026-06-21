@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.recursion.recursion_sub_conquer_question;
+package org.lyflexi.solutions.baseAlgorithm.recursion.recursion_sub_conquer_question;
 
 import java.util.Arrays;
 
