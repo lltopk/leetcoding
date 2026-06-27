@@ -13,11 +13,10 @@ public class LC378_kthSmallest {
         int right = matrix[n-1][n-1];
         while(left<right){
             int mid = (left+right)>>1;
-            //题干中有重复的数字, 所以这里要用>= , 而不是>
-            if(countLessMid(matrix,mid)>=k){
-                right = mid;
-            }else if(countLessMid(matrix,mid)<k){
+            if(countLessMid(matrix, mid) < k){
                 left = mid +1;
+            }else{//lowerBound求左界
+                right = mid;
             }
         }
 
@@ -25,17 +24,17 @@ public class LC378_kthSmallest {
     }
 
     /**
-     求小于target的个数
+     求小于mid的个数
      */
-    private int countLessMid(int[][] matrix, int target){
+    private int countLessMid(int[][] matrix, int mid){
         int n = matrix.length;
         //选点  左下角
         int i = n-1;
         int j = 0;
         int rs = 0;
         while(i>=0 && j<n){
-            if(matrix[i][j]<=target){
-                rs += i+1;
+            if(matrix[i][j] <= mid){
+                rs += i+1;//竖向都小于mid, 这有i+1个
                 j++;
             }else{
                 i--;
