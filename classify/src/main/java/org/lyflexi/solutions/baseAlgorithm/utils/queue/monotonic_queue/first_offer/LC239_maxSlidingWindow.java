@@ -1,9 +1,7 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.queue.monotonic_queue;
+package org.lyflexi.solutions.baseAlgorithm.utils.queue.monotonic_queue.first_offer;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 /**
  * 239. 滑动窗口最大值
@@ -68,7 +66,7 @@ public class LC239_maxSlidingWindow {
 
             //2. 左边出
             int l = r - k + 1;
-            //窗口左边界每次只会向右移动 1 格, 因此每轮循环至多只有一个下标过期。
+            //定长滑动窗口每次只会向右移动 1 格, 因此收缩条件这里用if即可
             if(q.getFirst() < l){
                 q.removeFirst();
             }
