@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue;
+package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.infinity;
 
 /**
  * 2336. 无限集中的最小数字
@@ -57,7 +57,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 /**
- * 优先级队列
+ * 无限集. 优先级队列
  */
 public class LC2336_SmallestInfiniteSet {
     //仅存储从无限集中访问过的元素, 且不可重复
