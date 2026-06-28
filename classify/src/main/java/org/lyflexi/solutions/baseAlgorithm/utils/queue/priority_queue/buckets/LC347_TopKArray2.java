@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.pair;
+package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.buckets;
 
 import java.util.*;
 
@@ -55,37 +55,35 @@ import java.util.*;
  */
 
 /**
- * pair优先队列 + 哈希
+ * 桶排序
  */
-public class LC347_TopKArray {
-
-    public int[] topKByPriotity(int[] nums, int k) {
-
-        //小顶堆
-        Queue<int[]> priorityQueue = new PriorityQueue<>((a, b) -> {
-            return a[1] - b[1];
-        });
-        //分组计数
-        Map<Integer, Integer> helper = new HashMap<>();
+public class LC347_TopKArray2 {
+    //面试官? 试试不用优先级队列?
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> cntMap = new HashMap<>();
+        int maxCnt = 0;
         for(int x: nums){
-            helper.merge(x, 1, Integer::sum);
+            cntMap.merge(x, 1, Integer::sum);
+            maxCnt = Math.max(maxCnt, cntMap.get(x));
+        }
+
+        //桶排序, 将次数相同的元素归为一桶
+        //下标为元素次数, 值为同次数的元素集合
+        List<Integer>[] buckets = new ArrayList[maxCnt+1];
+        Arrays.setAll(buckets, idx -> new ArrayList<>());
+        for(int key: cntMap.keySet()){
+            int cnt = cntMap.get(key);
+            buckets[cnt].add(key);
         }
 
         int[] ret = new int[k];
-        //枚举哈希, 保持优先级队列中始终只有k个元素
-        for(int key: helper.keySet()){
-            if(priorityQueue.size() == k){
-                if(priorityQueue.peek()[1] < helper.get(key)){
-                    priorityQueue.poll();
-                    priorityQueue.offer(new int[]{key, helper.get(key)});
-                }
-            }else{
-                priorityQueue.offer(new int[]{key, helper.get(key)});
+        int j = 0;
+        //反向扫描
+        for(int i = maxCnt; j < k; i--){
+            //竖向扫描
+            for(int num: buckets[i]){
+                ret[j++] = num;
             }
-        }
-
-        for (int i = 0; i < k; i++) {
-            ret[i] = priorityQueue.poll()[0];
         }
         return ret;
     }

@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.pair;
+package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.groupCnt;
 
 import java.util.*;
 
@@ -55,7 +55,7 @@ import java.util.*;
  */
 
 /**
- * pair优先队列 + 哈希
+ * 桶排序ON
  */
 public class LC347_TopKArray2 {
     //面试官? 试试不用优先级队列?
