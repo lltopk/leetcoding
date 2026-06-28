@@ -83,14 +83,13 @@ premium lock icon
 public class LC3296_minNumberOfSeconds {
     public long minNumberOfSeconds(int mountainHeight, int[] workerTimes) {
         int n = workerTimes.length;
-
-        //由于时间越多, 搬山越多, 因此可以二分(时间)
+        //由于秒数越多, 搬山越多, 因此可以二分(同时干活的秒数)
         long l = 0, r = 0;
         long maxTime = Integer.MIN_VALUE;
         for(int i = 0; i<n; i++){
             maxTime = Math.max(maxTime, workerTimes[i]);
         }
-        // 假设所有工人花费时间都是最慢的maxTime
+        // 假设所有工人速度都是最慢的maxTime, 因此每个工人降低mountainHeight/n即可
         // 初始化右界r = maxTime + 2maxTime +... (mountainHeight/n)maxTime
         // 其中, mountainHeight/n上取整
         long h = (mountainHeight+n-1)/n;
@@ -98,30 +97,30 @@ public class LC3296_minNumberOfSeconds {
 
         while(l +1 <r){
             long mid = l + ((r-l)>>1);
-            if(checkIncrease(workerTimes, mid, mountainHeight)){
-                l = mid;
-            }else{
+            //二分答案求最小
+            if(checkDes(workerTimes, mid, mountainHeight)){
                 r = mid;
+            }else{
+                l = mid;
             }
         }
-
         return r;
-
     }
 
-
-    private boolean checkIncrease(int[] workerTimes, long mid, int mountainHeight){
+    private boolean checkDes(int[] workerTimes, long mid, int mountainHeight){
         int n = workerTimes.length;
-
         long sumH = 0;
-        for(int i = 0; i< n;i++){
+        //累加每个工人在耗时mid内的搬山高度h
+        for(int i = 0; i< n; i++){
+            //怎么求h?
             //设t = workerTimes[i]
-            //累加单个工人在耗时mid内, t + 2t + 3t + ... + xt = m
-            //的搬山高度x
+            //t + 2t + 3t + ... + ht = mid
+            //hd(1+h)/2 = mid, 即h为二元一次方程的根
             sumH += (-1+Math.sqrt(1+8*mid/workerTimes[i]))/2;
+            if(sumH >= mountainHeight){
+                return true;
+            }
         }
-
-
-        return sumH < mountainHeight;
+        return false;
     }
 }
