@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.k_sequences;
+package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.n_sequences;
 
 /**
  * 1792. 最大平均通过率
