@@ -71,12 +71,14 @@ public class LC3478_findMaxSum {
         for (int i = 0; i < n; i++) {
             a[i] = new int[]{nums1[i], nums2[i], i};
         }
+        //排序后的左边索引自然满足: j < i, 这样就可以枚举右, 维护左(累加nums2[j])
         Arrays.sort(a, (p, q) -> p[0] - q[0]);
         //x:[1,2,3,4,5]
         //y:[30,20,50,10,40]
         //idx: [2,1,4,0,3]
 
         long[] ans = new long[n];
+        //小顶堆, 新的nums[j]入堆之后, 当堆满的时候, s每次减去堆顶, 就能保证s最大
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         long s = 0;
         //找出所有满足 nums1[j] 小于 nums1[i] 的下标 j , 因此不包括当前元素, 所以先计算上轮答案, 后入堆

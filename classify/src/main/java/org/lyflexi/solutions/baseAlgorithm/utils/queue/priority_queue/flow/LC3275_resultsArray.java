@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.kth;
+package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.flow;
 
 /**
  * 3275. 第 K 近障碍物查询
