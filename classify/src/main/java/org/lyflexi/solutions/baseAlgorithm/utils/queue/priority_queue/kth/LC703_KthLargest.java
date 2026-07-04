@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue;
+package org.lyflexi.solutions.baseAlgorithm.utils.queue.priority_queue.kth;
 
 /**
  * 703. 数据流中的第 K 大元素
