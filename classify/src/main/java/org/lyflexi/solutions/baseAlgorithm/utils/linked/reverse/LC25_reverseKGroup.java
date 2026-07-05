@@ -40,7 +40,9 @@ import org.lyflexi.common.ListNode;
  */
 
 
-
+/**
+ * 原地反转， 不新建链表： ListNode dummy = new ListNode(0, head);
+ */
 public class LC25_reverseKGroup {
     public ListNode reverseKGroup(ListNode head, int k) {
         int n = 0;

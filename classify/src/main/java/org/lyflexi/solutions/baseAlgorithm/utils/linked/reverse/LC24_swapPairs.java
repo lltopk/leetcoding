@@ -43,6 +43,10 @@ import org.lyflexi.common.ListNode;
  */
 
 /**
+ * 原地反转， 不新建链表： ListNode dummy = new ListNode(0, head);
+ */
+
+/**
  * 先做25. K 个一组翻转链表
  *
  * 24. 两两交换链表中的节点 = return fn25(head, 2)

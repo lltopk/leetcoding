@@ -44,7 +44,9 @@ import org.lyflexi.common.ListNode;
  * 58.3%
  */
 
-
+/**
+ * 原地反转， 不新建链表： ListNode dummy = new ListNode(0, head);
+ */
 public class LC92_ReverseListⅡ {
     /**
      定义p0为left的上个节点
