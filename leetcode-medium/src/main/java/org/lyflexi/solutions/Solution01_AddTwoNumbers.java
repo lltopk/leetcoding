@@ -1,5 +1,7 @@
 package org.lyflexi.solutions;
 
+import org.lyflexi.solutions.structDef.ListNode;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -50,21 +52,6 @@ public class Solution01_AddTwoNumbers {
         ListNode listNode = addTwoNumbers(pre1.next, pre2.next);
         printNum(listNode);
 
-    }
-
-
-    static class ListNode {
-        int val;
-        ListNode next;
-        ListNode() {
-        }
-        ListNode(int val) {
-            this.val = val;
-        }
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
     }
 
 
