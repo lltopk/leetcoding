@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.linked;
+package org.lyflexi.solutions.baseAlgorithm.utils.linked.reverse;
 
 import org.lyflexi.common.ListNode;
 
