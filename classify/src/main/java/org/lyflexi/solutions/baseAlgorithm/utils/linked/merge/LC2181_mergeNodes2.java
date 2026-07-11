@@ -57,7 +57,9 @@ package org.lyflexi.solutions.baseAlgorithm.utils.linked.merge;
 import org.lyflexi.common.ListNode;
 
 /**
- * 原地修改
+ * 合并链表题单
+ *
+ * 原地修改， 把后面的非零累加到tail节点中
  */
 public class LC2181_mergeNodes2 {
     public ListNode mergeNodes(ListNode head) {

@@ -59,7 +59,7 @@ import org.lyflexi.common.ListNode;
 import java.util.PriorityQueue;
 
 /**
- * K个单调序列  +  优先级队列
+ * 合并链表题单： K个单调序列  +  优先级队列
  */
 public class LC23_mergeKLists {
     public ListNode mergeKLists(ListNode[] lists) {

@@ -1,50 +1,47 @@
 package org.lyflexi.solutions.baseAlgorithm.utils.linked.merge;
 
 /**
- * 2. 两数相加
+ * 2816. 翻倍以链表形式表示的数字
  * 已解答
  * 中等
  * 相关标签
  * premium lock icon
  * 相关企业
- * 给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
+ * 提示
+ * 给你一个 非空 链表的头节点 head ，表示一个不含前导零的非负数整数。
  *
- * 请你将两个数相加，并以相同形式返回一个表示和的链表。
- *
- * 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+ * 将链表 翻倍 后，返回头节点 head 。
  *
  *
  *
  * 示例 1：
  *
  *
- * 输入：l1 = [2,4,3], l2 = [5,6,4]
- * 输出：[7,0,8]
- * 解释：342 + 465 = 807.
+ * 输入：head = [1,8,9]
+ * 输出：[3,7,8]
+ * 解释：上图中给出的链表，表示数字 189 。返回的链表表示数字 189 * 2 = 378 。
  * 示例 2：
  *
- * 输入：l1 = [0], l2 = [0]
- * 输出：[0]
- * 示例 3：
  *
- * 输入：l1 = [9,9,9,9,9,9,9], l2 = [9,9,9,9]
- * 输出：[8,9,9,9,0,0,0,1]
+ * 输入：head = [9,9,9]
+ * 输出：[1,9,9,8]
+ * 解释：上图中给出的链表，表示数字 999 。返回的链表表示数字 999 * 2 = 1998 。
  *
  *
  * 提示：
  *
- * 每个链表中的节点数在范围 [1, 100] 内
+ * 链表中节点的数目在范围 [1, 104] 内
  * 0 <= Node.val <= 9
- * 题目数据保证列表表示的数字不含前导零
+ * 生成的输入满足：链表表示一个不含前导零的数字，除了数字 0 本身。
  *
  * 面试中遇到过这道题?
  * 1/5
  * 是
  * 否
  * 通过次数
- * 2,888,331/6.1M
+ * 19,788/29.8K
  * 通过率
- * 47.0%
+ * 66.4%
  */
 
 import org.lyflexi.common.ListNode;
@@ -52,8 +49,27 @@ import org.lyflexi.common.ListNode;
 /**
  * 合并链表题单， 见LC02_addTwoNumbers， LC445_addTwoNumbers
  */
-public class LC02_addTwoNumbers {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+public class LC2816_doubleIt {
+    public ListNode doubleIt(ListNode head) {
+        head = reverse(head);
+        ListNode ret = addTwoNumbers0(head, head);
+        return reverse(ret);
+    }
+
+    //LC206. 反转链表
+    private ListNode reverse(ListNode head){
+        ListNode pre = null;
+        while(head!=null){
+            ListNode next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
+    //LC2. 两数相加
+    private ListNode addTwoNumbers0(ListNode l1, ListNode l2) {
         ListNode dummy = new ListNode(0, l1), cur = dummy;
         ListNode p1 = l1;
         ListNode p2 = l2;

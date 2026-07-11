@@ -57,6 +57,8 @@ package org.lyflexi.solutions.baseAlgorithm.utils.linked.merge;
 import org.lyflexi.common.ListNode;
 
 /**
+ * 合并链表题单
+ *
  * 新建链表： ListNode dummy = new ListNode();
  *
  * 初始化尾指针ListNode tail = dummy;，进行尾插法
