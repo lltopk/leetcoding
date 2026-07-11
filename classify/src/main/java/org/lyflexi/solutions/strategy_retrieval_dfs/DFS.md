@@ -25,14 +25,14 @@ DFS搜索
 
 ### 二叉树回溯
 
-## 一般树DFS
+## 一般树问题DFS？？
 ### 自顶向下DFS
 ### 自底向上DFS
 
 
 
 
-## 通用回溯框架
+## 通用回溯类问题
 回溯`BackTracking`本质是搜索树上的DFS， 先理解二叉树上的回溯, 再来学习一般情况下的回溯。
 
 In Example One, visiting each node starts a "trial". And passing a leaf node or the `return` statement to going back to the parent node suggests "retreat".
@@ -72,91 +72,8 @@ void backtrack(State state, List<Choice> choices, List<State> res) {
 }
 ```
 
-### 全排列
-
-- 求解不含重复数字的输入数组的所有 **不重复全排列**
-
-```java
-/* Backtracking algorithm: Permutation I */
-void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
-    // When the state length equals the number of elements, record the solution
-    if (state.size() == choices.length) {
-        res.add(new ArrayList<Integer>(state));
-        return;
-    }
-    // Traverse all choices
-    for (int i = 0; i < choices.length; i++) {
-        int choice = choices[i];
-        // Pruning: do not allow repeated selection of elements
-        if (selected[i]) {
-	        continue;
-        }
-        // Attempt: make a choice, update the state
-        selected[i] = true;
-        state.add(choice);
-        // Proceed to the next round of selection
-        backtrack(state, choices, selected, res);
-        // Retract: undo the choice, restore to the previous state
-        selected[i] = false;
-        state.remove(state.size() - 1);
-    }
-}
-
-/* Permutation I */
-List<List<Integer>> permutationsI(int[] nums) {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
-    return res;
-}
-```
-
-### 全排列Ⅱ
-
-- 求解包含重复数字的输入数组的所有 **不重复全排列**
-
-Although both `selected` and `duplicated` serve as pruning mechanisms, they target different issues:
-
-* **Repeated-choice pruning** (via `selected`): There is a single `selected` array for the entire search, indicating which elements are already in the current state. This prevents the same element from appearing more than once in `state`.（纵向剪枝）
-* **Equal-element pruning** (via `duplicated`): Each call to the `backtrack` function uses its own `duplicated` set, recording which elements have already been chosen in that specific iteration (`for` loop). This ensures that equal elements are selected only once per round of choices.（横向剪枝）
-
-```java
-/* Backtracking algorithm: Permutation II */
-void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
-    // When the state length equals the number of elements, record the solution
-    if (state.size() == choices.length) {
-        res.add(new ArrayList<Integer>(state));
-        return;
-    }
-    // Traverse all choices，每次重建意味着递归的每一层duplicated变量是独立的。窥探整个递归树的全貌，同一层节点如果存在相同值，要提前剪枝
-    Set<Integer> duplicated = new HashSet<Integer>();
-    for (int i = 0; i < choices.length; i++) {
-        int choice = choices[i];
-        // Pruning: do not allow repeated selection of elements and do not allow repeated selection of equal elements
-        if (selected[i] || duplicated.contains(choice)) {
-	        continue;
-        }
-        // Attempt: make a choice, update the state
-	// 由于递归回溯时会返回到上一级，而上一级别有自己的 duplicated 集合，因此不需要从duplicated集合中移除元素。对duplicated来说不用回溯retreat
-        duplicated.add(choice); // Record selected element values
-        selected[i] = true;
-        state.add(choice);
-        // Proceed to the next round of selection
-        backtrack(state, choices, selected, res);
-        // Retract: undo the choice, restore to the previous state
-        selected[i] = false;
-        state.remove(state.size() - 1);
-    }
-}
-
-/* Permutation II */
-List<List<Integer>> permutationsII(int[] nums) {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
-    return res;
-}
-```
-
-### 子集和问题Ⅰ
+### 子集型回溯
+#### 子集和问题Ⅰ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组没有重复的元素，每个元素可以多次选择。
 
@@ -204,7 +121,7 @@ List<List<Integer>> subsetSumI(int[] nums, int target) {
 }
 ```
 
-### 子集和问题Ⅱ
+#### 子集和问题Ⅱ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组可能包含重复的元素，每个元素只能选择一次。请将这些组合作为列表返回，该列表不应包含重复的组合。
 
@@ -263,5 +180,100 @@ List<List<Integer>> subsetSumII(int[] nums, int target) {
     return res;
 }
 ```
+
+### 划分型回溯
+
+### 组合型回溯
+
+### 排列型回溯
+
+#### 全排列
+
+- 求解不含重复数字的输入数组的所有 **不重复全排列**
+
+```java
+/* Backtracking algorithm: Permutation I */
+void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
+    // When the state length equals the number of elements, record the solution
+    if (state.size() == choices.length) {
+        res.add(new ArrayList<Integer>(state));
+        return;
+    }
+    // Traverse all choices
+    for (int i = 0; i < choices.length; i++) {
+        int choice = choices[i];
+        // Pruning: do not allow repeated selection of elements
+        if (selected[i]) {
+	        continue;
+        }
+        // Attempt: make a choice, update the state
+        selected[i] = true;
+        state.add(choice);
+        // Proceed to the next round of selection
+        backtrack(state, choices, selected, res);
+        // Retract: undo the choice, restore to the previous state
+        selected[i] = false;
+        state.remove(state.size() - 1);
+    }
+}
+
+/* Permutation I */
+List<List<Integer>> permutationsI(int[] nums) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
+    return res;
+}
+```
+
+#### 全排列Ⅱ
+
+- 求解包含重复数字的输入数组的所有 **不重复全排列**
+
+Although both `selected` and `duplicated` serve as pruning mechanisms, they target different issues:
+
+* **Repeated-choice pruning** (via `selected`): There is a single `selected` array for the entire search, indicating which elements are already in the current state. This prevents the same element from appearing more than once in `state`.（纵向剪枝）
+* **Equal-element pruning** (via `duplicated`): Each call to the `backtrack` function uses its own `duplicated` set, recording which elements have already been chosen in that specific iteration (`for` loop). This ensures that equal elements are selected only once per round of choices.（横向剪枝）
+
+```java
+/* Backtracking algorithm: Permutation II */
+void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
+    // When the state length equals the number of elements, record the solution
+    if (state.size() == choices.length) {
+        res.add(new ArrayList<Integer>(state));
+        return;
+    }
+    // Traverse all choices，每次重建意味着递归的每一层duplicated变量是独立的。窥探整个递归树的全貌，同一层节点如果存在相同值，要提前剪枝
+    Set<Integer> duplicated = new HashSet<Integer>();
+    for (int i = 0; i < choices.length; i++) {
+        int choice = choices[i];
+        // Pruning: do not allow repeated selection of elements and do not allow repeated selection of equal elements
+        if (selected[i] || duplicated.contains(choice)) {
+	        continue;
+        }
+        // Attempt: make a choice, update the state
+	// 由于递归回溯时会返回到上一级，而上一级别有自己的 duplicated 集合，因此不需要从duplicated集合中移除元素。对duplicated来说不用回溯retreat
+        duplicated.add(choice); // Record selected element values
+        selected[i] = true;
+        state.add(choice);
+        // Proceed to the next round of selection
+        backtrack(state, choices, selected, res);
+        // Retract: undo the choice, restore to the previous state
+        selected[i] = false;
+        state.remove(state.size() - 1);
+    }
+}
+
+/* Permutation II */
+List<List<Integer>> permutationsII(int[] nums) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
+    return res;
+}
+```
+
+### 有重复元素的回溯
+
+### 搜索类问题
+
 
 ## 网格图DFS
