@@ -1,10 +1,6 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.linked.merge;
+package org.lyflexi.solutions.baseAlgorithm.utils.linked.conquer;
 
 import org.lyflexi.common.ListNode;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * 148. 排序链表

@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.linked.base_opr;
+package org.lyflexi.solutions.baseAlgorithm.utils.linked;
 
 import org.lyflexi.common.ListNode;
 
