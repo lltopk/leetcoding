@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.linked.base_opr;
+package org.lyflexi.solutions.baseAlgorithm.utils.linked.pointers;
 
 import org.lyflexi.common.ListNode;
 
@@ -41,16 +41,14 @@ import org.lyflexi.common.ListNode;
  */
 public class LC19_removeNthFromEnd {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        //蒙多推二塔, 红方收高地
+        // 由于可能会删除链表头部，用哨兵节点简化代码
         ListNode dummy = new ListNode(0, head);
         ListNode p0 = dummy, p2 = dummy;
 
-        //红方先走
         for(int i = 0; i< n+ 1; i++){
             p2 = p2.next;
         }
 
-        //蒙多和红方一起走
         while(p2 != null){
             p0 = p0.next;
             p2 = p2.next;
