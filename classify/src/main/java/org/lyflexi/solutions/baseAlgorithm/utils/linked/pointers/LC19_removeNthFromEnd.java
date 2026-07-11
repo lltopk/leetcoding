@@ -43,12 +43,15 @@ public class LC19_removeNthFromEnd {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         // 由于可能会删除链表头部，用哨兵节点简化代码
         ListNode dummy = new ListNode(0, head);
-        ListNode p0 = dummy, p2 = dummy;
+        ListNode p0 = dummy;
+        ListNode p2 = head;
 
-        for(int i = 0; i< n+ 1; i++){
+        //试填法， 算固定间距
+        for(int i = 0; i< n; i++){
             p2 = p2.next;
         }
 
+        //同步匀速行驶
         while(p2 != null){
             p0 = p0.next;
             p2 = p2.next;
