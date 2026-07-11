@@ -1,4 +1,4 @@
-DFS搜索算法: 深度优先遍历, 深入理解递归
+DFS搜索
 
 ## 二叉树DFS
 一般有三种遍历方式：
@@ -6,27 +6,34 @@ DFS搜索算法: 深度优先遍历, 深入理解递归
 - 中序遍历：见二叉搜索树。
 - 后序遍历：自底向上 DFS。
 
+带着问题去做下面的题目：
+- 一般来说，DFS 的递归边界是空节点。在什么情况下，要额外把叶子节点作为递归边界？
+- 在什么情况下，DFS 需要有返回值？什么情况下不需要有返回值？
+- 在什么情况下，题目更适合用自顶向下的方法解决？什么情况下更适合用自底向上的方法解决？
+
+
 ### 自顶向下DFS
 二叉树泛前序遍历
 
 ### 自底向上DFS
 二叉树泛后序遍历
 
-## 二叉搜索树BST
-二叉树泛中序遍历
+### 二叉搜索树BST
+二叉树泛中序遍历, Binary Search Tree的特点是中序遍历有序
+
+### 最近公共祖先
+
+### 二叉树回溯
 
 ## 一般树DFS
 ### 自顶向下DFS
 ### 自底向上DFS
 
-## DFS回溯框架
-回溯`BackTracking`本质是搜索树上的DFS
 
-先理解二叉树上的回溯，再来学习一般情况下的回溯。
 
-### 二叉树回溯
 
-### 通用回溯框架
+## 通用回溯框架
+回溯`BackTracking`本质是搜索树上的DFS， 先理解二叉树上的回溯, 再来学习一般情况下的回溯。
 
 In Example One, visiting each node starts a "trial". And passing a leaf node or the `return` statement to going back to the parent node suggests "retreat".
 
@@ -65,7 +72,7 @@ void backtrack(State state, List<Choice> choices, List<State> res) {
 }
 ```
 
-#### 全排列
+### 全排列
 
 - 求解不含重复数字的输入数组的所有 **不重复全排列**
 
@@ -103,7 +110,7 @@ List<List<Integer>> permutationsI(int[] nums) {
 }
 ```
 
-#### 全排列Ⅱ
+### 全排列Ⅱ
 
 - 求解包含重复数字的输入数组的所有 **不重复全排列**
 
@@ -149,7 +156,7 @@ List<List<Integer>> permutationsII(int[] nums) {
 }
 ```
 
-#### 子集和问题Ⅰ
+### 子集和问题Ⅰ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组没有重复的元素，每个元素可以多次选择。
 
@@ -197,7 +204,7 @@ List<List<Integer>> subsetSumI(int[] nums, int target) {
 }
 ```
 
-#### 子集和问题Ⅱ
+### 子集和问题Ⅱ
 
 - 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组可能包含重复的元素，每个元素只能选择一次。请将这些组合作为列表返回，该列表不应包含重复的组合。
 
