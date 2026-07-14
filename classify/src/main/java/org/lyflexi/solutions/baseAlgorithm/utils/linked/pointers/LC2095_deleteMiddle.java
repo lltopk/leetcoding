@@ -64,7 +64,7 @@ package org.lyflexi.solutions.baseAlgorithm.utils.linked.pointers;
 import org.lyflexi.common.ListNode;
 
 /**
- * 蒙多上高地, 快慢指针
+ * 蒙多拆二塔, 防守方到高地
  */
 public class LC2095_deleteMiddle {
     public ListNode deleteMiddle(ListNode head) {

@@ -39,6 +39,10 @@ import org.lyflexi.common.ListNode;
  *
  * 进阶：你能尝试使用一趟扫描实现吗？
  */
+
+/**
+ * 蒙多拆二塔, 防守方到高地
+ */
 public class LC19_removeNthFromEnd {
     public ListNode removeNthFromEnd(ListNode head, int n) {
         // 由于可能会删除链表头部，用哨兵节点简化代码
