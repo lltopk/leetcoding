@@ -1,9 +1,6 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.linked.pointers;
+package org.lyflexi.solutions.baseAlgorithm.utils.linked.pointers.floyd_cycle;
 
 import org.lyflexi.common.ListNode;
-
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * 142. 环形链表 II
@@ -52,15 +49,31 @@ import java.util.Set;
  *
  * 进阶：你是否可以使用 O(1) 空间解决此题？
  */
-public class LC142_detectCycle {
+
+/**
+ * Floyd判圈算法:
+ */
+public class LC142_detectCycle2 {
     public ListNode detectCycle(ListNode head) {
-        Set<ListNode> set = new HashSet<>();
-        while(head!=null){
-            if(set.contains(head)){
-                return head;
+        if (head == null) {
+            return null;
+        }
+        ListNode slow = head, fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            //当快慢指针在环中相遇的时候, 重新定义个新的指针p0从head开始走, 让slow继续走, 则p0和slow一定会在打结点相遇
+            //原因是2(a+b) = a + b + k(b+c) 其中(b+c)表示环的大小
+            //即2(a+b) = a + b + b + c + (k-1)(b+c)
+            //即a = c + (k-1)(b+c)
+            if (slow == fast) {
+                ListNode p0 = head;
+                while(p0 != slow){
+                    p0 = p0.next;
+                    slow = slow.next;
+                }
+                return p0;
             }
-            set.add(head);
-            head = head.next;
         }
         return null;
     }

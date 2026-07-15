@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.baseAlgorithm.utils.linked.pointers;
+package org.lyflexi.solutions.baseAlgorithm.utils.linked.pointers.floyd_cycle;
 
 /**
  * 141. 环形链表
