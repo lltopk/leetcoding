@@ -52,20 +52,39 @@ import java.util.Set;
 
 /**
  * 结论: 当不断的执行x = (x*10 + 1) % k;之后, 若迟迟没有得0, 就会陷入循环
+ *
+ * 自然想到Floyd判环
  */
-public class LC1015_smallestRepunitDivByK {
+public class LC1015_smallestRepunitDivByK2 {
     /**
      只关注被模后的尾数即可. 每轮次只让尾数 * 10 + 1进行计算
      */
     public int smallestRepunitDivByK(int k) {
-        int ret = 0, x = 1%k;//初始化模k是因为当输入k=1的时候, 答案是1
-        Set<Integer> mySet = new HashSet<>();
-        while(x > 0 && mySet.add(x)){
-            x = (x*10 + 1) % k;
+        if(k ==1){
+            return 1;
         }
-        if(x == 0){
-            return mySet.size() + 1;
+        //Floyd判环
+        int slow = 1, fast = 1;
+        //记录fast走的步数
+        int cnt = 1;
+        while(fast!=0){
+            //注意这里不能写成fast = next(next(fast, k), k);, 假如next(fast, k)已经是0, 那么next(0, k)就变成了1, 错误的成为了环
+            fast = next(fast, k);
+            cnt++;
+            if(fast == 0){
+                break;
+            }
+            fast = next(fast, k);
+            cnt++;
+            slow = next(slow, k);
+            if(fast == slow){
+                return -1;
+            }
         }
-        return -1;
+        return cnt;
+    }
+
+    private int next(int x, int k){
+        return (x * 10 + 1) % k;
     }
 }
