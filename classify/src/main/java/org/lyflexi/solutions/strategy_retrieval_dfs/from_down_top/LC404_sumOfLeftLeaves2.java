@@ -46,7 +46,7 @@ import org.lyflexi.common.TreeNode;
 /**
  * 自底向上 求左叶子
  */
-public class LC404_sumOfLeftLeaves {
+public class LC404_sumOfLeftLeaves2 {
     /**
      * 这是这道题容易困惑地方是：sumOfLeftLeaves(root.left) 求的是 root.left 子树中所有左叶子的和，它并不会把 root.left 自己算进去。
      *
@@ -60,17 +60,14 @@ public class LC404_sumOfLeftLeaves {
         if(root == null){
             return 0;
         }
-
-        //左子树中的左叶子和, 但不包括左子树
-        int leftS = sumOfLeftLeaves(root.left);
-        //右子树中的左叶子和, 但不包括右子树
-        int rightS = sumOfLeftLeaves(root.right);
-
-        //因此下面要再判断左子树本身是不是叶子, 是的话加进答案
         TreeNode left = root.left;
+
+        //剪枝（Pruning）优化, 当确定左叶子之后, 就无需让左叶子继续参与递归sumOfLeftLeaves(root.left)
         if(left !=null && left.left==null && left.right==null){
-            return left.val + leftS + rightS;
+            return left.val + sumOfLeftLeaves(root.right);
         }
+        int leftS = sumOfLeftLeaves(root.left);
+        int rightS = sumOfLeftLeaves(root.right);
         return leftS + rightS;
     }
 }
