@@ -19,13 +19,13 @@ DFS深度搜索分为「自底向上归」和「自顶向下递」, 命名方式
 
 
 二. 自顶向下递
-- 归纳奠基: 定义新的递归函数`void dfs(...args, ret, ...states)`, 并给新的递归函数传入初始值, `dfs(...args, ret, ...0)`
+- 归纳奠基: 定义新的递归函数`dfs(...args, ret, ...states)`, 并给新的递归函数传入初始值, `dfs(...args, ret, ...0)`
 - 归纳步骤: 先取出高度进行计算`ret = Math.max(++depth, ret);`, 然后递归调用左右子问题
-- 成员变量: 如果`ret`不是成员变量, 那么必须是引用类型才能传入`void dfs(...args, ret, ...states)`
+- 成员变量: 如果`ret`不是成员变量, 那么必须是引用类型才能传入递归函数`dfs(...args, ret, ...states)`
 
 自顶向下是在向下递的过程中完成计算的，归的时候只是简单的函数返回不参与计算，但栈仍然负责
 1. 保存返回地址，递归完了需要返回到哪里
-2. 保存变量信息，比如每层的depth是多少
+2. 保存变量信息，比如每层的`depth`是多少
 
 无论是自底向上还是自顶向下哪种方式，最终都要层层返回到根节点的调用者手里，只是自顶向下的归的过程中没有参与计算而已。
 
@@ -49,7 +49,6 @@ DFS深度搜索分为「自底向上归」和「自顶向下递」, 命名方式
 ### 二叉树高度
 ### 相同/对称/翻转/平衡
 ### 二叉树直径
-### 二叉树回溯
 ### 最近公共祖先
 ### 二叉搜索树BST
 二叉树中序遍历, Binary Search Tree的特点是中序遍历有序
@@ -90,45 +89,8 @@ public class LC111_minDepth2 {
 
 
 ## 通用回溯类问题
-回溯`BackTracking`本质是搜索树上的DFS， 先理解二叉树上的回溯, 再来学习一般情况下的回溯。
 
-In Example One, visiting each node starts a "trial". And passing a leaf node or the `return` statement to going back to the parent node suggests "retreat".
-
-- 寻解trial，基于递归函数的共享状态变量 `state `，如当前路径  `path:List<TreeNode>`收集当前状态的答案。注意结果集 `res: List<List<TreeNode>````>` 并不属于trial
-- 回溯retreat，伴随着向上归的动作中复原当前状态state，一般回溯retreat语句位于程序末尾
-- 剪枝prune，通过return提前返回程序剪掉下面的枝叶，属于优化性能的手段。要注意剪枝语句return和trial语句的相对位置，但当trial语句在return语句之前，return之前必须再次retreat，因为提前trial了节点信息。当trial语句在return语句之后，那就没必要在return之前二次retreat
-- 经典应用场景有二叉树dfs，全排列permutation，子集和subSetSum
-
-标准的回溯框架如下:
-- state，是trial共享待回溯变量，如共享路径变量
-- choices，是输入集合，如树节点集合集合
-- res，答案收集器
--
-```java
-/* Backtracking algorithm framework */
-void backtrack(State state, List<Choice> choices, List<State> res) {
-    // Check if it's a solution
-    if (isSolution(state)) {
-        // Record the solution
-        recordSolution(state, res);
-        // Stop searching
-        return;
-    }
-    // Iterate through all choices
-    for (Choice choice : choices) {
-        // Prune: check if the choice is valid
-        if (!isValid(state, choice)) {
-	        continue/break;
-        }
-        // Trial: make a choice, update the state
-        makeChoice(state, choice);
-        backtrack(state, choices, res);
-        // Retreat: undo the choice, revert to the previous state
-        undoChoice(state, choice);
-    }
-}
-```
-
+### 二叉树回溯
 ### 子集型回溯
 #### 子集和问题Ⅰ
 
@@ -246,41 +208,7 @@ List<List<Integer>> subsetSumII(int[] nums, int target) {
 
 #### 全排列
 
-- 求解不含重复数字的输入数组的所有 **不重复全排列**
 
-```java
-/* Backtracking algorithm: Permutation I */
-void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
-    // When the state length equals the number of elements, record the solution
-    if (state.size() == choices.length) {
-        res.add(new ArrayList<Integer>(state));
-        return;
-    }
-    // Traverse all choices
-    for (int i = 0; i < choices.length; i++) {
-        int choice = choices[i];
-        // Pruning: do not allow repeated selection of elements
-        if (selected[i]) {
-	        continue;
-        }
-        // Attempt: make a choice, update the state
-        selected[i] = true;
-        state.add(choice);
-        // Proceed to the next round of selection
-        backtrack(state, choices, selected, res);
-        // Retract: undo the choice, restore to the previous state
-        selected[i] = false;
-        state.remove(state.size() - 1);
-    }
-}
-
-/* Permutation I */
-List<List<Integer>> permutationsI(int[] nums) {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
-    return res;
-}
-```
 
 #### 全排列Ⅱ
 
