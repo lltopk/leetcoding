@@ -19,9 +19,9 @@ DFS深度搜索分为「自底向上归」和「自顶向下递」, 命名方式
 
 
 二. 自顶向下递
-- 归纳奠基: 定义新的递归函数`dfs(...args, ret, ...states)`, 并给新的递归函数传入初始值, `dfs(...args, ret, ...0)`
+- 归纳奠基: 定义新的递归函数`dfs(...args, ret, state, ...layers)`, 并给新的递归函数传入初始值, `dfs(...args, ret, state, ...0)`
 - 归纳步骤: 先取出高度进行计算`ret = Math.max(++depth, ret);`, 然后递归调用左右子问题
-- 成员变量: 如果`ret`不是成员变量, 那么必须是引用类型才能传入递归函数`dfs(...args, ret, ...states)`
+- 成员变量: 如果`ret`不是成员变量, 那么必须是引用类型才能传入递归函数`dfs(...args, ret, state, ...layers)`
 
 自顶向下是在向下递的过程中完成计算的，归的时候只是简单的函数返回不参与计算，但栈仍然负责
 1. 保存返回地址，递归完了需要返回到哪里
@@ -89,8 +89,38 @@ public class LC111_minDepth2 {
 
 
 ## 通用回溯类问题
+一般来说回溯问题的解法都是自顶向下, 因此可以定义如下递归函数
+```java
+private void dfs(...args, ret, state, ...layers){
+    if (layers) {
+        ret.add(new ArrayList<>(path));
+        return;
+    }
+    //模板一. 选与不选
+    path.add(...args[...layers]);
+    dfs(...args, ret, path, ...states + 1);
+    path.remove(path.size() - 1);
+    
+    //模板二. 枚举//TODO??
+    for(int i = 0/layer; i<...args.length; i++){
+        // Trial: make a choice, update the state
+        makeChoice(state, choice);
+        backtrack(state, choices, res);
+        // Retreat: undo the choice, revert to the previous state
+        undoChoice(state, choice);
+    }
+}
+```
+其中
+- `...args`: 代表题目的输入参数
+- `ret`: 代表答案, 是个引用类型
+- `state`: 如当前路径`path`, 代表回溯对象, 当前路径`dfs`结束之后, 要先还原现场才能弹出到下一条`dfs`路径
+- `...layers`: 代表层中的变量如`start/depth`, 层中变量基本类型即可, 各个层间独立不受影响, 在归的途中是被栈记忆过的
 
 ### 二叉树回溯
+回溯`BackTracking`本质是搜索树上的DFS， 先理解二叉树上的回溯, 再来学习一般情况下的回溯。
+
+
 ### 子集型回溯
 #### 子集和问题Ⅰ
 
@@ -208,7 +238,41 @@ List<List<Integer>> subsetSumII(int[] nums, int target) {
 
 #### 全排列
 
+- 求解不含重复数字的输入数组的所有 **不重复全排列**
 
+```java
+/* Backtracking algorithm: Permutation I */
+void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
+    // When the state length equals the number of elements, record the solution
+    if (state.size() == choices.length) {
+        res.add(new ArrayList<Integer>(state));
+        return;
+    }
+    // Traverse all choices
+    for (int i = 0; i < choices.length; i++) {
+        int choice = choices[i];
+        // Pruning: do not allow repeated selection of elements
+        if (selected[i]) {
+	        continue;
+        }
+        // Attempt: make a choice, update the state
+        selected[i] = true;
+        state.add(choice);
+        // Proceed to the next round of selection
+        backtrack(state, choices, selected, res);
+        // Retract: undo the choice, restore to the previous state
+        selected[i] = false;
+        state.remove(state.size() - 1);
+    }
+}
+
+/* Permutation I */
+List<List<Integer>> permutationsI(int[] nums) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
+    return res;
+}
+```
 
 #### 全排列Ⅱ
 
