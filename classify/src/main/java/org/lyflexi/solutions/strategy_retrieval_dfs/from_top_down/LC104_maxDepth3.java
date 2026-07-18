@@ -47,25 +47,19 @@ import org.lyflexi.common.TreeNode;
 /**
  * 自顶向下DFS
  */
-public class LC104_maxDepth {
+public class LC104_maxDepth3 {
     int ret = 0;
-
-    /**
-     * 从0开始
-     * @param root
-     * @return
-     */
     public int maxDepth(TreeNode root) {
-        dfs(root, 0);
+        dfs(root, 1);
         return ret;
     }
     private void dfs(TreeNode root, int depth){
         if(root == null){
             return;
         }
-        ret = Math.max(++depth, ret);
+        ret = Math.max(ret, depth);
         //等价于给左右子树都传2
-        dfs(root.left, depth);
+        dfs(root.left, ++depth);
         dfs(root.right, depth);
     }
 }

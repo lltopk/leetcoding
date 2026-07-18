@@ -48,25 +48,23 @@ import org.lyflexi.common.TreeNode;
  * 自顶向下DFS
  */
 public class LC104_maxDepth2 {
-    public int maxDepth(TreeNode root) {
-        //创建一个引用数组
-        int[] ret = new int[1];
-        dfs(root, ret, 0);
-        return ret[0];
-    }
+    int ret = 0;
 
     /**
-     * 如果要传结果进去, 不能是普通变量int, 必须是引用类型int[]
+     * 从1开始
      * @param root
-     * @param ret
-     * @param depth
+     * @return
      */
-    private void dfs(TreeNode root, int[] ret, int depth){
+    public int maxDepth(TreeNode root) {
+        dfs(root, 1);
+        return ret;
+    }
+    private void dfs(TreeNode root, int depth){
         if(root == null){
             return;
         }
-        ret[0] = Math.max(++depth, ret[0]);
-        dfs(root.left, ret, depth);
-        dfs(root.right, ret, depth);
+        ret = Math.max(ret, depth);
+        dfs(root.left, depth + 1);
+        dfs(root.right, depth + 1);
     }
 }
