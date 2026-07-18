@@ -45,7 +45,7 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.from_down_top;
 import org.lyflexi.common.TreeNode;
 
 /**
- * 自底向上DFS
+ * 自底向上DFS, 直接递归maxDepth函数自带返回值
  */
 public class LC104_maxDepth {
     public int maxDepth(TreeNode root) {
