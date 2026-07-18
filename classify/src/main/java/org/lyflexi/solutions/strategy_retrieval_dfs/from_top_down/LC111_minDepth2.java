@@ -44,7 +44,7 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down;
 import org.lyflexi.common.TreeNode;
 
 /**
- * 自顶向下
+ * 自顶向下, 剪枝优化
  */
 public class LC111_minDepth2 {
     int ret = Integer.MAX_VALUE;
