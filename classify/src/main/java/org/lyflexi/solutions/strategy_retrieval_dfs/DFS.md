@@ -43,16 +43,45 @@ DFS深度搜索分为「自底向上归」和「自顶向下递」, 命名方式
 ### 自底向上DFS
 二叉树泛后序遍历
 
+## 二叉树应用
+### 二叉树高度
+### 二叉树直径
+### 二叉树回溯
+### 最近公共祖先
 ### 二叉搜索树BST
 二叉树中序遍历, Binary Search Tree的特点是中序遍历有序
+### 创建二叉树
+## 最优性剪枝
+DFS过程中, 如果在已知条件下可以不必多余深入递归, 则提前返回, 能够大幅降低时间复杂度, 见LC111. 二叉树的最小深度
+```java
+/**
+ * 自顶向下
+ */
+public class LC111_minDepth2 {
+    int ret = Integer.MAX_VALUE;
+    public int minDepth(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        dfs(root, 0);
+        return ret;
+    }
+    private void dfs(TreeNode root, int depth){
+        //其中|| ++depth > ret 意思是最优性剪枝, 继续向下递归也不会让 ret 变小，直接返回。
+        if(root == null || ++depth > ret){
+            return;
+        }
+        if(root.left == null && root.right == null){
+            ret = Math.min(ret, depth);
+            return;
+        }
+        dfs(root.left, depth);
+        dfs(root.right, depth);
+    }
+}
+```
 
-### 最近公共祖先
-
-### 二叉树回溯
-
-## 一般树问题DFS？？
-### 自顶向下DFS
-### 自底向上DFS
+## 一般树(N叉树)
 
 
 
