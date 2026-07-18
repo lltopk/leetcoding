@@ -50,9 +50,9 @@ public class LC404_sumOfLeftLeaves {
     /**
      * 这是这道题容易困惑地方是：sumOfLeftLeaves(root.left) 求的是 root.left 子树中所有左叶子的和，它并不会把 root.left 自己算进去。
      *
-     * 本质上是因为递归函数只知道当前节点(root)是否为叶子, 但不知道root是不是别人家的左孩子(左叶子)
+     * 一般来说递归函数只知道当前节点root是否为空(root==null) 或者 root是否为叶子(root.left==null && root.right==null)
      *
-     * 所以不能自己决定把自己加进去。
+     * 但永远不知道root是不是别人家的左孩子(左叶子), 所以不能自己决定把自己加进去., 因此你必须手动加进去
      * @param root
      * @return
      */
