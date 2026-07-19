@@ -92,7 +92,7 @@ public class LC111_minDepth2 {
 回溯问题思考过程, 回溯三问: 
 1. 当前操作: 枚举`path[i]`要填入的字母
 2. 子问题: 构造字符串`≥i`的部分, 尝试能否把`[i, n)`加入答案
-3. 下一个子问题: 构造字符串`≥i+1`的部分, 尝试能否把`[i+1, n)`加入答案
+3. 下一个子问题: 构造字符串`≥i+1`的部分, 尝试能否把`[i+1, n)`加入答案, 其中`≥i+1`的部分就对应于二叉树的两个分支有两个路线， 或者对应于`N`叉树的N个分支有`N`个路线
 
 回溯问题代码模板: 一般来说回溯问题的解法都是自顶向下`dfs(i) -> dfs(i+1)`直到`i == n`, 因此可以定义如下递归函数
 ```java
@@ -120,7 +120,10 @@ private void dfs(...args, ret, state, ...layers){
 - `state`: 如当前路径`path`, 代表回溯对象, 当前路径`dfs`结束之后, 要先还原现场才能弹出到下一条`dfs`路径
 - `...layers`: 代表层中的变量如`start/depth`, 层中变量基本类型即可, 各个层间独立不受影响, 在归的途中是被栈记忆过的
 
-时间复杂度分析, 先不考虑剪枝优化, 由于回溯会穷举整棵二叉树/或者叶子节点共`2^n`, 同时要复制每个答案`path`需要`O(n)`, 因此总的时间复杂度为`O(n* 2^n);`
+时间复杂度分析, 先不考虑剪枝优化, 由于回溯会在二叉树/N叉树上穷举所有可能性, 这些可能性相当于答案的个数, 同时每个答案`path`都要复制一份作为结果这需要`O(n)`, 因此总的时间复杂度为`O(n* 可能性);`
+- 子集问题：`O(n/2 ·2^n)`, 因为子集不要求元素数为`n`, 因此平均复制时间是`O(n/2)`, 其中可能性是二叉树所有节点个数, 即等比数列求和相当于`O(2^n)`
+- 组合问题：`O(k·C(n,k))`, 组合的复制时间是`O(k)`表示取`k`个, 其中可能性是`C(n,k)`
+- 排列问题：`O(n⋅n!)` 其中可能性是`O(n⋅n!)`, 其中`O(!n)`是要远远大于子集型`O(2^n)`的, 这有点违背直觉， 毕竟排列型的叶子节点往往都是单节点。可以从数学证明来纠正你的直觉, 其实画图可以看出当`n`很大的时候阶乘在前几层中已经爆炸了
 
 模板一. 选与不选(输入视角), 见LC78. 子集
 ```java
@@ -229,90 +232,45 @@ public class LC437_pathSum {
 更多组合题单： 见LC39. 组合总和; LC40. 组合总和 II; 216. 组合总和 III; 22. 括号生成
 
 ### 排列型回溯
-
-#### 全排列
-
-- 求解不含重复数字的输入数组的所有 **不重复全排列**
+见LC46. 全排列, 与其他回溯类问题不同的是, 全排列的定义就是每层必须要选, 所以不能用选与不选（输入视角）, 只能使用枚举思路（答案视角）
 
 ```java
-/* Backtracking algorithm: Permutation I */
-void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
-    // When the state length equals the number of elements, record the solution
-    if (state.size() == choices.length) {
-        res.add(new ArrayList<Integer>(state));
-        return;
+/**
+ * 全排列的定义就是每层必须要选， 所以不能用选与不选（输入视角）
+ * 
+ * 只能使用枚举思路（答案视角）
+ */
+public class LC46_permute {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ret = new ArrayList<>();
+        int[] visit = new int[nums.length];
+        dfs(nums, ret, new ArrayList<>(), visit, 0);
+        return ret;
     }
-    // Traverse all choices
-    for (int i = 0; i < choices.length; i++) {
-        int choice = choices[i];
-        // Pruning: do not allow repeated selection of elements
-        if (selected[i]) {
-	        continue;
-        }
-        // Attempt: make a choice, update the state
-        selected[i] = true;
-        state.add(choice);
-        // Proceed to the next round of selection
-        backtrack(state, choices, selected, res);
-        // Retract: undo the choice, restore to the previous state
-        selected[i] = false;
-        state.remove(state.size() - 1);
-    }
-}
 
-/* Permutation I */
-List<List<Integer>> permutationsI(int[] nums) {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
-    return res;
+
+    private void dfs(int[] nums, List<List<Integer>> ret, List<Integer> path, int[] visit, int i){
+        if (i == nums.length){
+            ret.add(new ArrayList<>(path));
+            return;
+        }
+        //在下面的循环中
+        //i代表层数：当前递归层， 直到层深度等于nums.length
+        //j代表当前层中剩余可选的数字范围：假设在i层三种可能性分别是(1,2,3)，那么i+1层的可能性是(2,3) (1,3) (1,2), 那么i+2层的可能性是(3) (2) (3) (1) (2) (1) 若n=3的全排列就到底了
+        //根据上述例子， 因此虽然j可以从头开始重新选， 但都需要跳过上一层的自己
+        for(int j = 0; j<nums.length; j++){
+            if(visit[j] == 0){
+                path.add(nums[j]);
+                visit[j] = 1;//布尔数组标记， 保证下面层数从头再选一轮的时候跳过上一轮的自己
+                dfs(nums, ret, path, visit, i + 1);
+                path.remove(path.size() - 1);
+                visit[j] = 0;
+            }
+        }
+    }
 }
 ```
-
-#### 全排列Ⅱ
-
-- 求解包含重复数字的输入数组的所有 **不重复全排列**
-
-Although both `selected` and `duplicated` serve as pruning mechanisms, they target different issues:
-
-* **Repeated-choice pruning** (via `selected`): There is a single `selected` array for the entire search, indicating which elements are already in the current state. This prevents the same element from appearing more than once in `state`.（纵向剪枝）
-* **Equal-element pruning** (via `duplicated`): Each call to the `backtrack` function uses its own `duplicated` set, recording which elements have already been chosen in that specific iteration (`for` loop). This ensures that equal elements are selected only once per round of choices.（横向剪枝）
-
-```java
-/* Backtracking algorithm: Permutation II */
-void backtrack(List<Integer> state, int[] choices, boolean[] selected, List<List<Integer>> res) {
-    // When the state length equals the number of elements, record the solution
-    if (state.size() == choices.length) {
-        res.add(new ArrayList<Integer>(state));
-        return;
-    }
-    // Traverse all choices，每次重建意味着递归的每一层duplicated变量是独立的。窥探整个递归树的全貌，同一层节点如果存在相同值，要提前剪枝
-    Set<Integer> duplicated = new HashSet<Integer>();
-    for (int i = 0; i < choices.length; i++) {
-        int choice = choices[i];
-        // Pruning: do not allow repeated selection of elements and do not allow repeated selection of equal elements
-        if (selected[i] || duplicated.contains(choice)) {
-	        continue;
-        }
-        // Attempt: make a choice, update the state
-	// 由于递归回溯时会返回到上一级，而上一级别有自己的 duplicated 集合，因此不需要从duplicated集合中移除元素。对duplicated来说不用回溯retreat
-        duplicated.add(choice); // Record selected element values
-        selected[i] = true;
-        state.add(choice);
-        // Proceed to the next round of selection
-        backtrack(state, choices, selected, res);
-        // Retract: undo the choice, restore to the previous state
-        selected[i] = false;
-        state.remove(state.size() - 1);
-    }
-}
-
-/* Permutation II */
-List<List<Integer>> permutationsII(int[] nums) {
-    List<List<Integer>> res = new ArrayList<List<Integer>>();
-    backtrack(new ArrayList<Integer>(), nums, new boolean[nums.length], res);
-    return res;
-}
-```
+更多排列回溯问题见LC51. N 皇后; 52. N 皇后 II
 
 ### 有重复元素的回溯
 见LC子集 II ; 组合总和 II ;全排列 II
