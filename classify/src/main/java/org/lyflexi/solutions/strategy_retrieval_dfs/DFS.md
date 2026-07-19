@@ -89,25 +89,28 @@ public class LC111_minDepth2 {
 
 
 ## 通用回溯类问题
-一般来说回溯问题的解法都是自顶向下, 因此可以定义如下递归函数
+回溯问题思考过程, 回溯三问: 
+1. 当前操作: 枚举`path[i]`要填入的字母
+2. 子问题: 构造字符串`≥i`的部分, 尝试能否把`[i, n)`加入答案
+3. 下一个子问题: 构造字符串`≥i+1`的部分, 尝试能否把`[i+1, n)`加入答案
+
+回溯问题代码模板: 一般来说回溯问题的解法都是自顶向下`dfs(i) -> dfs(i+1)`直到`i == n`, 因此可以定义如下递归函数
 ```java
 private void dfs(...args, ret, state, ...layers){
     if (layers) {
-        ret.add(new ArrayList<>(path));
+        ret.add(new ArrayList<>(state));
         return;
     }
-    //模板一. 选与不选
-    path.add(...args[...layers]);
-    dfs(...args, ret, path, ...states + 1);
-    path.remove(path.size() - 1);
+    //模板一. 选与不选(输入视角)
+    makeChoice(state, ...args[...layers]);
+    dfs(...args, ret, state, ...layers + 1);
+    undoChoice(state);
     
-    //模板二. 枚举//TODO??
+    //模板二. 枚举选哪个(答案视角)
     for(int i = 0/layer; i<...args.length; i++){
-        // Trial: make a choice, update the state
-        makeChoice(state, choice);
-        backtrack(state, choices, res);
-        // Retreat: undo the choice, revert to the previous state
-        undoChoice(state, choice);
+        makeChoice(state, ...args[...layers]);
+        dfs(...args, ret, state, ...layers + 1);
+        undoChoice(state);
     }
 }
 ```
@@ -117,122 +120,113 @@ private void dfs(...args, ret, state, ...layers){
 - `state`: 如当前路径`path`, 代表回溯对象, 当前路径`dfs`结束之后, 要先还原现场才能弹出到下一条`dfs`路径
 - `...layers`: 代表层中的变量如`start/depth`, 层中变量基本类型即可, 各个层间独立不受影响, 在归的途中是被栈记忆过的
 
+时间复杂度分析, 先不考虑剪枝优化, 由于回溯会穷举整棵二叉树/或者叶子节点共`2^n`, 同时要复制每个答案`path`需要`O(n)`, 因此总的时间复杂度为`O(n* 2^n);`
+
+模板一. 选与不选(输入视角), 见LC78. 子集
+```java
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> ret = new ArrayList<>();
+        dfs(nums, ret, new ArrayList<>(), 0);
+        return ret;
+    }
+
+    private void dfs(int[] nums, List<List<Integer>> ret, List<Integer> path, int i){
+        if(i == nums.length){
+            ret.add(new ArrayList<>(path));
+            return;
+        }
+
+        //不选
+        dfs(nums, ret, path, i+1);
+        //选
+        path.add(nums[i]);
+        dfs(nums, ret, path, i+1);
+        path.remove(path.size() - 1);
+    }
+}
+```
+
+模板二. 枚举选哪个(答案视角), 见LC17. 电话号码的字母组合
+```java
+class Solution {
+    private String[] mapping = new String[]{"", "",  "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    public List<String> letterCombinations(String digits) {
+        List<String> ret  = new ArrayList<>();
+        //digits的长度就是最终要选的次数
+        char[] path = new char[digits.length()];
+        //回溯出口就是i == digits.length();
+        dfs(digits, ret, path, 0);
+        return ret;
+    }
+
+    private void dfs(String digits, List<String> ret, char[] path, int i){
+        if(i == digits.length()){
+            ret.add(new String(path));
+            return;
+        }
+        //当前层可以可以枚举选哪些
+        for(char c: mapping[digits.charAt(i) - '0'].toCharArray()){
+            path[i] = c;//由于这里是覆盖, 而不是添加, 所以下面不需要恢复现场
+            dfs(digits, ret, path, i+1);
+        }
+    }
+}
+```
+
+
 ### 二叉树回溯
 回溯`BackTracking`本质是搜索树上的DFS， 先理解二叉树上的回溯, 再来学习一般情况下的回溯。
 
+见LC437. 路径总和 III
+```java
+public class LC437_pathSum {
+    int ret = 0;
+    /**
+     枚举右维护左
+     前缀和
+     dfs
+     回溯
+     */
+    public int pathSum(TreeNode root, int targetSum) {
+        Map<Long, Integer> cnt = new HashMap<>();
+        cnt.put(0l, 1);//单独初始化前缀和[0, )本身就是解的情况
+        dfs(root, targetSum, cnt, 0l);
+        return ret;
+    }
+    private void dfs(TreeNode root, int targetSum, Map<Long, Integer> cnt, long preS){
+        if(root == null){
+            return;
+        }
+        preS += root.val;
+        //s2 - s1 = k
+        ret += cnt.getOrDefault(preS - targetSum, 0);
+        cnt.merge(preS, 1, Integer::sum);
+        dfs(root.left, targetSum, cnt, preS);
+        dfs(root.right, targetSum, cnt, preS);
+        //恢复现场
+        cnt.merge(preS, -1, Integer::sum);
+    }
+}
+```
+
 
 ### 子集型回溯
-#### 子集和问题Ⅰ
-
-- 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组没有重复的元素，每个元素可以多次选择。
-
-To implement this pruning, given the input array [x1,x2,…,xn], the choice sequence in the search process should be [x(i1),x(i2),…,x(im)], which needs to satisfy i1≤i2≤⋯≤im.  **Any choice sequence that does not meet this condition will cause duplicates and should be pruned** .
-
-So we initialize the variable `start`, which indicates the starting index point for traversal.  **After making the choice xi, set the next round to start from index  i** . This will ensure the choice sequence satisfies i1≤i2≤⋯≤im, thereby ensuring the uniqueness of the subsets.
-
-* **Before starting the search, must sort the array `nums`.**
-* In the traversal of all choices, **end the loop directly when the subset sum exceeds `target`** , as subsequent elements are larger and their subset sum will definitely exceed `target`.
-* Eliminate the element sum variable `total`,  **by performing subtraction on `target` to count the element sum** . When `target` equals 0, record the solution.This way, one function parameter "total" can be omitted
-
-```java
-/* Backtracking algorithm: Subset Sum I */
-void backtrack(List<Integer> state, int target, int[] choices, int start, List<List<Integer>> res) {
-    // When the subset sum equals target, record the solution
-    if (target == 0) {
-        res.add(new ArrayList<>(state));
-        return;
-    }
-    // Traverse all choices
-    // Pruning two: start traversing from start to avoid generating duplicate subsets
-    for (int i = start; i < choices.length; i++) {
-        // Pruning one: if the subset sum exceeds target, end the loop immediately
-        // This is because the array is sorted, and later elements are larger, so the subset sum will definitely exceed target
-        if (target - choices[i] < 0) {
-            break;
-        }
-        // Attempt: make a choice, update target, start
-        state.add(choices[i]);
-        // Proceed to the next round of selection
-        backtrack(state, target - choices[i], choices, i, res);//下次的start还可以是i，因为元素可以重复选择
-        // Retract: undo the choice, restore to the previous state
-        state.remove(state.size() - 1);
-    }
-}
-
-/* Solve Subset Sum I */
-List<List<Integer>> subsetSumI(int[] nums, int target) {
-    List<Integer> state = new ArrayList<>(); // State (subset)
-    Arrays.sort(nums); // Sort nums
-    int start = 0; // Start point for traversal
-    List<List<Integer>> res = new ArrayList<>(); // Result list (subset list)
-    backtrack(state, target, nums, start, res);
-    return res;
-}
-```
-
-#### 子集和问题Ⅱ
-
-- 给定一个正整数nums数组和一个目标正整数目标，找到所有可能的组合，使得组合中元素的总和等于目标。给定的数组可能包含重复的元素，每个元素只能选择一次。请将这些组合作为列表返回，该列表不应包含重复的组合。
-
-Compared to the previous question,  **this question's input array may contain duplicate elements** , introducing new problems. For example, given the array [4,4^,5] and target element 8, the first round code's output results in [4,4],[4,4^], resulting in duplicate subsets , the second round code's output results in [4^,4],[4^,4^], also resulting in duplicate subsets. To solve this issue
-
-- **Each array element can only be chosen once** . Fortunately, we can also use the variable `start` to meet this constraint: after making the choice xi, set the next round to start from index i+1 going forward.  [4,4],[4,4^],[4^,4],[4^,4^]->[4,4^],[4^,4]（纵向剪枝）
-- **Another, equal elements could be chosen, but we need to limit equal elements to being chosen only once per round** . The implementation is quite clever: since the array is sorted, equal elements are adjacent. This means that in a certain round of choices, if the current element is equal to its left-hand element, it means it has already been chosen, so skip the current element directly.[4,4^],[4^,4]->[4,4^]（横向剪枝）
-
-为什么 `i > start` 才开始判断第四次剪枝？为什么 `choices[i] == choices[i - 1]`能够判断同一层的重复项？
-
-当你在某一层开始遍历（比如 `start = 0`），你可能会遇到多个连续相同的元素。假设这些元素是从索引 `start` 开始的：
-
-* 对于第一个元素（`i == start`），你总是会尝试将其加入到当前状态中，因为它代表了该层（俯瞰整个树结构的某一层）首次遇到该值的机会。
-* **只要是在递归调用之前的程序代码都属于当前层，递归调用代码所在行说明准备进入下一层，递归调用之后的程序代码是回溯说明要返回上一层**。所以在递归语句之前执行 `choices[i] == choices[i - 1]`，并且 `i > start`，这表明你已经在当前层尝试过这个值了。因此，为了避免产生重复组合，你应该跳过这次尝试。
-
-```java
-/* Backtracking algorithm: Subset Sum II */
-void backtrack(List<Integer> state, int target, int[] choices, int start, List<List<Integer>> res) {
-    // When the subset sum equals target, record the solution
-    if (target == 0) {
-        res.add(new ArrayList<>(state));
-        return;
-    }
-    // Traverse all choices
-    // Pruning two: start traversing from start to avoid generating duplicate subsets
-    for (int i = start; i < choices.length; i++) {
-        // Pruning one: if the subset sum exceeds target, end the loop immediately
-        // This is because the array is sorted, and later elements are larger, so the subset sum will definitely exceed target
-        if (target - choices[i] < 0) {
-            break;
-        }
-        // Pruning four: if the element equals the left element, it indicates that the search branch is repeated, skip it
-	// 对于root.mid, 要求当root.mid.val==root.left.val的时候直接剪掉
-	// 所以这个判断必须保留 i > start只剪同一层即不同分支的重复项（只要是在递归调用之前的程序代码都属于当前层），
-	// 允许不同层选相同值（递归调用代码所在行说明准备进入下一层，前后两次递归说明是相邻层，相邻层允许选相同值）
-        if (i > start && choices[i] == choices[i - 1]) {
-            continue;
-        }
-        // Attempt: make a choice, update target, start
-        state.add(choices[i]);
-        // Proceed to the next round of selection
-	// Pruning three: start traversing from start（i+1） to avoid repeatedly selecting the same element
-        backtrack(state, target - choices[i], choices, i + 1, res);//下次的start不可以是i，因为元素不可以重复选择了
-        // Retract: undo the choice, restore to the previous state
-        state.remove(state.size() - 1);
-    }
-}
-
-/* Solve Subset Sum II */
-List<List<Integer>> subsetSumII(int[] nums, int target) {
-    List<Integer> state = new ArrayList<>(); // State (subset)
-    Arrays.sort(nums); // Sort nums
-    int start = 0; // Start point for traversal
-    List<List<Integer>> res = new ArrayList<>(); // Result list (subset list)
-    backtrack(state, target, nums, start, res);
-    return res;
-}
-```
 
 ### 划分型回溯
+形如字符串`"abc"`, 可以把分割线（逗号）看成是可以「选或不选」的东西，本质是子集型回溯。
 
-### 组合型回溯
+- 见LC131. 分割回文串
+- 见LC93. 复原 IP 地址
+
+### 组合型回溯 理解剪枝
+见LC77. 组合, 当剩余可选数不足剩余的`k`个的时候， 可以剪枝提前返回来优化递归函数
+- 可以正向选与不选回溯
+- 可以逆向选与不选回溯（递归函数可以少传1个参数）
+- 可以正向枚举回溯
+- 可以逆向枚举回溯（递归函数可以少传1个参数）
+
+更多组合题单： 见LC39. 组合总和; LC40. 组合总和 II; 216. 组合总和 III; 22. 括号生成
 
 ### 排列型回溯
 
@@ -321,6 +315,8 @@ List<List<Integer>> permutationsII(int[] nums) {
 ```
 
 ### 有重复元素的回溯
+见LC子集 II ; 组合总和 II ;全排列 II
+
 
 ### 搜索类问题
 
