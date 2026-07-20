@@ -48,23 +48,23 @@ import java.util.List;
  */
 public class LC17_letterCombinations {
     private String[] mapping = new String[]{"", "",  "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    List<String> ret  = new ArrayList<>();
     public List<String> letterCombinations(String digits) {
-        List<String> ret  = new ArrayList<>();
         //digits的长度就是最终要选的次数
         char[] path = new char[digits.length()];
         //回溯出口就是i == digits.length();
-        dfs(digits, ret, path, 0);
+        dfs(digits, path, 0);
         return ret;
     }
 
-    private void dfs(String digits, List<String> ret, char[] path, int i){
+    private void dfs(String digits, char[] path, int i){
         if(i == digits.length()){
             ret.add(new String(path));
             return;
         }
         for(char c: mapping[digits.charAt(i) - '0'].toCharArray()){
             path[i] = c;
-            dfs(digits, ret, path, i+1);
+            dfs(digits, path, i+1);
         }
     }
 }

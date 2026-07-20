@@ -45,23 +45,23 @@ import java.util.List;
  * 回溯, 选与不选
  */
 public class LC78_subsets {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(nums, ret, new ArrayList<>(), 0);
+        dfs(nums, new ArrayList<>(), 0);
         return ret;
     }
 
-    private void dfs(int[] nums, List<List<Integer>> ret, List<Integer> path, int i){
+    private void dfs(int[] nums, List<Integer> path, int i){
         if(i == nums.length){
             ret.add(new ArrayList<>(path));
             return;
         }
 
         //不选
-        dfs(nums, ret, path, i+1);
+        dfs(nums, path, i+1);
         //选
         path.add(nums[i]);
-        dfs(nums, ret, path, i+1);
+        dfs(nums, path, i+1);
         path.remove(path.size() - 1);
     }
 }

@@ -49,9 +49,9 @@ import java.util.List;
  * 77.5%
  */
 public class LC77_combine4 {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(k, ret, new ArrayList<>(), n);
+        dfs(k, new ArrayList<>(), n);
         return ret;
     }
 
@@ -60,7 +60,7 @@ public class LC77_combine4 {
      *
      * 由于答案与顺序无关， 我们还可以反向递归， 让i从n开始， 这样递归函数可以少接收1个变量
      */
-    private void dfs(int k, List<List<Integer>> ret, List<Integer> path, int i){
+    private void dfs(int k, List<Integer> path, int i){
         if (k == 0){
             ret.add(new ArrayList<>(path));
             return;
@@ -69,10 +69,10 @@ public class LC77_combine4 {
         if (k > i) {
             return;
         }
-        dfs(k, ret, path, i - 1);
+        dfs(k, path, i - 1);
 
         path.add(i);
-        dfs(k - 1, ret, path, i - 1);
+        dfs(k - 1, path, i - 1);
         path.remove(path.size() - 1);
     }
 }

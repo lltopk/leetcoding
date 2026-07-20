@@ -56,10 +56,10 @@ import java.util.List;
  * - 提前存储当前列， 先前是否已经放了皇后就会存在攻击性， 共n个
  */
 public class LC51_solveNQueens2 {
+    List<List<String>> ret = new ArrayList<>();
     public List<List<String>> solveNQueens(int n) {
-        List<List<String>> ret = new ArrayList<>();
         //索引代表行号， 值代表皇后的列号
-        int[] col = new int[n];
+        int[] colState = new int[n];
         //右上对角线i+j范围是[0, 2*n-2], 共2*n - 1 个
         boolean[] diagonal1 = new boolean[2*n - 1];
         //左上对角线i-j范围是[-n + 1, n - 1]， 共2*n - 1 个
@@ -67,20 +67,20 @@ public class LC51_solveNQueens2 {
         //标记当前列有没有放过皇后
         boolean[] colMark = new boolean[n];
         //示例 1 的两个图，分别对应排列 [1,3,0,2] 和 [2,0,3,1]
-        //因此题目等价于求列号的全排列， 因此state为为int[] col
-        dfs(n, ret, col, diagonal1, diagonal2, colMark, 0);
+        //因此题目等价于求列号的全排列， 因此state为为int[] colState
+        dfs(n, colState, diagonal1, diagonal2, colMark, 0);
         return ret;
     }
 
     /**
      i代表行号， 也代表层数
-     col[], 代表这一层找到的答案
+     colState[], 代表这一层找到的答案
      */
-    private void dfs(int n, List<List<String>> ret, int[] col, boolean[] diagonal1, boolean[] diagonal2, boolean[] colMark, int i){
+    private void dfs(int n, int[] colState, boolean[] diagonal1, boolean[] diagonal2, boolean[] colMark, int i){
         //注意N皇后问题每次是按照整个棋盘来作为答案收集的， 而不是每行
         if(i == n){
             List<String> ret0 = new ArrayList<>();
-            for(int j: col){
+            for(int j: colState){
                 char[] row = new char[n];
                 Arrays.fill(row, '.');
                 row[j] = 'Q';
@@ -93,9 +93,9 @@ public class LC51_solveNQueens2 {
         for(int j = 0; j <n; j++){
             //!diagonal2[i - j + n - 1]中i-j之后还要 + n- 1， 目的是防止diagonal2数组索引取到负数
             if(!colMark[j] && !diagonal1[i+j] && !diagonal2[i - j + n - 1]){
-                col[i] = j;
+                colState[i] = j;//由于是覆盖答案, 索引col[i]不需要还原现场
                 colMark[j] = diagonal1[i+j] = diagonal2[i - j + n - 1] = true;
-                dfs(n, ret, col, diagonal1, diagonal2, colMark, i+1);
+                dfs(n, colState, diagonal1, diagonal2, colMark, i+1);
                 colMark[j] = diagonal1[i+j] = diagonal2[i - j + n - 1] = false;
             }
         }

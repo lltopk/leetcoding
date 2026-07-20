@@ -52,14 +52,14 @@ import java.util.List;
  *
  */
 public class LC51_solveNQueens {
+    List<List<String>> ret = new ArrayList<>();
     public List<List<String>> solveNQueens(int n) {
-        List<List<String>> ret = new ArrayList<>();
         //索引代表行号， 值代表皇后的列号
         int[] col = new int[n];
 
         //示例 1 的两个图，分别对应排列 [1,3,0,2] 和 [2,0,3,1]
         //因此题目等价于求列号的全排列， 因此state为为int[] col
-        dfs(n, ret, col, 0);
+        dfs(n, col, 0);
         return ret;
     }
 
@@ -67,7 +67,7 @@ public class LC51_solveNQueens {
      i代表行号， 也代表层数
      col[], 代表这一层找到的答案
      */
-    private void dfs(int n, List<List<String>> ret, int[] col, int i){
+    private void dfs(int n, int[] col, int i){
         //注意N皇后问题每次是按照整个棋盘来作为答案收集的， 而不是每行
         if(i == n){
             List<String> ret0 = new ArrayList<>();
@@ -83,7 +83,7 @@ public class LC51_solveNQueens {
         for(int j = 0; j <n; j++){
             if(valid(i, j, col)){
                 col[i] = j;
-                dfs(n, ret, col, i+1);
+                dfs(n, col, i+1);
             }
         }
     }

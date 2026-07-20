@@ -53,9 +53,9 @@ import java.util.List;
  * 74.1%
  */
 public class LC39_combinationSum {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(candidates, target, ret, new ArrayList<>(), 0);
+        dfs(candidates, target, new ArrayList<>(), 0);
         return ret;
     }
 
@@ -67,7 +67,7 @@ public class LC39_combinationSum {
      * @param path
      * @param i
      */
-    private void dfs(int[] candidates, int target, List<List<Integer>> ret, List<Integer> path, int i){
+    private void dfs(int[] candidates, int target, List<Integer> path, int i){
         if (target == 0){
             ret.add(new ArrayList<>(path));
             return;
@@ -75,11 +75,11 @@ public class LC39_combinationSum {
         if(i == candidates.length || target < 0){
             return;
         }
-        dfs(candidates, target, ret, path, i + 1);
+        dfs(candidates, target, path, i + 1);
 
         path.add(candidates[i]);
         //这题允许重复选， 因此下次dfs无需i+1
-        dfs(candidates, target - candidates[i], ret, path, i);
+        dfs(candidates, target - candidates[i], path, i);
         path.remove(path.size() - 1);
     }
 }

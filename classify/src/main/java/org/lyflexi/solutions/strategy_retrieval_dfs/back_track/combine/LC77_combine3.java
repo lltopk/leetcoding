@@ -49,9 +49,9 @@ import java.util.List;
  * 77.5%
  */
 public class LC77_combine3 {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> combine(int n, int k) {
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(n, k, ret, new ArrayList<>(), 1);
+        dfs(n, k, new ArrayList<>(), 1);
         return ret;
     }
 
@@ -63,7 +63,7 @@ public class LC77_combine3 {
      * @param path
      * @param i
      */
-    private void dfs(int n, int k, List<List<Integer>> ret, List<Integer> path, int i){
+    private void dfs(int n, int k, List<Integer> path, int i){
         if (k == 0){
             ret.add(new ArrayList<>(path));
             return;
@@ -73,10 +73,10 @@ public class LC77_combine3 {
             return;
         }
         //不选
-        dfs(n, k, ret, path, i+1);
+        dfs(n, k, path, i+1);
         //选
         path.add(i);
-        dfs(n, k - 1, ret, path, i+1);
+        dfs(n, k - 1, path, i+1);
         path.remove(path.size() - 1);
     }
 }

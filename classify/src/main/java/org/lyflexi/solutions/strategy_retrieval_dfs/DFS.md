@@ -11,23 +11,36 @@ DFS深度搜索分为「自底向上归」和「自顶向下递」, 命名方式
 
 那么对于所有自然数`n`, `P(n)`都成立。在递归代码具体的执行层面, **还需加上递归出口**, 以计算二叉树深度为例LC104. 二叉树的最大深度
 
-一. 自底向上归
+一. 自底向上归: 自底向上需要递到最底部, 然后才开始在归的返回途中计算答案. 因此递归程序自带栈隐式的记忆每个节点的信息,来模拟节点后进先出归，弹栈的效果, 因此空间复杂度是`O(N)`。
 - 归纳奠基: 当前节点为`null`直接返回高度`0`, 注意`null`代表当前节点连叶子节点都不是
 - 归纳步骤: 先递归调用左右子问题, 然后计算当前高度为`max(左子问题, 右子问题) + 1`
 
-自底向上需要递到最底部, 然后才开始在归的返回途中计算答案. 因此递归程序自带栈隐式的记忆每个节点的信息,来模拟节点后进先出归，弹栈的效果, 因此空间复杂度是`O(N)`。
-
-
-二. 自顶向下递
+二. 自顶向下递: 自顶向下是在向下递的过程中完成计算的，归的时候只是简单的函数返回不参与计算，但栈仍然负责保存返回地址以及层中的变量信息等, 最终层层返回到根节点的调用者手里才算闭环
 - 归纳奠基: 定义新的递归函数`dfs(...args, ret, state, ...layers)`, 并给新的递归函数传入初始值, `dfs(...args, ret, state, ...0)`
 - 归纳步骤: 先取出高度进行计算`ret = Math.max(++depth, ret);`, 然后递归调用左右子问题
-- 成员变量: 如果`ret`不是成员变量, 那么必须是引用类型才能传入递归函数`dfs(...args, ret, state, ...layers)`
 
-自顶向下是在向下递的过程中完成计算的，归的时候只是简单的函数返回不参与计算，但栈仍然负责
-1. 保存返回地址，递归完了需要返回到哪里
-2. 保存变量信息，比如每层的`depth`是多少
+返回值讨论: 通常来说自底向上的递归函数需要带有返回值, 自顶向下的递归函数的返回值通常是`void`. 但都不必须是这样的, 真正决定的是父节点是否需要利用子节点计算出来的结果
 
-无论是自底向上还是自顶向下哪种方式，最终都要层层返回到根节点的调用者手里，只是自顶向下的归的过程中没有参与计算而已。
+递归参数讨论, 如果递归函数没有返回值即`void`, 你就需要自己定义成员变量`ret`(习惯于是类级别)来统计答案, 同时也要定义并区分函数参数
+```java
+RetType ret;
+public retType main(...args){
+    stateRef1 = new StateRef;
+    stateRef2 = new StateRef;
+    stateRef3 = new StateRef;
+    dfs(...args, stateRef1, stateRef2, stateRef3, ...0);
+    return ret;
+}
+private void dfs(...args, ...stateRef, ...layers){
+    if(condition){
+        ret += or ret.add
+    }
+    dfs(...args, ...stateRef, ...layers++ or ...layers--)
+}
+```
+有两类函数参数, 分别是基本参数引用参数`path` 和 基本参数`x`, 可以单独出现, 也可以同时出现
+- 函数引用参数`...stateRef`: 如`path`, 用于统计递归状态, 这种常用于回溯问题, 需要记得还原现场
+- 函数基本参数`...layers`: 由于基本类型不会对不同递归层级的状态造成影响, 对于每层递归是独立的参数, 所以可以表示二叉树高度, 或者表示递归层数
 
 
 ## 二叉树DFS
@@ -96,28 +109,37 @@ public class LC111_minDepth2 {
 
 回溯问题代码模板: 一般来说回溯问题的解法都是自顶向下`dfs(i) -> dfs(i+1)`直到`i == n`, 因此可以定义如下递归函数
 ```java
-private void dfs(...args, ret, state, ...layers){
-    if (layers) {
+RetType ret;
+public retType main(...args){
+    stateRef1 = new StateRef;
+    stateRef2 = new StateRef;
+    stateRef3 = new StateRef;
+    dfs(...args, stateRef1, stateRef2, stateRef3, ...0);
+    return ret;
+}
+private void dfs(...args, ...stateRef, ...layers){
+    if (layers.match(condition)) {
         ret.add(new ArrayList<>(state));
         return;
     }
-    //模板一. 选与不选(输入视角)
-    makeChoice(state, ...args[...layers]);
-    dfs(...args, ret, state, ...layers + 1);
-    undoChoice(state);
     
+    //模板一. 选与不选(输入视角)
+    dfs(...args, ...stateRef, ...layers + 1 or -1);//不选
+    makeChoice(...stateRef, ...args[...layers]);//选
+    dfs(...args, ...stateRef, ...layers + 1 or -1);
+    undoChoice(...stateRef);
+
     //模板二. 枚举选哪个(答案视角)
     for(int i = 0/layer; i<...args.length; i++){
-        makeChoice(state, ...args[...layers]);
-        dfs(...args, ret, state, ...layers + 1);
-        undoChoice(state);
+        makeChoice(...stateRef, ...args[...layers]);
+        dfs(...args, ...stateRef, ...layers + 1) or -1;
+        undoChoice(...stateRef);
     }
 }
 ```
-其中
+定义类成员变量`ret`接收答案, 然后澄清下`dfs(...args, ...stateRef, ...layers)`中的各个参数
 - `...args`: 代表题目的输入参数
-- `ret`: 代表答案, 是个引用类型
-- `state`: 如当前路径`path`, 代表回溯对象, 当前路径`dfs`结束之后, 要先还原现场才能弹出到下一条`dfs`路径
+- `...stateRef`: 如当前路径`path`, 代表回溯对象, 当前路径`dfs`结束之后, 要先还原现场才能弹出到下一条`dfs`路径
 - `...layers`: 代表层中的变量如`start/depth`, 层中变量基本类型即可, 各个层间独立不受影响, 在归的途中是被栈记忆过的
 
 时间复杂度分析, 先不考虑剪枝优化, 由于回溯会在二叉树/N叉树上穷举所有可能性, 这些可能性相当于答案的个数, 同时每个答案`path`都要复制一份作为结果这需要`O(n)`, 因此总的时间复杂度为`O(n* 可能性);`
@@ -128,23 +150,23 @@ private void dfs(...args, ret, state, ...layers){
 模板一. 选与不选(输入视角), 见LC78. 子集
 ```java
 class Solution {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(nums, ret, new ArrayList<>(), 0);
+        dfs(nums, new ArrayList<>(), 0);
         return ret;
     }
 
-    private void dfs(int[] nums, List<List<Integer>> ret, List<Integer> path, int i){
+    private void dfs(int[] nums, List<Integer> path, int i){
         if(i == nums.length){
             ret.add(new ArrayList<>(path));
             return;
         }
 
         //不选
-        dfs(nums, ret, path, i+1);
+        dfs(nums, path, i+1);
         //选
         path.add(nums[i]);
-        dfs(nums, ret, path, i+1);
+        dfs(nums, path, i+1);
         path.remove(path.size() - 1);
     }
 }
@@ -154,16 +176,16 @@ class Solution {
 ```java
 class Solution {
     private String[] mapping = new String[]{"", "",  "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    List<String> ret  = new ArrayList<>();
     public List<String> letterCombinations(String digits) {
-        List<String> ret  = new ArrayList<>();
         //digits的长度就是最终要选的次数
         char[] path = new char[digits.length()];
         //回溯出口就是i == digits.length();
-        dfs(digits, ret, path, 0);
+        dfs(digits, path, 0);
         return ret;
     }
 
-    private void dfs(String digits, List<String> ret, char[] path, int i){
+    private void dfs(String digits, char[] path, int i){
         if(i == digits.length()){
             ret.add(new String(path));
             return;
@@ -171,7 +193,7 @@ class Solution {
         //当前层可以可以枚举选哪些
         for(char c: mapping[digits.charAt(i) - '0'].toCharArray()){
             path[i] = c;//由于这里是覆盖, 而不是添加, 所以下面不需要恢复现场
-            dfs(digits, ret, path, i+1);
+            dfs(digits, path, i+1);
         }
     }
 }
@@ -241,15 +263,15 @@ public class LC437_pathSum {
  * 只能使用枚举思路（答案视角）
  */
 public class LC46_permute {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> ret = new ArrayList<>();
         int[] visit = new int[nums.length];
-        dfs(nums, ret, new ArrayList<>(), visit, 0);
+        dfs(nums, new ArrayList<>(), visit, 0);
         return ret;
     }
 
 
-    private void dfs(int[] nums, List<List<Integer>> ret, List<Integer> path, int[] visit, int i){
+    private void dfs(int[] nums, List<Integer> path, int[] visit, int i){
         if (i == nums.length){
             ret.add(new ArrayList<>(path));
             return;
@@ -262,7 +284,7 @@ public class LC46_permute {
             if(visit[j] == 0){
                 path.add(nums[j]);
                 visit[j] = 1;//布尔数组标记， 保证下面层数从头再选一轮的时候跳过上一轮的自己
-                dfs(nums, ret, path, visit, i + 1);
+                dfs(nums, path, visit, i + 1);
                 path.remove(path.size() - 1);
                 visit[j] = 0;
             }

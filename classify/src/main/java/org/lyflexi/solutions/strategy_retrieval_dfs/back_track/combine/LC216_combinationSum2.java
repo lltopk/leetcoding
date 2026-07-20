@@ -58,9 +58,9 @@ import java.util.List;
  */
 
 public class LC216_combinationSum2 {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> combinationSum3(int k, int n) {
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(n, k, ret, new ArrayList<>(), 1);
+        dfs(n, k, new ArrayList<>(), 1);
         return ret;
     }
 
@@ -72,7 +72,7 @@ public class LC216_combinationSum2 {
      * @param path
      * @param i
      */
-    private void dfs(int n, int k, List<List<Integer>> ret, List<Integer> path, int i){
+    private void dfs(int n, int k, List<Integer> path, int i){
         if (k == 0 && n == 0){
             ret.add(new ArrayList<>(path));
             return;
@@ -87,7 +87,7 @@ public class LC216_combinationSum2 {
         }
         for(int j = i ; j<=9; j++){
             path.add(j);
-            dfs(n - j, k - 1, ret, path, j+1);
+            dfs(n - j, k - 1, path, j+1);
             path.remove(path.size() - 1);
         }
     }

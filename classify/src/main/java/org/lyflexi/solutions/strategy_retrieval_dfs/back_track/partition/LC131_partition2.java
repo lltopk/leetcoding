@@ -43,18 +43,18 @@ import java.util.List;
  * 划分型回溯： 选与不选思路（答案视角）
  */
 public class LC131_partition2 {
+    List<List<String>> ret = new ArrayList<>();
     public List<List<String>> partition(String s) {
-        List<List<String>> ret = new ArrayList<>();
         //第一个0代表当前字串末尾位置i
         //第二个0代表字串起点start
-        dfs(s, ret, new ArrayList<>(), 0, 0);
+        dfs(s, new ArrayList<>(), 0, 0);
         return ret;
     }
 
     /**
      判断是否分割， 即是否要在i和i+1之间切一刀
      */
-    private void dfs(String s, List<List<String>> ret, List<String> path, int i, int start){
+    private void dfs(String s, List<String> path, int i, int start){
         if (i == s.length()){
             ret.add(new ArrayList<>(path));
             return;
@@ -65,14 +65,14 @@ public class LC131_partition2 {
 
         //不选， 当i==s.length() - 1时候是最后一段必须要选， 只有当i < s.length() - 1时才可以不选
         if(i < s.length() - 1){
-            dfs(s, ret, path, i+1, start);
+            dfs(s, path, i+1, start);
         }
         //选
         if(isHuiwen(s, start, i)){
             path.add(s.substring(start, i + 1));
             //重置start和i， 从i+1开始
             // 现在 s 未被分割的部分为 [i+1, n-1], 即下一个子问题dfs(i+1)
-            dfs(s, ret, path, i+1, i+1);
+            dfs(s, path, i+1, i+1);
             path.remove(path.size() - 1);
         }
     }

@@ -55,11 +55,11 @@ import java.util.List;
  * 60.1%
  */
 public class LC40_combinationSum2 {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         //这道题candidates存在重复元素， 而结果不能出现重复组合
         Arrays.sort(candidates);
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(candidates, target, ret, new ArrayList<>(), 0);
+        dfs(candidates, target, new ArrayList<>(), 0);
         return ret;
     }
 
@@ -71,7 +71,7 @@ public class LC40_combinationSum2 {
      * @param path
      * @param i
      */
-    private void dfs(int[] candidates, int target, List<List<Integer>> ret, List<Integer> path, int i){
+    private void dfs(int[] candidates, int target, List<Integer> path, int i){
         if (target == 0){
             ret.add(new ArrayList<>(path));
             return;
@@ -87,7 +87,7 @@ public class LC40_combinationSum2 {
 
         int x = candidates[i];
         path.add(candidates[i]);
-        dfs(candidates, target - candidates[i], ret, path, i+1);
+        dfs(candidates, target - candidates[i], path, i+1);
         path.remove(path.size() - 1);
 
         i++;
@@ -96,6 +96,6 @@ public class LC40_combinationSum2 {
             i++;
         }
         //不选, 注意此时由于上面的while循环， i恰好变成了i+1, 所以不选的时候传i即可了
-        dfs(candidates, target, ret, path, i);
+        dfs(candidates, target, path, i);
     }
 }

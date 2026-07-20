@@ -54,12 +54,12 @@ import java.util.List;
  * 二叉树回溯
  */
 public class LC113_pathSum {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(root, ret, new ArrayList<>(), targetSum);
+        dfs(root, new ArrayList<>(), targetSum);
         return ret;
     }
-    private void dfs(TreeNode root, List<List<Integer>> ret, List<Integer> path, int targetSum){
+    private void dfs(TreeNode root, List<Integer> path, int targetSum){
         if(root == null){
             return;
         }
@@ -69,8 +69,8 @@ public class LC113_pathSum {
         if(targetSum == 0 && root.left==null && root.right == null){
             ret.add(new ArrayList<>(path));
         }
-        dfs(root.left, ret, path, targetSum);
-        dfs(root.right, ret, path, targetSum);
+        dfs(root.left, path, targetSum);
+        dfs(root.right, path, targetSum);
         path.remove(path.size() - 1);
     }
 }

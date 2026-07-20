@@ -46,13 +46,13 @@ import java.util.List;
  * 回溯: 枚举选哪个, 答案视角
  */
 public class LC78_subsets2 {
+    List<List<Integer>> ret = new ArrayList<>();
     public List<List<Integer>> subsets(int[] nums) {
-        List<List<Integer>> ret = new ArrayList<>();
-        dfs(nums, ret, new ArrayList<>(), 0);
+        dfs(nums, new ArrayList<>(), 0);
         return ret;
     }
 
-    private void dfs(int[] nums, List<List<Integer>> ret, List<Integer> path, int i){
+    private void dfs(int[] nums, List<Integer> path, int i){
         //这题不要求最后一个元素一定是nums[nums.length - 1]
         //如果加了判断if(i == nums.length), 会导致漏答案
         ret.add(new ArrayList<>(path));
@@ -64,7 +64,7 @@ public class LC78_subsets2 {
         }
         for(int j = i; j<nums.length; j++){
             path.add(nums[j]);
-            dfs(nums, ret, path, j+1);
+            dfs(nums, path, j+1);
             path.remove(path.size() - 1);
         }
     }

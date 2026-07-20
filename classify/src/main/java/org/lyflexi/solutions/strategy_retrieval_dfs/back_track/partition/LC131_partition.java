@@ -43,13 +43,13 @@ import java.util.List;
  * 划分型回溯： 枚举思路（答案视角）
  */
 public class LC131_partition {
+    List<List<String>> ret = new ArrayList<>();
     public List<List<String>> partition(String s) {
-        List<List<String>> ret = new ArrayList<>();
-        dfs(s, ret, new ArrayList<>(), 0);
+        dfs(s, new ArrayList<>(), 0);
         return ret;
     }
 
-    private void dfs(String s, List<List<String>> ret, List<String> path, int i){
+    private void dfs(String s, List<String> path, int i){
         if (i == s.length()){
             ret.add(new ArrayList<>(path));
             return;
@@ -60,7 +60,7 @@ public class LC131_partition {
         for(int j = i; j<s.length(); j++){
             if(isHuiwen(s, i, j)){
                 path.add(s.substring(i, j + 1));
-                dfs(s, ret, path, j+1);
+                dfs(s, path, j+1);
                 path.remove(path.size() - 1);
             }
         }
