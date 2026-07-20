@@ -73,6 +73,7 @@ public class LC1448_goodNodes {
         int left = dfs(root.left, mx);
         int right = dfs(root.right, mx);
         // 由于mx是基本类型， 所以当前节点的mx不是左右子树中的mx
+        // 这里是≤， 而不是＜, 是因为当前层执行过这句话mx = Math.max(mx, root.val);, 因此若mx == root.val， 也能够证明当前节点是最大的
         return left + right + (mx <= root.val ? 1 : 0);
     }
 }
