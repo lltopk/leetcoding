@@ -66,7 +66,7 @@ public void dfs(...args, ...layers){
 问题二: 在什么情况下，DFS 需要有返回值？什么情况下不需要有返回值？
 - 自底向上的递归函数通常要带有返回值, 因为是在归中计算, 父节点需要根据子节点的结果来做计算
 - 自顶向下的递归函数的返回值通常是`void`, 因为通常在递的过程中已经计算了答案. 但有的时候自顶向下也可以借鉴自底向上的整体思维(带上返回值), 评价标准是, 是否需要返回值由父节点是否需要利用子节点的结果来计算决定的
-> 自顶向下同时带有返回值的题目见LC129. 求根节点到叶节点数字之和; 100. 相同的树
+> 自顶向下同时带有返回值的题目见LC129. 求根节点到叶节点数字之和; 100. 相同的树; 101. 对称二叉树; 226. 翻转二叉树解法二
 
 问题三: 在什么情况下，题目更适合用自顶向下的方法解决？什么情况下更适合用自底向上的方法解决？
 
@@ -87,7 +87,7 @@ public void dfs(...args, ...layers){
 ### 二叉搜索树BST
 二叉树中序遍历, Binary Search Tree的特点是中序遍历有序
 ### 创建二叉树
-## 最优性剪枝
+## DFS最优性剪枝
 DFS过程中, 如果在已知条件下可以不必多余深入递归, 则提前返回, 能够大幅降低时间复杂度, 见LC111. 二叉树的最小深度
 ```java
 /**
@@ -223,6 +223,36 @@ class Solution {
 
 ### 二叉树回溯
 回溯`BackTracking`本质是搜索树上的DFS， 先理解二叉树上的回溯, 再来学习一般情况下的回溯。
+
+见LC257. 二叉树的所有路径
+```java
+public class LC257_binaryTreePaths {
+    List<String> ret = new ArrayList<>();
+    public List<String> binaryTreePaths(TreeNode root) {
+        if (root == null) {
+            return ret;
+        }
+        dfs(root, new StringBuilder());
+        return ret;
+    }
+
+    private void dfs(TreeNode root, StringBuilder path) {
+        if(root == null){
+            return;
+        }
+        int preLen = path.length();
+        path.append(root.val);
+        if (root.left == null && root.right == null) {
+            ret.add(new String(path));//这里不能return, 目的是保证最后的回溯， 也能够作用于这里的叶子节点ret.add(new String(path));
+        }
+        path.append("->");
+        dfs(root.left, path);
+        dfs(root.right, path);
+        //回溯, 要么回溯上面的叶子节点ret.add(new String(path));， 要么回溯上面的path.append("->");
+        path.setLength(preLen);
+    }
+}
+```
 
 见LC437. 路径总和 III
 ```java
