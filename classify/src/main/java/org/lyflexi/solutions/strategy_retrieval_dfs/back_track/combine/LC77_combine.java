@@ -56,7 +56,7 @@ public class LC77_combine {
     }
 
     /**
-     * 枚举思路（选与不选）
+     * 枚举思路（答案视角）
      * @param n
      * @param k
      * @param ret
