@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_top;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV;
 
 /**
  * 129. 求根节点到叶节点数字之和
@@ -61,21 +61,21 @@ import org.lyflexi.common.TreeNode;
  */
 public class LC129_sumNumbers {
     /**
-     自顶向下带有返回值
+        自顶向下带有返回值
      */
     public int sumNumbers(TreeNode root) {
         return dfs(root, 0);
     }
 
-    private int dfs(TreeNode root, int x){
+    private int dfs(TreeNode root, int sum){
         if(root == null){
             return 0;
         }
         //当前问题 = 左子树问题+右子树问题
-        x = x* 10 + root.val;
+        sum = sum* 10 + root.val;
         if(root.left == null && root.right == null){
-            return x;
+            return sum;
         }
-        return dfs(root.left, x) + dfs(root.right, x);
+        return dfs(root.left, sum) + dfs(root.right, sum);
     }
 }

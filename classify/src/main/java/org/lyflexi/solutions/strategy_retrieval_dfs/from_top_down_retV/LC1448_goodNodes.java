@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_top;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV;
 
 import org.lyflexi.common.TreeNode;
 
@@ -62,8 +62,6 @@ public class LC1448_goodNodes {
 
     /**
      * 自顶向下， 同时带有返回值
-     *
-     * 先递再归， 有递有归
      * @param root
      * @param mx
      * @return
@@ -71,11 +69,9 @@ public class LC1448_goodNodes {
     private int dfs(TreeNode root, int mx) {
         if (root == null)
             return 0;
-        //先递
         mx = Math.max(mx, root.val);
         int left = dfs(root.left, mx);
         int right = dfs(root.right, mx);
-        //再归
         // 由于mx是基本类型， 所以当前节点的mx不是左右子树中的mx
         return left + right + (mx <= root.val ? 1 : 0);
     }
