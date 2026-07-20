@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV;
 
 /**
  * 129. 求根节点到叶节点数字之和
@@ -59,7 +59,7 @@ import org.lyflexi.common.TreeNode;
 /**
  * 自顶向下带有返回值
  */
-public class LC129_sumNumbers3 {
+public class LC129_sumNumbers {
     /**
      自顶向下带有返回值
      */
