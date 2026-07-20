@@ -22,19 +22,18 @@ public retType main(...args){
     return ret;
 }
 /**
- * 通常自顶向上递归函数需要返回值， 父节点需要基于子节点的结果做计算
+ * 通常自底向上归函数需要返回值， 父节点需要基于子节点的结果做计算. 但是没有state/layer状态传递参数
  * ...args: 一般是题目输入, 如根节点
- * ...layers: 基本类型参数, 由于是基本类型, 所以对于每层递归/乃至每条路径来说都是独立的参数, 所以可以表示二叉树高度, 层数等等独立的变量
  */
-public int dfs(...args, ...layers){
+public int dfs(...args){
     if(condition){
         return 0;
     }
     //注意...layers在递归之前不参与计算
-    int lRet = dfs(...args, ...layers++ or ...layers--)
-    int rRet = dfs(...args, ...layers++ or ...layers--)
+    int lRet = dfs(...args.left)
+    int rRet = dfs(...args.right)
     //自底向上递归模板, 先递归后计算
-    option(ret)//可选操作， 自底向上模板大部分情况函数的返回值就是最终答案了， 但不排除特殊的题目还需要全局ret来接收（可选）
+    option(ret)//可选操作， 自底向上模板大部分情况函数的返回值就是最终答案了， 但不排除特殊的题目还需要全局ret来接收（可选）, 如145. 二叉树的后序遍历, 1026. 节点与其祖先之间的最大差值
     return gather(lRet, rRet)//当前节点（父节点）需要汇总子节点的结果做计算
 }
 ```
