@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV_top;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_down_top;
 
 import org.lyflexi.common.TreeNode;
 
@@ -53,7 +53,7 @@ import org.lyflexi.common.TreeNode;
  */
 public class LC951_flipEquiv {
     /**
-     这道题不能当作对称二叉树来做， 因为这道题即使不对称， 节点也可以尝试翻转后对称
+        这道题不能当作对称二叉树来做， 因为这道题即使不对称， 节点也可以尝试翻转后对称
      */
     public boolean flipEquiv(TreeNode root1, TreeNode root2) {
         //两个节点任一为null， 则为false

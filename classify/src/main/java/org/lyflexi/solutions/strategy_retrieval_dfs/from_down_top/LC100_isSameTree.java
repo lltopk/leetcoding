@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV_top;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_down_top;
 
 import org.lyflexi.common.TreeNode;
 
@@ -54,6 +54,8 @@ public class LC100_isSameTree {
             return p == q;
         }
 
+        //当前节点的val: p.val 和 q.val不属于自顶向下state/layer传递计算, 因此不属于自顶向下.
+        // 本质上是自底向上
         return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
 }

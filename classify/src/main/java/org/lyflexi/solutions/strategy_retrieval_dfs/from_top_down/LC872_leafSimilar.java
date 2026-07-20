@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down;
 
 import org.lyflexi.common.TreeNode;
 
@@ -78,7 +78,6 @@ public class LC872_leafSimilar {
         if(root == null){
             return;
         }
-        //叶子节点特判
         if(root.left == null && root.right==null){
             ret.add(root.val);
         }

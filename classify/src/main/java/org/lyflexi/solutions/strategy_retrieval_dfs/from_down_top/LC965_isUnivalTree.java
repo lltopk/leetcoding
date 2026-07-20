@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV_top;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_down_top;
 
 import org.lyflexi.common.TreeNode;
 
@@ -48,20 +48,13 @@ public class LC965_isUnivalTree {
         return dfs(root, root.val);
     }
 
-    /**
-     * 自顶向下 有递有归
-     *
-     * @param root
-     * @param headV
-     * @return
-     */
-    private boolean dfs(TreeNode root, int headV) {
+    private boolean dfs(TreeNode root, int firstV) {
         if (root == null) {
             return true;
         }
-        if (root.val != headV) {
+        if (root.val != firstV) {
             return false;
         }
-        return dfs(root.left, headV) && dfs(root.right, headV);
+        return dfs(root.left, firstV) && dfs(root.right, firstV);
     }
 }

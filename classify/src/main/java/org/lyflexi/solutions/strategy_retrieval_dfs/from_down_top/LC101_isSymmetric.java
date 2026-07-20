@@ -1,45 +1,50 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV_top;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_down_top;
 
 import org.lyflexi.common.TreeNode;
 
 /**
- * LCR 145. 判断对称二叉树
+ * 101. 对称二叉树
  * 已解答
  * 简单
  * 相关标签
  * premium lock icon
  * 相关企业
- * 请设计一个函数判断一棵二叉树是否 轴对称 。
+ * 给你一个二叉树的根节点 root ， 检查它是否轴对称。
  *
  *
  *
  * 示例 1：
  *
  *
- *
- * 输入：root = [6,7,7,8,9,9,8]
+ * 输入：root = [1,2,2,3,4,4,3]
  * 输出：true
- * 解释：从图中可看出树是轴对称的。
  * 示例 2：
- *
  *
  *
  * 输入：root = [1,2,2,null,3,null,3]
  * 输出：false
- * 解释：从图中可看出最后一层的节点不对称。
  *
  *
  * 提示：
  *
- * 0 <= 节点个数 <= 1000
+ * 树中节点数目在范围 [1, 1000] 内
+ * -100 <= Node.val <= 100
  *
- * 注意：本题与主站 101 题相同：https://leetcode.cn/problems/symmetric-tree/
+ *
+ * 进阶：你可以运用递归和迭代两种方法解决这个问题吗？
+ *
+ *
+ * 面试中遇到过这道题?
+ * 1/5
+ * 是
+ * 否
+ * 通过次数
+ * 1,690,269/2.7M
+ * 通过率
+ * 63.8%
  */
-public class LCR145_checkSymmetricTree {
-    public boolean checkSymmetricTree(TreeNode root) {
-        if(root == null){
-            return true;
-        }
+public class LC101_isSymmetric {
+    public boolean isSymmetric(TreeNode root) {
         return isSymmetric(root.left, root.right);
     }
     /**

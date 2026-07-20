@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV_top;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_down_top;
 
 import org.lyflexi.common.TreeNode;
 
@@ -61,13 +61,13 @@ public class LC1379_getTargetCopy {
         if(original == target){
             return cloned;
         }
-        //有递有归
+
+
         //接下来同时递归original.left 和 cloned.left
         TreeNode leftRef = getTargetCopy(original.left, cloned.left, target);
         if(leftRef!=null){
             return leftRef;
         }
-        //有递有归
         //接下来同时递归original.right 和 cloned.right
         return getTargetCopy(original.right, cloned.right, target);
     }

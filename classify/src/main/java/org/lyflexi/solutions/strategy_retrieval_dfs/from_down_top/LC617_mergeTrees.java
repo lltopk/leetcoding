@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV_top;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_down_top;
 
 import org.lyflexi.common.TreeNode;
 
@@ -46,7 +46,6 @@ import org.lyflexi.common.TreeNode;
  */
 public class LC617_mergeTrees {
     public TreeNode mergeTrees(TreeNode root1, TreeNode root2) {
-        //自顶向下DFS， 有递有归
         if(root1 == null){
             return root2;
         }

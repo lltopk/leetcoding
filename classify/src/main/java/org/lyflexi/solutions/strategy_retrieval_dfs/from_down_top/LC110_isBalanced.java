@@ -45,20 +45,20 @@ import org.lyflexi.common.TreeNode;
  */
 public class LC110_isBalanced {
     public boolean isBalanced(TreeNode root) {
-        return mxH(root, 0) == -1?false: true;
+        return mxH(root) == -1?false: true;
     }
     /**
      自底向下求最大高度变形。当不平衡的时候返回-1， 当-1弹回父节点继续返回-1直到根节点
      */
-    private int mxH(TreeNode root, int h){
+    private int mxH(TreeNode root){
         if(root == null){
             return 0;
         }
-        int hL = mxH(root.left, h+1);
+        int hL = mxH(root.left);
         if(hL == -1){
             return -1;
         }
-        int hR = mxH(root.right, h+1);
+        int hR = mxH(root.right);
         if(hR == -1 || Math.abs(hR - hL) > 1){
             return -1;
         }
