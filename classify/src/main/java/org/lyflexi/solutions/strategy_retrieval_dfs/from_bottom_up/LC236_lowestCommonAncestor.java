@@ -70,7 +70,7 @@ public class LC236_lowestCommonAncestor {
         if(left != null && right != null){
             return root;
         }
-        //左子树或者右子树任意一个不存在候选项， 则返回存在候选项的一方, 具体就是p/q
+        //左子树或者右子树任意一个不存在候选项(说明p q在同侧)， 则返回存在候选项的一方, 具体就是p/q
         return left == null? right: left;
     }
 }
