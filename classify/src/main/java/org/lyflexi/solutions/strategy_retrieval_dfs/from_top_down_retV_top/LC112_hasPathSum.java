@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_top_down_retV_top;
 
 import org.lyflexi.common.TreeNode;
 
@@ -56,7 +56,7 @@ import org.lyflexi.common.TreeNode;
 /**
  * 自定向下 简洁写法
  */
-public class LC112_hasPathSum2 {
+public class LC112_hasPathSum {
     /**
      * 「倒着减小」可以让我们直接递归调用 hasPathSum：
      *
