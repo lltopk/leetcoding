@@ -21,7 +21,7 @@ DFS深度搜索分为「自底向上归」和「自顶向下递」, 命名方式
 - 归纳奠基: 当前节点为`null`直接返回高度`0`, 注意`null`代表当前节点连叶子节点都不是
 - 归纳步骤: 先递归调用左右子问题, 然后计算当前高度为`return max(左子问题, 右子问题) + 1`, 因此这种归纳方式递归函数通常需要返回值
 ```java
-RetType ret;//在自底向上模板中ret不是必须的
+RetType ret;//在自底向上模板中ret不是必须的, 具体要根据题意
 public retType main(...args){
     dfs(...args, ...0);
     return ret;
@@ -185,7 +185,7 @@ public class LC111_minDepth2 {
 
 回溯问题代码模板: 一般来说回溯问题的解法都是自顶向下`dfs(i) -> dfs(i+1)`直到`i == n`, 因此可以定义如下递归函数
 ```java
-RetType ret;
+RetType ret;// ret可以定义为成员变量, 也可以传入回溯函数, 根据个人喜好(竞赛中当前问题就是单独的类因此定义为成员变量即可, 工程实践中根据代码规范最好是定义成回溯函数参数)
 public retType main(...args){
     stateRef1 = new StateRef;
     stateRef2 = new StateRef;
