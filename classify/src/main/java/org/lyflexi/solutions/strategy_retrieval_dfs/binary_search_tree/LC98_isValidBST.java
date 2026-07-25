@@ -56,6 +56,7 @@ public class LC98_isValidBST {
         }
         //细纠这里的逻辑， 这里! isValidBST(root.left)其实是当前节点（父节点）判断左子树的结果， 由于是中序遍历， 因此左子树一定是提前有结果了
         //假如左子树结果是false， 那么就会进入这个分支， 然后使得当前节点也返回false
+        // 这能保证自底向上传递false
         if(! isValidBST(root.left)){
             return false;
         }

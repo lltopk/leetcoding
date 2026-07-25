@@ -1,0 +1,63 @@
+package org.lyflexi.solutions.strategy_retrieval_dfs.binary_search_tree;
+
+import org.lyflexi.common.TreeNode;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * 653. 两数之和 IV - 输入二叉搜索树
+ * 已解答
+ * 简单
+ * 相关标签
+ * premium lock icon
+ * 相关企业
+ * 给定一个二叉搜索树 root 和一个目标结果 k，如果二叉搜索树中存在两个元素且它们的和等于给定的目标结果，则返回 true。
+ *
+ *
+ *
+ * 示例 1：
+ *
+ *
+ * 输入: root = [5,3,6,2,4,null,7], k = 9
+ * 输出: true
+ * 示例 2：
+ *
+ *
+ * 输入: root = [5,3,6,2,4,null,7], k = 28
+ * 输出: false
+ *
+ *
+ * 提示:
+ *
+ * 二叉树的节点个数的范围是  [1, 104].
+ * -104 <= Node.val <= 104
+ * 题目数据保证，输入的 root 是一棵 有效 的二叉搜索树
+ * -105 <= k <= 105
+ *
+ * 面试中遇到过这道题?
+ * 1/5
+ * 是
+ * 否
+ * 通过次数
+ * 134,213/210.3K
+ * 通过率
+ * 63.8%
+ */
+public class LC653_findTarget {
+    //两数之和，  哈希法
+    Set<Integer> set = new HashSet<>();
+    public boolean findTarget(TreeNode root, int k) {
+        if(root == null){
+            return false;
+        }
+        //a + b = k
+        //a = k - b
+        if(set.contains(k - root.val)){
+            return true;
+        }
+        set.add(root.val);
+        //自底向上， 因为k永远维持原装
+        return findTarget(root.left, k) || findTarget(root.right, k);
+    }
+}
