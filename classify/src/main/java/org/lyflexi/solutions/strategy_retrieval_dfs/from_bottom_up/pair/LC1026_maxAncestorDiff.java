@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.from_bottom_up;
+package org.lyflexi.solutions.strategy_retrieval_dfs.from_bottom_up.pair;
 
 import org.lyflexi.common.TreeNode;
 
