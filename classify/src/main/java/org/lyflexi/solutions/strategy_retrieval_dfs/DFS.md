@@ -126,8 +126,44 @@ public class LC100_isSameTree {
 }
 ```
 
-## 二叉树DFS
-本质依然是基于自顶向下DFS / 自底向DFS 的应用, 有些题目既可以用自顶向下DFS 也可以用 自底向DFS解决， 请带着问题去做下面的题目：
+## 二叉树应用DFS
+本质依然是基于自顶向下DFS / 自底向DFS 的应用, 有些题目既可以用自顶向下DFS 也可以用 自底向DFS解决
+
+如果是自底向上求解, 你需要重点区分`dfs`求解对象, 以及最终的应用求解对象`ret`, 如124. 二叉树中的最大路径和
+- 这个`dfs`: 自底向上求最大一侧单链和
+- 应用`ret`: 整个`dfs`迭代过程中根据两侧单链和的最大值`dfs(root.left)`和`dfs(root.right)`, 进一步求两侧单链和最大值的和的最大值, 包括当前节点即为最大路径和
+```java
+/**
+ * 同源题目: 124. 二叉树中的最大路径和
+ * 543. 二叉树的直径 
+ * 687. 最长同值路径
+ */
+public class LC124_maxPathSum {
+    int ret = Integer.MIN_VALUE;
+    public int maxPathSum(TreeNode root) {
+        dfs(root);
+        return ret;
+    }
+    /**
+     这个dfs: 自底向上求最大一侧链和
+     整个迭代过程中, 根据dfs(root.left)和dfs(root.right)求两侧链和最大值, 即为最大路径和
+     */
+    private int dfs(TreeNode root){
+        if(root == null){
+            return 0;//求和, 则叶子节点 0 + leaf.val = leaf.val
+        }
+        //注意左右链的和都不能小于0, 否则记为0表示不选
+        int left = Math.max(dfs(root.left), 0);
+        int right = Math.max(dfs(root.right), 0);
+
+        //特别的当所有节点都为负数, 路径中只有一个节点是最优的, 毕竟节点越多，元素和越小
+        ret = Math.max(ret, left + right + root.val);
+        return Math.max(left, right) + root.val;
+    }
+}
+```
+
+更多的题目请带着问题去做下面的题目：
 
 问题一: 一般来说，DFS 的递归边界是空节点。在什么情况下，要额外把叶子节点作为递归边界？
 
@@ -138,11 +174,14 @@ public class LC100_isSameTree {
 二叉树DFS题型分类如下：
 - 二叉树高度
 - 相同/对称/翻转/平衡
-- 二叉树直径
-- 最近公共祖先
-- 创建二叉树 
 - 二叉搜索树
 - 路径总和
+- 二叉树直径
+- 创建二叉树
+- 最近公共祖先
+
+
+
 
 ## DFS最优性剪枝
 DFS过程中, 如果在已知条件下可以不必多余深入递归, 则提前返回, 能够大幅降低时间复杂度, 见LC111. 二叉树的最小深度
