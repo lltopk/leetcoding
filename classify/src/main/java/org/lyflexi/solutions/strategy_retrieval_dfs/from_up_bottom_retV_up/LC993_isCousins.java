@@ -54,8 +54,8 @@ import org.lyflexi.common.TreeNode;
  * 59.9%
  */
 public class LC993_isCousins {
-    int D = 0;
-    TreeNode P = null;
+    int D = 0;//业务属性(比较对象)
+    TreeNode P = null;//业务属性(比较对象)
     public boolean isCousins(TreeNode root, int x, int y) {
         return dfs(root, null, 1, x, y);
     }

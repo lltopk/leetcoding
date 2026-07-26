@@ -127,8 +127,65 @@ public class LC100_isSameTree {
 ```
 
 ## 二叉树应用DFS
-本质依然是基于自顶向下DFS / 自底向DFS 的应用, 有些题目既可以用自顶向下DFS 也可以用 自底向DFS解决
+本质依然是基于自顶向下DFS / 自底向DFS 的应用, 有些题目既可以用自顶向下DFS 也可以用 自底向DFS
 
+### f_u_b区分业务属性biz和ret
+由于是应用题, 自顶向下求解, 你可能都会用到业务属性`biz`, 表示自顶向下维护的比较标准, 因此你需要区分`biz`和答案`ret`, 比如LC1302. 层数最深叶子节点的和
+```java
+public class LC1302_deepestLeavesSum {
+    int ret = 0;
+    int mxDepth = 0; //业务属性(比较标准)
+    public int deepestLeavesSum(TreeNode root) {
+        dfs(root, 0);
+        return ret;
+    }
+    private void dfs(TreeNode root, int depth){
+        if(root == null){
+            return;
+        }
+        if(depth + 1 > mxDepth){
+            mxDepth = depth + 1;
+            ret = root.val;
+        }else if(depth + 1 == mxDepth){
+            ret += root.val;
+        }
+        dfs(root.left, depth + 1);
+        dfs(root.right, depth + 1);
+    }
+}
+```
+
+多个业务属性`biz`见LC993. 二叉树的堂兄弟节点
+```java
+public class LC993_isCousins {
+    int D = 0;//业务属性(比较对象)
+    TreeNode P = null;//业务属性(比较对象)
+    public boolean isCousins(TreeNode root, int x, int y) {
+        return dfs(root, null, 1, x, y);
+    }
+    /**
+         自底向上, 有递有归
+         计算x y是否二叉树的堂兄弟节点(不能是亲兄弟)
+     */
+    private boolean dfs(TreeNode root, TreeNode p, int depth, int x, int y){
+        if(root == null){
+            return false;
+        }
+        //存在x || y
+        if(root.val == x || root.val ==y){
+            // if(P != null){//之前已经找到x y其中一个
+            if(D != 0){//之前已经找到x y其中一个
+                return D == depth && P != p;
+            }
+            D = depth;
+            P = p;
+        }
+        return dfs(root.left, root, depth+1, x, y) || dfs(root.right, root, depth+1, x,y);
+    }
+}
+```
+
+### f_b_u区分求解对象dfs和ret
 如果是自底向上求解, 你需要重点区分`dfs`求解对象, 以及最终的应用求解对象`ret`, 如124. 二叉树中的最大路径和
 - 这个`dfs`: 自底向上求最大一侧单链和
 - 应用`ret`: 整个`dfs`迭代过程中根据两侧单链和的最大值`dfs(root.left)`和`dfs(root.right)`, 进一步求两侧单链和最大值的和的最大值, 包括当前节点即为最大路径和
@@ -163,6 +220,7 @@ public class LC124_maxPathSum {
 }
 ```
 
+### 全部应用分类
 更多的题目请带着问题去做下面的题目：
 
 问题一: 一般来说，DFS 的递归边界是空节点。在什么情况下，要额外把叶子节点作为递归边界？
