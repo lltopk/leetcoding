@@ -516,7 +516,55 @@ public class LC46_permute {
 | 递归方向 | 左儿子和右儿子 | 一般为左右上下的相邻格子 |
 | 递归边界 | 空节点（或者叶节点） | 出界、遇到障碍或者已访问 |
 
-以计算每个连通块的大小为例, 这类题的模板如下
+以计算每个连通块的大小为例, 这类题的模板如下, 通过修改原矩阵`grid[i][j]`为不影响题目的值, 来表示格子已经被访问过
+```java
+    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
+
+    // 返回网格图 grid 每个连通块的大小
+    // 时间复杂度 O(mn)
+    public List<Integer> dfsGrid(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        List<Integer> compSize = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] != 'Y') { // grid[i][j] != 'Y' 根据题意修改
+                    continue;
+                }
+                int size = dfs(grid, i, j);
+                compSize.add(size);
+            }
+        }
+        return compSize;
+    }
+
+    /**
+     * 自底向上 返回当前连通块的大小
+     * @param i
+     * @param j
+     * @param grid
+     * @return
+     */
+    private int dfs(char[][] grid, int i, int j) {
+
+        // 越界 或 不可访问 或 已经访问过
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 'X' || grid[i][j] == 'Z') {
+            return 0;
+        }
+
+        grid[i][j] = 'Z';//修改原矩阵值来达到同样标记的效果
+        int ret = 1;
+        for (int[] dir : DIRS) {
+            ret += dfs(grid, i + dir[0], j + dir[1]);
+        }
+        return ret;
+    }
+}
+```
+时间复杂度分析: `O(mn)`, 其中 `m` 和 `n` 分别是 `grid` 的行数和列数。 统计最内层循环 `grid[i][j] = '2'`执行次数, 当我们访问一个访问过的格子时，会触发 `if grid[i][j] != '1': return` 。只有首次访问一个格子时，才会继续递归，其余情况不会继续递归。每次插上一个旗子只需要 `O(1)` 的时间，插上至多 `mn` 个旗子，就需要 `O(mn)` 的时间。
+
+另外还可以创建单独的二维数组来标记格子`boolean[][] vis = new boolean[m][n];`
 ```java
 class Solution {
     private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
@@ -566,53 +614,124 @@ class Solution {
 }
 ```
 
-当所求含义与矩阵`grid[i][j]`本身的值无关的时候, 可以通过修改原矩阵`grid`值达到同样的`boolean[][] vis = new boolean[m][n];`标记效果, 节约了空间, 此时模板如下
+### biz_prop
+还有一类题目对所求连通图做了额外限制, 比如不能与`0`相邻, 这个时候我们可以定义全局(成员)变量`condition`, 在`dfs`过程中计算`condition`是否满足
+
+最终只看满足`condition`的解, 见LCS 03. 主题空间
 ```java
-    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
+public class LCS_03_largestArea2 {
+    private static final int[][] DIRS = {
+            { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 }
+    };
 
-    // 返回网格图 grid 每个连通块的大小
-    // 时间复杂度 O(mn)
-    public List<Integer> dfsGrid(char[][] grid) {
+    int ans = 0;
+    boolean touch; // 当前主题空间是否接触走廊
+
+    public int largestArea(String[] grid) {
         int m = grid.length;
-        int n = grid[0].length;
+        int n = grid[0].length();
 
-        List<Integer> compSize = new ArrayList<>();
+        char[][] g = new char[m][n];
+        for (int i = 0; i < m; i++) {
+            g[i] = grid[i].toCharArray();
+        }
+
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (grid[i][j] != 'Y') { // grid[i][j] != 'Y' 根据题意修改
-                    continue;
+                if (g[i][j] != '0') {
+                    touch = false;
+                    char color = g[i][j];
+                    int area = dfs(g, i, j, color);
+                    if (!touch) {
+                        ans = Math.max(ans, area);
+                    }
                 }
-                int size = dfs(grid, i, j);
-                compSize.add(size);
             }
         }
-        return compSize;
+
+        return ans;
     }
 
-    /**
-     * 自底向上 返回当前连通块的大小
-     * @param i
-     * @param j
-     * @param grid
-     * @return
-     */
-    private int dfs(char[][] grid, int i, int j) {
+    private int dfs(char[][] g, int i, int j, char color) {
 
-        // 越界 或 不可访问 或 已经访问过
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 'X' || grid[i][j] == 'Z') {
+        // 越界
+        if (i < 0 || i >= g.length || j < 0 || j >= g[0].length) {
+            touch = true;
             return 0;
         }
 
-        grid[i][j] = 'Z';//修改原矩阵值来达到同样标记的效果
-        int ret = 1;
-        for (int[] dir : DIRS) {
-            ret += dfs(grid, i + dir[0], j + dir[1]);
+        // 走廊
+        if (g[i][j] == '0') {
+            touch = true;
+            return 0;
         }
-        return ret;
+
+        // 不属于当前主题空间
+        if (g[i][j] != color || g[i][j] == ' ') {
+            return 0;
+        }
+
+        g[i][j] = ' ';
+
+        int area = 1;
+        for (int[] d : DIRS) {
+            area += dfs(g, i + d[0], j + d[1], color);
+        }
+
+        return area;
     }
 }
 ```
 
-时间复杂度分析: `O(mn)`, 其中 `m` 和 `n` 分别是 `grid` 的行数和列数。 统计最内层循环 `grid[i][j] = '2'`执行次数, 当我们访问一个访问过的格子时，会触发 `if grid[i][j] != '1': return` 。只有首次访问一个格子时，才会继续递归，其余情况不会继续递归。每次插上一个旗子只需要 `O(1)` 的时间，插上至多 `mn` 个旗子，就需要 `O(mn)` 的时间。
+### 叶子边界 or 越界边界
+一般来说网格图`dfs`的边界条件都是越界都是`i < 0 || i >= g.length || j < 0 || j >= g[0].length`
+
+但就像`dfs`二叉树, 我们有的时候需要用到叶子节点, 在网格图中就是需要用到最外层格子, 这个时候卫语句的条件就是`i == 0 || i == grid.length - 1 || j == 0 || j == grid[0].length - 1`
+```java
+public class LC1254_closedIsland {
+    int ret = 0;
+    boolean closed = true;
+    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};//定义四个方向
+    public int closedIsland(int[][] grid) {
+        for(int i = 0; i< grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                //遇到岛屿则开始dfs
+                if(grid[i][j] == 0){
+                    closed = true;
+                    dfs(grid, i, j);//全部感染当前连通块， 因此下面可以答案+1了
+                    if(closed){
+                        ret++;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+
+    private void dfs(int[][] grid, int i , int j ){
+        //这里相当于判断叶子， 而不是判断空
+        if(i == 0 || i == grid.length - 1 || j == 0 || j == grid[0].length - 1){
+            //需要对边界进行特判（边界一定不会是有效解）
+            if(grid[i][j] == 0) {
+                closed = false;
+            }
+            return ;
+        }
+
+        //除此之外， 一定是封闭的， 保持closed是true即可
+        if(grid[i][j] != 0) return;
+
+        //标记为1吧
+        grid[i][j] = 1;
+        //左右上下四个方向
+        for(int[] dir: DIRS){
+            dfs(grid, i + dir[0], j + dir[1]);
+        }
+    }
+}
+```
+
+
+
 
 
