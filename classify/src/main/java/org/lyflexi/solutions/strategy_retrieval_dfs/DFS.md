@@ -531,7 +531,7 @@ class Solution {
         List<Integer> compSize = new ArrayList<>();
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (grid[i][j] != '*' || vis[i][j]) { // grid[i][j] != '*' 根据题意修改
+                if (grid[i][j] != 'Y' || vis[i][j]) { // grid[i][j] != 'Y' 根据题意修改
                     continue;
                 }
                 int size = dfs(grid, vis, i, j);
@@ -551,8 +551,8 @@ class Solution {
      */
     private int dfs(char[][] grid, int i, int j, boolean[][] vis) {
 
-        // 越界 或 这里 grid[i][j] == '*' 根据题意修改 或已经访问过
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '*' || vis[i][j]) {
+        // 越界 或 不可访问 或 已经访问过
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 'X' || vis[i][j]) {
             return 0;
         }
         
@@ -560,6 +560,53 @@ class Solution {
         int ret = 1;
         for (int[] dir : DIRS) {
             ret += dfs(grid, vis, i + dir[0], j + dir[1]);
+        }
+        return ret;
+    }
+}
+```
+
+其中`boolean[][] vis = new boolean[m][n];`可省略, 通过修改原矩阵`grid`值达到同样的标记效果, 这可以节约空间, 此时模板如下
+```java
+    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
+
+    // 返回网格图 grid 每个连通块的大小
+    // 时间复杂度 O(mn)
+    public List<Integer> dfsGrid(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        List<Integer> compSize = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] != 'Y') { // grid[i][j] != 'Y' 根据题意修改
+                    continue;
+                }
+                int size = dfs(grid, i, j);
+                compSize.add(size);
+            }
+        }
+        return compSize;
+    }
+
+    /**
+     * 自底向上 返回当前连通块的大小
+     * @param i
+     * @param j
+     * @param grid
+     * @return
+     */
+    private int dfs(char[][] grid, int i, int j) {
+
+        // 越界 或 不可访问 或 已经访问过
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 'X' || grid[i][j] == 'Z') {
+            return 0;
+        }
+
+        grid[i][j] = 'Z';//修改原矩阵值来达到同样标记的效果
+        int ret = 1;
+        for (int[] dir : DIRS) {
+            ret += dfs(grid, i + dir[0], j + dir[1]);
         }
         return ret;
     }
