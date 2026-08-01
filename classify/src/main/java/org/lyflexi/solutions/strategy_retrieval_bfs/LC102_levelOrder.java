@@ -61,11 +61,14 @@ public class LC102_levelOrder {
         }
         deque.offer(root);
         while(! deque.isEmpty()){
-            List<Integer> layer = new ArrayList<>();
+            //0. 初始化当前层变量/集合
+            List<Integer> bizList = new ArrayList<>();
             int n = deque.size();
             while(n-- > 0){
+                //1. 计算当前层
                 TreeNode node = deque.poll();
-                layer.add(node.val);
+                bizList.add(node.val);
+                //2. 计算下一层, 如果是逆序层序遍历, 则下面两个if交换顺序即可
                 if(node.left != null){
                     deque.offer(node.left);
                 }
@@ -73,7 +76,7 @@ public class LC102_levelOrder {
                     deque.offer(node.right);
                 }
             }
-            ret.add(layer);
+            ret.add(bizList);
         }
         return ret;
     }

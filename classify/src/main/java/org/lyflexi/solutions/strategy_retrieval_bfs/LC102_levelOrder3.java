@@ -2,9 +2,7 @@ package org.lyflexi.solutions.strategy_retrieval_bfs;
 
 import org.lyflexi.common.TreeNode;
 
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
 /**
@@ -52,7 +50,7 @@ import java.util.List;
 /**
  * 两个数组
  */
-public class LC102_levelOrder2 {
+public class LC102_levelOrder3 {
     List<List<Integer>> ret = new ArrayList<>();
     List<TreeNode> curList = new ArrayList<>();
 
@@ -63,17 +61,19 @@ public class LC102_levelOrder2 {
         curList.add(root);
         while(! curList.isEmpty()){
             List<Integer> bizList = new ArrayList<>(curList.size());
-            List<TreeNode> nxtList = new ArrayList<>();
-            for(TreeNode node: curList){
+            //引用bak指向curList的堆地址
+            List<TreeNode> bak = curList;
+            //引用curList指向新的空白堆地址
+            curList = new ArrayList();
+            for(TreeNode node: bak){
                 bizList.add(node.val);
                 if(node.left != null){
-                    nxtList.add(node.left);
+                    curList.add(node.left);
                 }
                 if(node.right !=null){
-                    nxtList.add(node.right);
+                    curList.add(node.right);
                 }
             }
-            curList = nxtList;
             ret.add(bizList);
         }
         return ret;
