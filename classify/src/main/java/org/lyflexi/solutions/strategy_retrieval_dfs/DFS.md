@@ -564,7 +564,7 @@ public class LC46_permute {
 ```
 时间复杂度分析: `O(mn)`, 其中 `m` 和 `n` 分别是 `grid` 的行数和列数。 统计最内层循环 `grid[i][j] = '2'`执行次数, 当我们访问一个访问过的格子时，会触发 `if grid[i][j] != '1': return` 。只有首次访问一个格子时，才会继续递归，其余情况不会继续递归。每次插上一个旗子只需要 `O(1)` 的时间，插上至多 `mn` 个旗子，就需要 `O(mn)` 的时间。
 
-另外还可以创建单独的二维数组来标记格子`boolean[][] vis = new boolean[m][n];`
+另外更直观的方式是, 可以创建单独的二维数组来标记格子`boolean[][] vis = new boolean[m][n];`
 ```java
 class Solution {
     private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
@@ -617,7 +617,7 @@ class Solution {
 ### biz_prop
 还有一类题目对所求连通图做了额外限制, 比如不能与`0`相邻, 这个时候我们可以定义全局(成员)变量`condition`, 在`dfs`过程中计算`condition`是否满足
 
-最终只看满足`condition`的解, 见LCS 03. 主题空间
+最终只看满足`condition`的解, 见LCS 03. 主题空间, 定义`boolean touch;` 表示当前主题空间是否接触走廊
 ```java
 public class LCS_03_largestArea2 {
     private static final int[][] DIRS = {
