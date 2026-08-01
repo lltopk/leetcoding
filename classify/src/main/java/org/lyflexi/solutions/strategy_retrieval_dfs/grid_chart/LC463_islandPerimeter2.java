@@ -48,33 +48,39 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
  * 通过率
  * 71.1%
  */
+public class LC463_islandPerimeter2 {
+    private static final int[][] DIRS = {
+            {0,1},{0,-1},{1,0},{-1,0}
+    };
 
-/**
- * 观察到题目保证没有内陆湖，我们可以不用dfs直接遍历即可
- */
-public class LC463_islandPerimeter {
     public int islandPerimeter(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        int ans = 0;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] == 0) {
-                    continue;
-                }
-                if (i == 0 || grid[i - 1][j] == 0) { // 上：出界或者是水
-                    ans++;
-                }
-                if (i == m - 1 || grid[i + 1][j] == 0) { // 下：出界或者是水
-                    ans++;
-                }
-                if (j == 0 || grid[i][j - 1] == 0) { // 左：出界或者是水
-                    ans++;
-                }
-                if (j == n - 1 || grid[i][j + 1] == 0) { // 右：出界或者是水
-                    ans++;
+        for(int i=0;i<grid.length;i++){
+            for(int j=0;j<grid[0].length;j++){
+                if(grid[i][j]==1){
+                    return dfs(grid,i,j);
                 }
             }
+        }
+        return 0;
+    }
+
+    private int dfs(int[][] grid,int i,int j){
+
+        //越界返回贡献1
+        if(i<0 || i>=grid.length || j<0 || j>=grid[0].length)
+            return 1;
+        //如果是水返回贡献1
+        if(grid[i][j]==0)
+            return 1;
+        //如果访问过， 则没有贡献
+        if(grid[i][j]==2)
+            return 0;
+
+        grid[i][j]=2;
+
+        int ans=0;
+        for(int[] d:DIRS){
+            ans+=dfs(grid,i+d[0],j+d[1]);
         }
         return ans;
     }
