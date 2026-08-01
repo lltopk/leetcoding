@@ -62,7 +62,8 @@ public class LC958_isCompleteTree {
             }
         }
 
-        //判断节点个数是否等于最后一个元素的二叉索引数， 如果不等于， 说明节点少了
-        return list.size() == list.get(list.size() - 1).idx + 1;
+        //判断节点个数是否等于最后一个元素的二叉索引数， 如果不等于， 二叉树索引计算是标准的， 只能是说明节点少了
+        // return list.size() == list.get(list.size() - 1).idx + 1;
+        return i == list.get(i - 1).idx + 1;//此时i == list.size();
     }
 }

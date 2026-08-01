@@ -45,6 +45,10 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
  * 通过率
  * 68.8%
  */
+
+/**
+ * 定义数组表示四个方向
+ */
 public class LC695_maxAreaOfIsland2 {
     int ret = 0;
     /**
