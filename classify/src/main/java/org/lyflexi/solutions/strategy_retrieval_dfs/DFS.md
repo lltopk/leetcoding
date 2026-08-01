@@ -506,3 +506,66 @@ public class LC46_permute {
 
 
 ## 网格图DFS
+网格图DFS适用于需要计算连通块个数、大小的题目。
+
+二叉树 DFS 与网格图 DFS 的区别：
+
+| 对比项 | 二叉树 | 网格图 |
+| :--- | :--- | :--- |
+| 递归入口 | 根节点 | 网格图的某个格子 |
+| 递归方向 | 左儿子和右儿子 | 一般为左右上下的相邻格子 |
+| 递归边界 | 空节点（或者叶节点） | 出界、遇到障碍或者已访问 |
+
+以计算每个连通块的大小为例, 这类题的模板如下
+```java
+class Solution {
+    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
+
+    // 返回网格图 grid 每个连通块的大小
+    // 时间复杂度 O(mn)
+    public List<Integer> dfsGrid(char[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        boolean[][] vis = new boolean[m][n];
+
+        List<Integer> compSize = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] != '*' || vis[i][j]) { // grid[i][j] != '*' 根据题意修改
+                    continue;
+                }
+                int size = dfs(grid, vis, i, j);
+                compSize.add(size);
+            }
+        }
+        return compSize;
+    }
+
+    /**
+     * 自底向上 返回当前连通块的大小
+     * @param i
+     * @param j
+     * @param grid
+     * @param vis
+     * @return
+     */
+    private int dfs(char[][] grid, int i, int j, boolean[][] vis) {
+
+        // 越界 或 这里 grid[i][j] == '*' 根据题意修改 或已经访问过
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '*' || vis[i][j]) {
+            return 0;
+        }
+        
+        vis[i][j] = true;
+        int ret = 1;
+        for (int[] dir : DIRS) {
+            ret += dfs(grid, vis, i + dir[0], j + dir[1]);
+        }
+        return ret;
+    }
+}
+```
+
+时间复杂度分析: `O(mn)`, 其中 `m` 和 `n` 分别是 `grid` 的行数和列数。 统计最内层循环 `grid[i][j] = '2'`执行次数, 当我们访问一个访问过的格子时，会触发 `if grid[i][j] != '1': return` 。只有首次访问一个格子时，才会继续递归，其余情况不会继续递归。每次插上一个旗子只需要 `O(1)` 的时间，插上至多 `mn` 个旗子，就需要 `O(mn)` 的时间。
+
+
