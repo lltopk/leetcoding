@@ -9,7 +9,7 @@
 - 第二个循环中: 同时计算当前层和下一层, `opr(bizList) + opr(nxtList)` 或 `opr(bizList) + opr(deque)`
 
 ### 两个数组
-方法一: 两个数组, curList nxtList, 类似于链表当循环结束前进`curList` 到 `nxtList`
+方法一: 两个数组, curList nxtList, 类似于链表当循环结束后, 前进`curList` 到 `nxtList`
 ```java
 /**
  * 两个数组
