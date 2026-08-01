@@ -666,9 +666,9 @@ public class LCS_03_largestArea2 {
             return 0;
         }
 
-        // 不属于当前主题空间
+        // 不属于当前主题空间, 或者已经访问过
         if (g[i][j] != color || g[i][j] == ' ') {
-            return 0;
+            return 0;//由于g[i][j]不为'0', 才会进行dfs， 因此到这里已经不存在接触走廊的情况了， 因此保持touch == false
         }
 
         g[i][j] = ' ';
