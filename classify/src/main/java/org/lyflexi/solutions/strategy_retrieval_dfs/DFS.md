@@ -145,6 +145,7 @@ public class LC1302_deepestLeavesSum {
         }
         if(depth + 1 > mxDepth){
             mxDepth = depth + 1;
+            //发现了一个新的、更深的楼层，因此之前统计的所有楼层数据全部作废，从这一层重新开始统计。
             ret = root.val;
         }else if(depth + 1 == mxDepth){
             ret += root.val;
@@ -233,10 +234,10 @@ public class LC124_maxPathSum {
 - 二叉树高度(简单)
 - 相同/对称/翻转/平衡(简单)
 - 二叉搜索树(简单)
-- 路径总和(简单)
-- 二叉树直径(简单)
+- 路径总和(中等 掺杂回溯/前缀和)
+- 二叉树直径(中等)
 - 创建二叉树(先跳过)
-- 最近公共祖先LCA问题(比较难)
+- 最近公共祖先LCA问题(比较难, 跳过)
 
 
 ## DFS最优性剪枝
