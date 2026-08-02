@@ -73,14 +73,11 @@ public class LC529_updateBoard {
             //若隔壁无雷, 则继续DFS
             dfs(board, click[0], click[1]);
         }
+
+        //顶多dfs了一次, 起点是click[0], click[1]
         return board;
     }
 
-    /**
-     这道题不是dfs一次, 也不是所有二维格子都dfs
-
-     而是如果当前(i,j)是安全的, 那么继续dfs八个方向, 否则结束游戏
-     */
     private void dfs(char[][] board, int i, int j){
 
         //模拟, 搜索周围有没有地雷
