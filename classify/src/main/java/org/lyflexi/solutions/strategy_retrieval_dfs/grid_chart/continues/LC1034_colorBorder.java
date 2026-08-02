@@ -83,9 +83,6 @@ public class LC1034_colorBorder {
     }
 
     private void dfs(int[][] grid, int i, int j, boolean[][][] pair, int origin, int color){
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length) {
-            return;
-        }
         if(pair[i][j][0] || pair[i][j][1]) return;//重复访问
         pair[i][j][1] = true;
         int cnt = 0;

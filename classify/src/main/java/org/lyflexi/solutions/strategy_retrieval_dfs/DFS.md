@@ -222,18 +222,19 @@ public class LC865_subtreeWithAllDeepest {
             maxDepth = Math.max(maxDepth, depth); // 维护全局最大深度
             return depth;
         }
-
+        //maxDepth = Math.max(maxDepth, depth + 1); // 或者写在这里, 维护全局最大深度
         int leftMaxDepth = dfs(node.left, depth + 1); // 获取左子树最深叶节点的深度
         int rightMaxDepth = dfs(node.right, depth + 1); // 获取右子树最深叶节点的深度
 
         if (leftMaxDepth == rightMaxDepth && leftMaxDepth == maxDepth) {
             // node 可能是答案, 由于是DFS会回退, 因此当遇到更大的maxDepth的时候, 这个答案会更新
-            // 由于该递归函数是求当前子树最深叶节点的深度, 因此父节点和叶子节点都满足该条件: if (leftMaxDepth == rightMaxDepth && leftMaxDepth == maxDepth), 因此最终父节点一定会覆盖叶子节点, 父节点为所求
+            // 由于该递归函数是求当前子树最深叶节点的深度, 因此父节点的高度同样等于maxDepth, 因此最终父节点一定会覆盖叶子节点, 父节点为所求
             ret = node;
         }
         
-        //当前子树最深叶节点的深度
-        return Math.max(leftMaxDepth, rightMaxDepth); 
+        //当前子树最深叶节点的深度, 不包括当前节点
+        //如果左子树的最大深度比右子树的大，那么最深叶结点就只在左子树中，所以最近公共祖先也只在左子树中。反之亦然
+        return Math.max(leftMaxDepth, rightMaxDepth);//注意: 由于当node == null返回了depth, 所以这里没有+1了
     }
 }
 ```
@@ -734,9 +735,6 @@ public class LC1034_colorBorder {
     }
 
     private void dfs(int[][] grid, int i, int j, boolean[][][] pair, int origin, int color){
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length) {
-            return;
-        }
         if(pair[i][j][0] || pair[i][j][1]) return;//重复访问
         pair[i][j][1] = true;
         int cnt = 0;
@@ -761,8 +759,10 @@ public class LC1034_colorBorder {
 ```
 这种题目我叫做`continue from current grid[i][j]`, 在循环递归四个方向的过程中, 要用`continue`保证`cnt`当前格子计算的完整性, 不要用return来提前终止DFS 
 
+同时, 正是由于在`for`循环中判断下个方向如果越界则`continue`, 因此可以省去整个`dfs`入口的地方的越界判断
+
 ### 结束语
-DFS网格图除了上述题目分类之外, 还有一些其他的杂项如
+DFS网格图除了上述题目分类之外, 还有一些其他的杂项等
 - 2684. 矩阵中移动的最大次数
 - 1905. 统计子岛屿
 
