@@ -53,6 +53,9 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
  */
 public class LC200_numIslands {
     int ret = 0;
+    private static final int[][] DIRS = {
+            { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 }
+    };
     public int numIslands(char[][] grid) {
         for(int i = 0; i< grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
@@ -72,12 +75,11 @@ public class LC200_numIslands {
             return;
         }
 
-        //染色， 标记为2吧
+        //标记为2吧
         grid[i][j] = '2';
         //左右上下四个方向
-        dfs(grid, i, j-1);
-        dfs(grid, i, j+1);
-        dfs(grid, i-1, j);
-        dfs(grid, i+1, j);
+        for(int[] dir: DIRS){
+            dfs(grid, i+dir[0], j+dir[1]);
+        }
     }
 }

@@ -127,66 +127,9 @@ public class LC100_isSameTree {
 ```
 
 ## 二叉树应用DFS
-本质依然是基于自顶向下DFS / 自底向DFS 的应用, 有些题目既可以用自顶向下DFS 也可以用 自底向DFS
+本质依然是基于自顶向下DFS / 自底向DFS 的应用
 
-### f_u_b区分业务属性biz和ret
-由于是应用题, 自顶向下求解, 你可能都会用到业务属性`biz`, 表示自顶向下维护的比较标准, 因此你需要区分`biz`和答案`ret`, 比如LC1302. 层数最深叶子节点的和
-```java
-public class LC1302_deepestLeavesSum {
-    int ret = 0;
-    int mxDepth = 0; //业务属性(比较标准)
-    public int deepestLeavesSum(TreeNode root) {
-        dfs(root, 0);
-        return ret;
-    }
-    private void dfs(TreeNode root, int depth){
-        if(root == null){
-            return;
-        }
-        if(depth + 1 > mxDepth){
-            mxDepth = depth + 1;
-            //发现了一个新的、更深的楼层，因此之前统计的所有楼层数据全部作废，从这一层重新开始统计。
-            ret = root.val;
-        }else if(depth + 1 == mxDepth){
-            ret += root.val;
-        }
-        dfs(root.left, depth + 1);
-        dfs(root.right, depth + 1);
-    }
-}
-```
-
-多个业务属性`biz`见LC993. 二叉树的堂兄弟节点
-```java
-public class LC993_isCousins {
-    int D = 0;//业务属性(比较对象)
-    TreeNode P = null;//业务属性(比较对象)
-    public boolean isCousins(TreeNode root, int x, int y) {
-        return dfs(root, null, 1, x, y);
-    }
-    /**
-         自底向上, 有递有归
-         计算x y是否二叉树的堂兄弟节点(不能是亲兄弟)
-     */
-    private boolean dfs(TreeNode root, TreeNode p, int depth, int x, int y){
-        if(root == null){
-            return false;
-        }
-        //存在x || y
-        if(root.val == x || root.val ==y){
-            // if(P != null){//之前已经找到x y其中一个
-            if(D != 0){//之前已经找到x y其中一个
-                return D == depth && P != p;
-            }
-            D = depth;
-            P = p;
-        }
-        return dfs(root.left, root, depth+1, x, y) || dfs(root.right, root, depth+1, x,y);
-    }
-}
-```
-
-### f_b_u区分求解对象dfs和ret
+### bottom_up区分求解对象dfs和ret
 如果是自底向上求解, 你需要重点区分`dfs`求解对象, 以及最终的应用求解对象`ret`, 如124. 二叉树中的最大路径和
 - 这个`dfs`: 自底向上求最大一侧单链和
 - 应用`ret`: 整个`dfs`迭代过程中根据两侧单链和的最大值`dfs(root.left)`和`dfs(root.right)`, 进一步求两侧单链和最大值的和的最大值, 包括当前节点即为最大路径和
@@ -217,6 +160,80 @@ public class LC124_maxPathSum {
         //特别的当所有节点都为负数, 路径中只有一个节点是最优的, 毕竟节点越多，元素和越小
         ret = Math.max(ret, left + right + root.val);
         return Math.max(left, right) + root.val;
+    }
+}
+```
+
+### up_bottom区分业务属性biz和ret
+一般来说自顶向下求解, 你可能都会用到业务属性`biz`, 表示自顶向下维护的比较标准, 因此你需要区分`biz`和答案`ret`, 比如LC1302. 层数最深叶子节点的和
+```java
+public class LC1302_deepestLeavesSum {
+    int ret = 0;
+    int mxDepth = 0; //业务属性(比较标准)
+    public int deepestLeavesSum(TreeNode root) {
+        dfs(root, 0);
+        return ret;
+    }
+    private void dfs(TreeNode root, int depth){
+        if(root == null){
+            return;
+        }
+        if(depth + 1 > mxDepth){
+            mxDepth = depth + 1;
+            //发现了一个新的、更深的楼层，因此之前统计的所有楼层数据全部作废，从这一层重新开始统计。
+            ret = root.val;
+        }else if(depth + 1 == mxDepth){
+            ret += root.val;
+        }
+        dfs(root.left, depth + 1);
+        dfs(root.right, depth + 1);
+    }
+}
+```
+
+### up_bottom_up区分业务属性biz和求解对象dfs ret
+下面这个是自顶向下有递有归, 见LC865. 具有所有最深节点的最小子树
+- 设置了业务属性`maxDepth`
+- 求解对象`private int dfs(TreeNode node, int depth)`求当前子树最深叶节点的深度
+- 求解对象`ret`是题目要求的答案`TreeNode`, 代码如下
+```java
+public class LC865_subtreeWithAllDeepest {
+    private int maxDepth = -1; // biz_prop, 全局最大深度
+    private TreeNode ret;
+
+    /**
+     * 求具有所有最深节点的最小子树
+     * @param root
+     * @return
+     */
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+        dfs(root, 0);
+        return ret;
+    }
+
+    /**
+     * 求当前子树最深叶节点的深度
+     * @param node
+     * @param depth
+     * @return
+     */
+    private int dfs(TreeNode node, int depth) {
+        if (node == null) {
+            maxDepth = Math.max(maxDepth, depth); // 维护全局最大深度
+            return depth;
+        }
+
+        int leftMaxDepth = dfs(node.left, depth + 1); // 获取左子树最深叶节点的深度
+        int rightMaxDepth = dfs(node.right, depth + 1); // 获取右子树最深叶节点的深度
+
+        if (leftMaxDepth == rightMaxDepth && leftMaxDepth == maxDepth) {
+            // node 可能是答案, 由于是DFS会回退, 因此当遇到更大的maxDepth的时候, 这个答案会更新
+            // 由于该递归函数是求当前子树最深叶节点的深度, 因此父节点和叶子节点都满足该条件: if (leftMaxDepth == rightMaxDepth && leftMaxDepth == maxDepth), 因此最终父节点一定会覆盖叶子节点, 父节点为所求
+            ret = node;
+        }
+        
+        //当前子树最深叶节点的深度
+        return Math.max(leftMaxDepth, rightMaxDepth); 
     }
 }
 ```
@@ -516,7 +533,47 @@ public class LC46_permute {
 | 递归方向 | 左儿子和右儿子 | 一般为左右上下的相邻格子 |
 | 递归边界 | 空节点（或者叶节点） | 出界、遇到障碍或者已访问 |
 
-以计算每个连通块的大小为例, 这类题的模板如下, 通过修改原矩阵`grid[i][j]`为不影响题目的值, 来表示格子已经被访问过
+在DFS网格图的过程中, 枚举连通块中的任何一个格子的时候都会左右上下四个方向移动, 为了避免重复计算, 需要`boolean[][] vis = new boolean[m][n];`来标记已访问
+
+与`boolean[][] vis = new boolean[m][n];`等价的是我们可以就地修改原矩阵`grid[i][j]`值为不影响答案的值, 如`'0'` 或 `' '`, 这样就节省了`boolean[][] vis`的空间
+### 连通块个数 自顶向下
+自顶向下求连通块个数, 见LC200. 岛屿数量
+```java
+public class LC200_numIslands {
+    int ret = 0;
+    private static final int[][] DIRS = {
+            { 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 }
+    };
+    public int numIslands(char[][] grid) {
+        for(int i = 0; i< grid.length; i++){
+            for(int j = 0; j < grid[0].length; j++){
+                //遇到岛屿则开始dfs
+                if(grid[i][j] == '1'){
+                    dfs(grid, i, j);//全部感染当前连通块， 因此下面可以答案+1了
+                    ret++;
+                }
+            }
+        }
+        return ret;
+    }
+
+    private void dfs(char[][] grid, int i , int j ){
+        //越界 或 遇到水0 或 重复访问2
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0' || grid[i][j] == '2'){
+            return;
+        }
+
+        //标记为2吧
+        grid[i][j] = '2';
+        //左右上下四个方向
+        for(int[] dir: DIRS){
+            dfs(grid, i+dir[0], j+dir[1]);
+        }
+    }
+}
+```
+### 联通块大小 有递有归
+自顶向下有递有归, 计算每个连通块的大小模板如下
 ```java
     private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
 
@@ -564,57 +621,7 @@ public class LC46_permute {
 ```
 时间复杂度分析: `O(mn)`, 其中 `m` 和 `n` 分别是 `grid` 的行数和列数。 统计最内层循环 `grid[i][j] = '2'`执行次数, 当我们访问一个访问过的格子时，会触发 `if grid[i][j] != '1': return` 。只有首次访问一个格子时，才会继续递归，其余情况不会继续递归。每次插上一个旗子只需要 `O(1)` 的时间，插上至多 `mn` 个旗子，就需要 `O(mn)` 的时间。
 
-另外更直观的方式是, 可以创建单独的二维数组来标记格子`boolean[][] vis = new boolean[m][n];`
-```java
-class Solution {
-    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
-
-    // 返回网格图 grid 每个连通块的大小
-    // 时间复杂度 O(mn)
-    public List<Integer> dfsGrid(char[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
-        boolean[][] vis = new boolean[m][n];
-
-        List<Integer> compSize = new ArrayList<>();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (grid[i][j] != 'Y' || vis[i][j]) { // grid[i][j] != 'Y' 根据题意修改
-                    continue;
-                }
-                int size = dfs(grid, vis, i, j);
-                compSize.add(size);
-            }
-        }
-        return compSize;
-    }
-
-    /**
-     * 自底向上 返回当前连通块的大小
-     * @param i
-     * @param j
-     * @param grid
-     * @param vis
-     * @return
-     */
-    private int dfs(char[][] grid, int i, int j, boolean[][] vis) {
-
-        // 越界 或 不可访问 或 已经访问过
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 'X' || vis[i][j]) {
-            return 0;
-        }
-        
-        vis[i][j] = true;
-        int ret = 1;
-        for (int[] dir : DIRS) {
-            ret += dfs(grid, vis, i + dir[0], j + dir[1]);
-        }
-        return ret;
-    }
-}
-```
-
-### biz_prop
+### 业务属性 biz_prop
 还有一类题目对所求连通图做了额外限制, 比如不能与`0`相邻, 这个时候我们可以定义全局(成员)变量`condition`, 在`dfs`过程中计算`condition`是否满足
 
 最终只看满足`condition`的解, 见LCS 03. 主题空间, 定义`boolean touch;` 表示当前主题空间是否接触走廊

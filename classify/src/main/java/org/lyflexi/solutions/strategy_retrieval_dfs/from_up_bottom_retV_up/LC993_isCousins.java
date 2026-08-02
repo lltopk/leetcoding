@@ -60,7 +60,7 @@ public class LC993_isCousins {
         return dfs(root, null, 1, x, y);
     }
     /**
-         自底向上, 有递有归
+         自顶向下, 有递有归
          计算x y是否二叉树的堂兄弟节点(不能是亲兄弟)
      */
     private boolean dfs(TreeNode root, TreeNode p, int depth, int x, int y){
