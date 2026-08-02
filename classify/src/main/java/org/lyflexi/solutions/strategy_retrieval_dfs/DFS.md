@@ -534,8 +534,19 @@ public class LC46_permute {
 | 递归边界 | 空节点（或者叶节点） | 出界、遇到障碍或者已访问 |
 
 在DFS网格图的过程中, 枚举连通块中的任何一个格子的时候都会左右上下四个方向移动, 为了避免重复计算, 需要`boolean[][] vis = new boolean[m][n];`来标记已访问
-
+```java
+//由于boolean[][] vis不是答案, 因此习惯于传递到递归函数, 而不是定义为成员(全局)变量
+dfs(char[][] grid, int i , int j, boolean[][] vis){
+    
+}
+```
 与`boolean[][] vis = new boolean[m][n];`等价的是我们可以就地修改原矩阵`grid[i][j]`值为不影响答案的值, 如`'0'` 或 `' '`, 这样就节省了`boolean[][] vis`的空间
+```java
+dfs(char[][] grid, int i , int j){
+    
+}
+```
+
 ### 连通块个数 自顶向下
 自顶向下求连通块个数, 见LC200. 岛屿数量
 ```java
@@ -572,8 +583,10 @@ public class LC200_numIslands {
     }
 }
 ```
-### 联通块大小 有递有归
-自顶向下有递有归, 计算每个连通块的大小模板如下
+时间复杂度分析: `O(mn)`, 其中 `m` 和 `n` 分别是 `grid` 的行数和列数。 统计最内层循环 `grid[i][j] = '2'`执行次数, 当我们访问一个访问过的格子时，会触发 `if grid[i][j] != '1': return` 。只有首次访问一个格子时，才会继续递归，其余情况不会继续递归。每次插上一个旗子只需要 `O(1)` 的时间，插上至多 `mn` 个旗子，就需要 `O(mn)` 的时间。
+
+### 连通块大小 有递有归
+以每片连通块为单位开展DFS求大小(自底向上), 并且过程中需要四个访问DFS(自顶向下), 因此属于自顶向下有递有归, 这类题模板如下
 ```java
     private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
 
@@ -619,7 +632,6 @@ public class LC200_numIslands {
     }
 }
 ```
-时间复杂度分析: `O(mn)`, 其中 `m` 和 `n` 分别是 `grid` 的行数和列数。 统计最内层循环 `grid[i][j] = '2'`执行次数, 当我们访问一个访问过的格子时，会触发 `if grid[i][j] != '1': return` 。只有首次访问一个格子时，才会继续递归，其余情况不会继续递归。每次插上一个旗子只需要 `O(1)` 的时间，插上至多 `mn` 个旗子，就需要 `O(mn)` 的时间。
 
 ### 业务属性 biz_prop
 还有一类题目对所求连通图做了额外限制, 比如不能与`0`相邻, 这个时候我们可以定义全局(成员)变量`condition`, 在`dfs`过程中计算`condition`是否满足
@@ -689,56 +701,3 @@ public class LCS_03_largestArea2 {
     }
 }
 ```
-
-### 叶子边界 or 越界边界
-一般来说网格图`dfs`的边界条件都是越界都是`i < 0 || i >= g.length || j < 0 || j >= g[0].length`
-
-但就像`dfs`二叉树, 我们有的时候需要用到叶子节点, 在网格图中就是需要用到最外层格子, 这个时候卫语句的条件就是`i == 0 || i == grid.length - 1 || j == 0 || j == grid[0].length - 1`
-```java
-public class LC1254_closedIsland {
-    int ret = 0;
-    boolean closed = true;
-    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};//定义四个方向
-    public int closedIsland(int[][] grid) {
-        for(int i = 0; i< grid.length; i++){
-            for(int j = 0; j < grid[0].length; j++){
-                //遇到岛屿则开始dfs
-                if(grid[i][j] == 0){
-                    closed = true;
-                    dfs(grid, i, j);//全部感染当前连通块， 因此下面可以答案+1了
-                    if(closed){
-                        ret++;
-                    }
-                }
-            }
-        }
-        return ret;
-    }
-
-    private void dfs(int[][] grid, int i , int j ){
-        //这里相当于判断叶子， 而不是判断空
-        if(i == 0 || i == grid.length - 1 || j == 0 || j == grid[0].length - 1){
-            //需要对边界进行特判（边界一定不会是有效解）
-            if(grid[i][j] == 0) {
-                closed = false;
-            }
-            return ;
-        }
-
-        //除此之外， 一定是封闭的， 保持closed是true即可
-        if(grid[i][j] != 0) return;
-
-        //标记为1吧
-        grid[i][j] = 1;
-        //左右上下四个方向
-        for(int[] dir: DIRS){
-            dfs(grid, i + dir[0], j + dir[1]);
-        }
-    }
-}
-```
-
-
-
-
-

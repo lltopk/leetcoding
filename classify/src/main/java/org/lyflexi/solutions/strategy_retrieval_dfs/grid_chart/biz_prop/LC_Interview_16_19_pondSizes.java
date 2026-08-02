@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
+package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart.biz_prop;
 
 import java.util.ArrayList;
 import java.util.Arrays;

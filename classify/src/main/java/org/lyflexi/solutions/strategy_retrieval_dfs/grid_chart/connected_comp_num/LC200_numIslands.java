@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
+package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart.connected_comp_num;
 
 /**
  * 200. 岛屿数量

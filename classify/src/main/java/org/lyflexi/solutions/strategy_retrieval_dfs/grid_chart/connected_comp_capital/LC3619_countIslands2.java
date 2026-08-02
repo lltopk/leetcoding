@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
+package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart.connected_comp_capital;
 
 /**
  * 3619. 总价值可以被 K 整除的岛屿数目
@@ -58,14 +58,13 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
  * 通过率
  * 57.3%
  */
-public class LC3619_countIslands {
+public class LC3619_countIslands2 {
     int ret = 0;
     private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};//定义四个方向
     public int countIslands(int[][] grid, int k) {
-        boolean[][] visit = new boolean[grid.length][grid[0].length];
         for(int i = 0; i< grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
-                if(grid[i][j] > 0 && !visit[i][j] && dfs(grid, visit, i, j) % k == 0){
+                if(grid[i][j] > 0 && dfs(grid, i, j) % k == 0){
                     ret++;
                 }
             }
@@ -76,18 +75,18 @@ public class LC3619_countIslands {
     /**
      自底向上DFS求面积
      */
-    private long dfs(int[][] grid, boolean[][] visit, int i , int j){
+    private long dfs(int[][] grid, int i , int j){
         //越界 或 遇到水0 或 重复访问
-        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0 || visit[i][j]){
+        if(i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0){
             return 0;
         }
-
-        //染色
-        visit[i][j] = true;
-        //左右上下四个方向
+        //先获取贡献
         long ret = grid[i][j];
+        //标记
+        grid[i][j] = 0;
+        //左右上下四个方向
         for(int[] dir: DIRS){
-            ret += dfs(grid, visit, i + dir[0], j + dir[1]);
+            ret += dfs(grid, i + dir[0], j + dir[1]);
         }
         return ret;
     }

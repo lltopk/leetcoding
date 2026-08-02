@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
+package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart.connected_comp_capital;
 
 /**
  * 695. 岛屿的最大面积
@@ -45,20 +45,15 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
  * 通过率
  * 68.8%
  */
-
-/**
- * 定义数组表示四个方向
- */
-public class LC695_maxAreaOfIsland2 {
+public class LC695_maxAreaOfIsland {
     int ret = 0;
     /**
      1 1 1
      0 1 0
 
-     注意求面积不能等于求DFS层数会得出最大面积为3， dfs(int[][] grid, int i , int j, int area)
-     正确的做法是
+     注意求面积不能等于求DFS层数会得出最大面积为3， void dfs(int[][] grid, int i , int j, int area)
+     正确的做法是自底向上求面积得到4: int dfs(int[][] grid, int i , int j)
      */
-    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}};//定义四个方向
     public int maxAreaOfIsland(int[][] grid) {
         for(int i = 0; i< grid.length; i++){
             for(int j = 0; j < grid[0].length; j++){
@@ -83,10 +78,6 @@ public class LC695_maxAreaOfIsland2 {
         //染色， 标记为2吧
         grid[i][j] = 2;
         //左右上下四个方向
-        int ret = 1;
-        for(int[] dir: DIRS){
-            ret += dfs(grid, i + dir[0], j + dir[1]);
-        }
-        return ret;
+        return dfs(grid, i, j-1) + dfs(grid, i, j+1) + dfs(grid, i-1, j) + dfs(grid, i+1, j) + 1;//最后加1是父节点， 自底向上归
     }
 }

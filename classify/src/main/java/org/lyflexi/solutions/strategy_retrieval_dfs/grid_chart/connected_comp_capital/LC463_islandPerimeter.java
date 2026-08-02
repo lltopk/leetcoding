@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
+package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart.connected_comp_capital;
 
 /**
  * 463. 岛屿的周长
@@ -48,7 +48,7 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart;
  * 通过率
  * 71.1%
  */
-public class LC463_islandPerimeter2 {
+public class LC463_islandPerimeter {
     private static final int[][] DIRS = {
             {0,1},{0,-1},{1,0},{-1,0}
     };
