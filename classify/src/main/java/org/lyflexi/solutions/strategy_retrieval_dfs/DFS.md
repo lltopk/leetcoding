@@ -701,3 +701,69 @@ public class LCS_03_largestArea2 {
     }
 }
 ```
+
+### continue from current grid[i][j]
+比如边界着色问题, 题目给定的(row, col), 和染色color, 要求找到(row, col)的连通块之后对这个连通块中的颜色不为`grid[row][col]`的染成color, 同时连通块的临界边也染成color
+
+思路是用辅助数组找到所有的特殊格子, 然后用这些特殊格子覆盖原矩阵对应位置的颜色即可
+
+为了计算任意格子是否满足上述特征, 首先会在`dfs`中创建局部的计数器`cnt`, 然后递归当前格子的四个方向, 然后检查四个方向的颜色是不是等于初始化颜色`grid[row][col]`
+
+如果都一样则`cnt == 4`, 表示当前格子无需染色. 如果存在不一样或者遇到边界则`cnt < 4`, 表示当前格子需染色
+```java
+public class LC1034_colorBorder {
+    /**
+     只求当前(row, col)的连通块, 这只需要DFS一次
+
+     boolean[][][] pair= new boolean[grid.length][grid[0].length][2];
+     
+     在DFS的过程中用辅助矩阵pair[i][j][0]标记边界格子设置为color, 同时pair[i][j][1]充当已访问标记设置为-1
+
+     最后让原矩阵grid[i][j]匹配helper[i][j], 当helper[i][j]为color的时候, 更新grid[i][j]为color
+     */
+    private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
+    public int[][] colorBorder(int[][] grid, int row, int col, int color) {
+        boolean[][][] pair = new boolean[grid.length][grid[0].length][2];
+        dfs(grid, row, col, pair, grid[row][col], color);
+        for(int i = 0; i<grid.length; i++){
+            for(int j = 0; j<grid[0].length; j++){
+                if(pair[i][j][0]) grid[i][j] = color;
+            }
+        }
+        return grid;
+    }
+
+    private void dfs(int[][] grid, int i, int j, boolean[][][] pair, int origin, int color){
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length) {
+            return;
+        }
+        if(pair[i][j][0] || pair[i][j][1]) return;//重复访问
+        pair[i][j][1] = true;
+        int cnt = 0;
+        for(int[] dir: DIRS){
+            int i0 = i+dir[0];
+            int j0 = j + dir[1];
+            if(i0 < 0 || i0 == grid.length || j0 < 0 || j0==grid[0].length){
+                continue;
+            }
+            if(grid[i0][j0]!= origin){
+                continue;
+            }
+            cnt++;
+            dfs(grid, i0, j0, pair, origin, color);
+        }
+        //如果超过四个, 则当前(i,j)不是边界, 反之则为边界
+        if(cnt < 4){
+            pair[i][j][0] = true;
+        }
+    }
+}
+```
+这种题目我叫做`continue from current grid[i][j]`, 在循环递归四个方向的过程中, 要用`continue`保证`cnt`当前格子计算的完整性, 不要用return来提前终止DFS 
+
+### 结束语
+DFS网格图除了上述题目分类之外, 还有一些其他的杂项如
+- 2684. 矩阵中移动的最大次数
+- 1905. 统计子岛屿
+
+这些都属于DFS思想, 往往可以类比于二叉树DFS, 通过自顶向下 自底向上都可以解题, 就不细分了
