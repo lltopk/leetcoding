@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart.biz_prop;
+package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart.pair;
 
 /**
  * 1034. 边界着色
@@ -56,6 +56,10 @@ package org.lyflexi.solutions.strategy_retrieval_dfs.grid_chart.biz_prop;
  * 通过率
  * 55.0%
  */
+
+/**
+ * 补充: int[][] helper = new int[grid.length][grid[0].length]等价于boolean[][][] pair= new boolean[grid.length][grid[0].length][2];
+ */
 public class LC1034_colorBorder {
     /**
      只求当前(row, col)的连通块, 这只需要DFS一次
@@ -66,39 +70,38 @@ public class LC1034_colorBorder {
      */
     private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下
     public int[][] colorBorder(int[][] grid, int row, int col, int color) {
-        int[][] helper = new int[grid.length][grid[0].length];
-        dfs(grid, row, col, helper, grid[row][col], color);
+        boolean[][][] pair = new boolean[grid.length][grid[0].length][2];
+        dfs(grid, row, col, pair, grid[row][col], color);
         for(int i = 0; i<grid.length; i++){
             for(int j = 0; j<grid[0].length; j++){
-                if(helper[i][j] == color) grid[i][j] = color;
+                if(pair[i][j][0]) grid[i][j] = color;
             }
         }
         return grid;
     }
 
-    private void dfs(int[][] grid, int i, int j, int[][] helper, int origin, int color){
+    private void dfs(int[][] grid, int i, int j, boolean[][][] pair, int origin, int color){
         if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length) {
             return;
         }
-        if(helper[i][j] != 0) return;//重复访问
-        helper[i][j] = -1;
+        if(pair[i][j][0] || pair[i][j][1]) return;//重复访问
+        pair[i][j][1] = true;
         int cnt = 0;
         for(int[] dir: DIRS){
             int i0 = i+dir[0];
             int j0 = j + dir[1];
             if(i0 < 0 || i0 == grid.length || j0 < 0 || j0==grid[0].length){
-                continue;//注意是continue, 如果return会导致当前连通块没有找全, 导致最终cnt偏小, 问题边界就找多了
+                continue;
             }
-            //下面要用到i0, j0, 为了防止数组越界, 所以上面要对i0, j0判断越界
             if(grid[i0][j0]!= origin){
                 continue;
             }
             cnt++;
-            dfs(grid, i0, j0, helper, origin, color);
+            dfs(grid, i0, j0, pair, origin, color);
         }
         //如果超过四个, 则当前(i,j)不是边界, 反之则为边界
         if(cnt < 4){
-            helper[i][j] = color;
+            pair[i][j][0] = true;
         }
     }
 }
