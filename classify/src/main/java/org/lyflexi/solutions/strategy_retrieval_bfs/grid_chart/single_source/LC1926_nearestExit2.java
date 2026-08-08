@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_bfs.grid_chart.layer_step;
+package org.lyflexi.solutions.strategy_retrieval_bfs.grid_chart.single_source;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -67,6 +67,10 @@ import java.util.Deque;
  * 49,672/109.7K
  * 通过率
  * 45.3%
+ */
+
+/**
+ * 最短路径 分层计算距离
  */
 public class LC1926_nearestExit2 {
     private static final int[][] DIRS = {{0, -1}, {0, 1}, {-1, 0}, {1, 0}}; // 左右上下

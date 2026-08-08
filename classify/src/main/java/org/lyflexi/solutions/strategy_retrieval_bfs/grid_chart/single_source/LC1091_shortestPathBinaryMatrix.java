@@ -1,4 +1,4 @@
-package org.lyflexi.solutions.strategy_retrieval_bfs.grid_chart.layer_step;
+package org.lyflexi.solutions.strategy_retrieval_bfs.grid_chart.single_source;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
