@@ -184,7 +184,8 @@ class Solution {
 如果不需要求单源(输入)到其余所有点位的最短距离, 比如只要求到边界的最短距离, 此时我们就无需定义距离矩阵`int[][] dis = new int[m][n];`
 
 用一个变量如`dis`记录距离即可, 但要注意每层只贡献距离`1`, 而不是每个元素贡献距离`1`, 因此需要对队列分层计算. 否则就变成了求涟漪经过的所有点的个数了 不可不可... 
-```java
+```txt
+//每层对于dis只贡献1次
 for(int dis = 0; ! deque.isEmpty(); dis++){
     int n = deque.size();
     while(n-- > 0){
@@ -192,7 +193,7 @@ for(int dis = 0; ! deque.isEmpty(); dis++){
         for(int[] dir: DIRS){
             
         }
-    }    
+    }
 }
 ```
 见LC1926. 迷宫中离入口最近的出口
