@@ -53,13 +53,16 @@ public class LC42_trap {
     Deque<Integer> sk = new ArrayDeque<>();
     public int trap(int[] height) {
         int ret = 0;
+        //横着计算面积
+        //想象单调测试用例: 先是递减的, 然后遇到大的元素
         for(int i = 0 ; i< height.length; i++){
             while(!sk.isEmpty() && height[sk.peek()] <= height[i]){
                 int peek = sk.pop();
+                //这里特判, 是因为下面还要用到height[sk.peek()]
                 if(sk.isEmpty()){
                     break;
                 }
-                //高度: 当前柱子和 栈顶的上个柱子的最小值, 再减去底部的高度
+                //高度: 当前柱子和 栈顶的上个柱子的最小值, 再减去栈顶的高度
                 int botoomH = Math.min(height[sk.peek()], height[i]) - height[peek];
                 //宽度: 当前柱子索引, 和 栈顶的上个索引 之差-1
                 ret +=  botoomH * (i - sk.peek() -1);

@@ -32,12 +32,11 @@ package org.lyflexi.solutions.baseAlgorithm.slip_points.face_to_face;
  */
 
 /**
- * 前缀最大值数组
- * 后缀最大值数组
+ * 前缀最大, 后缀最大, 相向双指针
  *
- * 空间优化. 只计算当前前缀最大值和后缀最大值, 而不用把所有的前缀最大值项和后缀最大值项都存储
+ * 相遇优化. l<=r优化为l<r, 因为在"谁小移动谁"的设定下, 相遇的时候一定是最高柱子, 无法接水
  */
-public class LC42_trap3 {
+public class LC42_trap4 {
     public int trap(int[] height) {
         //以height =   [0,1,0,2,1,0,1,3,2,1,2,1]为例
         //前缀最大值数组=[0,1,1,2,2,2,2,3,3,3,3,3]
@@ -48,8 +47,8 @@ public class LC42_trap3 {
         int preMax = 0;//求最大
         int sufMax = 0;//求最大
         int ans = 0;
-        //l==r的时候, 也有可能要接水
-        while(l<=r){
+        //l<=r优化为l<r, 因为在"谁小移动谁"的设定下, 相遇的时候一定是最高柱子, 无法接水
+        while(l<r){
             preMax = Math.max(preMax, height[l]);
             sufMax = Math.max(sufMax, height[r]);
             if(preMax < sufMax){
