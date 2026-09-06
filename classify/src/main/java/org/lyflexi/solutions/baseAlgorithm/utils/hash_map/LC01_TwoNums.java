@@ -29,7 +29,7 @@ import java.util.Scanner;
 输入：nums = [3,3], target = 6
 输出：[0,1]
 * */
-public class Solution01_TwoNums {
+public class LC01_TwoNums {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int[] nums = Arrays.stream(scanner.nextLine().split(",")).mapToInt(Integer::parseInt).toArray();

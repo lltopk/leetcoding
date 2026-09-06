@@ -30,7 +30,7 @@ import java.util.Scanner;
 
 所以中间和为k的这j个数根本不用算！！！
 */
-public class Solution02_SubArrayOfSumK {
+public class LC560_SubArrayOfSumK {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

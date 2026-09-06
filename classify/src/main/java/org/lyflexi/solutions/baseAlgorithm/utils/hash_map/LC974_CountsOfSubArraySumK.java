@@ -21,7 +21,7 @@ import java.util.HashMap;
 输入: nums = [5], k = 9
 输出: 0
  */
-public class Solution03_CountsOfSubArraySumK {
+public class LC974_CountsOfSubArraySumK {
     public int subarraysDivByK(int[] nums, int k) {
         int answer = 0;
         int n = nums.length;

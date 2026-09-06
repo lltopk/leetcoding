@@ -24,7 +24,7 @@ nums1[i] + nums2[j] + nums3[k] + nums4[l] == 0
 输入：nums1 = [0], nums2 = [0], nums3 = [0], nums4 = [0]
 输出：1
 * */
-public class Solution04_FourArrays {
+public class LC454_FourArrays {
     public int fourSumCount(int[] nums1, int[] nums2, int[] nums3, int[] nums4) {
         int answer = 0;
         //a+b为键，计数为value
