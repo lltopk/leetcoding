@@ -2,6 +2,7 @@ package org.lyflexi.solutions.baseAlgorithm.utils.hash_map;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -39,25 +40,21 @@ public class LC560_SubArrayOfSumK {
         System.out.println(subarraySum(nums,k));
     }
 
+    /**
+     前缀和, 并且因为是两个变量用哈希, 枚举右维护左
+     */
     public static int subarraySum(int[] nums, int k) {
-        int answer = 0;
-        int n = nums.length;
-        int preSum = 0;
-        //以前缀和为键,出现次数为值
-        HashMap<Integer, Integer> map = new HashMap<>();
-        //若preSum-k=0则value应赋值为1，比如111求和为k的子数组个数答案是2
-        map.put(0,1);
-        for (int i = 0; i < n; i++) {
-            preSum+=nums[i];
-
-            if (map.containsKey(preSum-k)){
-                //遍历到当前索引位置，和为key的子数组的个数
-                answer+=map.get(preSum-k);
-            }
-
-            map.put(preSum,map.getOrDefault(preSum,0)+1);
+        int n = nums.length, ans = 0;
+        int preS = 0;
+        //存储某个前缀和(左)出现了多少次
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);//单独初始化前缀和[0, )本身就是解的情况, 注意不能是map.put(0, 0)
+        for(int r = 0; r< n; r++){
+            preS += nums[r];
+            //s2 - s1 = k
+            ans += map.getOrDefault(preS - k, 0);
+            map.merge(preS, 1 ,Integer::sum);
         }
-
-        return answer;
+        return ans;
     }
 }
