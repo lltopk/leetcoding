@@ -55,7 +55,11 @@ import java.util.*;
  */
 
 /**
- * 简单分组计算, key为排序后的字符串
+ * 算法
+ *
+ * 用哈希表分组，把排序后的字符串当作哈希表的 key，排序前的字符串加到对应的列表中（哈希表的 value）。
+ *
+ * 最后把哈希表的所有 value 加到一个列表中返回。
  */
 public class Hot002_LC49_groupAnagrams {
     public List<List<String>> groupAnagrams(String[] strs) {

@@ -44,7 +44,7 @@ import java.util.Map;
  *
  * 进阶：你可以想出一个时间复杂度小于 O(n2) 的算法吗？
  */
-public class Hot001_LC001_twoSum {
+public class Hot001_LC1_twoSum {
     public int[] twoSum(int[] nums, int target) {
         //枚举技巧: 双变量问题, 枚举右维护左, 进而转变成单变量问题target - nums[r]
         Map<Integer, Integer> map = new HashMap<>();
