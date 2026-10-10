@@ -46,66 +46,60 @@ import java.util.*;
  */
 
 /**
- * 优化
- * 
- * 上面的代码每次都要花费 $O(|\Sigma|)$ 的时间去判断是否涵盖，能不能优化到 $O(1)$ 呢？
- * 
- * 可以。用一个变量 $geCnt$ 维护目前子串（窗口）中有 $geCnt$ 种字母的出现次数大于等于 $t$ 中相应字母的出现次数。
- * 
- * 设 $t$ 有 $kinds$ 个不同的字母，那么「子串每种字母的出现次数都大于等于 $t$ 中相应字母的出现次数」等价于 $geCnt = kinds$。
- * 
- * 如何维护 $geCnt$ 呢？
- * 
- * 为了方便实现，把 $cntS$ 和 $cntT$ 合并成一个 $diff$，定义 $diff[x] = cntS[x] - cntT[x]$。如果 $diff[x] = 0$，就意味着窗口内字母 $x$ 的出现次数和 $t$ 的一样多。
- * 
- * - 如果字母 $x$ 进入窗口后，$diff[x] = 0$，这意味着 $x$ 在子串和 $t$ 中的出现次数从 $<$ 变成了 $>=$，那么把 $geCnt$ 增加一。
- * - 如果字母 $x$ 离开窗口前，$diff[x] = 0$，这意味着 $x$ 离开窗口后，$x$ 在子串和 $t$ 中的出现次数从 $>=$ 变成了 $<$，那么把 $geCnt$ 减少一。
- * 
- * ⚠注意：不能在 $diff[x] >= 0$ 的时候就把 $geCnt$ 增加一。这样写的话，对于同一个字母 $x$，$diff[x]$ 等于 $0,1,2,\ldots$ 的时候都会让 $geCnt$ 增加一，这就重复统计了。
+ * 不定长滑动窗口求最小
+ *
+ * 多维护int geCnt = 0, 滑动窗口的收缩条件为geCnt == kinds即为覆盖, 让时间复杂度从O(95*m + n) 优化为O(n + m)
  */
 public class Hot012_LC76_minWindow2 {
-    public String minWindow(String S, String t) {
-        int[] diff = new int[128]; // 窗口每种字母个数 - t 每种字母个数
+
+    public String minWindow(String s, String t) {
+        char[] sArray = s.toCharArray();
+        char[] tArray = t.toCharArray();
+        int m = sArray.length;
+        int n = tArray.length;
+
+        String ans = s + " ";
+        int l = 0;
+        //方法一每次收缩窗口的时候都要循环dict来判断是否覆盖, 总的时间复杂度为O(95*m + n), 其中95是字典字符集的大小
+        //判断覆盖能否优化呢?
+        //其实如果我们有一个变量geCnt代表窗口内共有geCnt种字符的次数大于等于t中的, 那么当geCnt == kinds即为覆盖, 其中kinds为t的字符种类
+        int geCnt = 0;
+        int[] dictS = new int[95];
+        int[] dictT = new int[95];
+
         int kinds = 0;
-        for (char c : t.toCharArray()) {
-            if (diff[c] == 0) {
-                kinds++; // 统计 t 有多少个不同的字母
-            }
-            diff[c]--;
-        }
-
-        char[] s = S.toCharArray();
-        int m = s.length;
-        int ansLeft = -1;
-        int ansRight = m;
-        int geCnt = 0; // 窗口内有 geCnt 种字母的出现次数 >= t 中相应字母的出现次数
-        int left = 0;
-
-        for (int right = 0; right < m; right++) { // 移动子串右端点
-            char c = s[right]; // 右端点字母
-            diff[c]++; // 右端点字母移入子串
-            if (diff[c] == 0) { // 原来窗口内 c 的出现次数比 t 的少，现在一样多
-                geCnt++; // 从 < 变成 >=
-            }
-
-            while (geCnt == kinds) { // 涵盖：所有字母的出现次数都是 >=
-                if (right - left < ansRight - ansLeft) { // 找到更短的子串
-                    ansLeft = left; // 记录此时的左右端点
-                    ansRight = right;
-                }
-
-                char x = s[left]; // 左端点字母
-                if (diff[x] == 0) {
-                    // x 移出窗口之前，检查出现次数，
-                    // 如果窗口内 x 的出现次数和 t 一样，
-                    // 那么 x 移出窗口后，窗口内 x 的出现次数比 t 的少
-                    geCnt--; // 从 >= 变成 <
-                }
-                diff[x]--; // 左端点字母移出子串
-                left++;
+        for(int i = 0; i<n; i++){
+            dictT[tArray[i] - ' ']++;
+            if(dictT[tArray[i] - ' '] == 1){
+                kinds++;
             }
         }
 
-        return ansLeft < 0 ? "" : S.substring(ansLeft, ansRight + 1);
+        for(int r = 0; r<m; r++){
+            //进入, 维护dictS
+            dictS[sArray[r] - ' ']++;
+
+            //当二者出现频率相等, geCnt++
+            if(dictS[sArray[r] - ' '] == dictT[sArray[r] - ' ']){//注意不能是>=, 否则会重复计算geCnt
+                geCnt++;
+            }
+
+            //O(1)判断
+            while(geCnt == kinds){
+                String sub = s.substring(l, r+1);
+                if(sub.length()<ans.length()){
+                    ans = sub;
+                }
+
+                if(dictS[sArray[l] - ' '] == dictT[sArray[l] - ' ']){// 同理, 只有 == 的时候, 才意味着窗口即将移出有效的sArray[l]
+                    geCnt--;
+                }
+                dictS[sArray[l] - ' ']--;
+                l++;
+            }
+        }
+
+        return ans.equals(s+" ")? "":ans;
+
     }
 }

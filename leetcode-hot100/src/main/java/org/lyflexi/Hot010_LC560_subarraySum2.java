@@ -44,7 +44,7 @@ import java.util.*;
 public class Hot010_LC560_subarraySum2 {
     public int subarraySum(int[] nums, int k) {
         Map<Integer, Integer> cnt = new HashMap<>(nums.length + 1, 1); // 预分配空间
-        cnt.put(0, 1); // s[0]=0 单独统计
+        cnt.put(0, 1); // s[0]=0 单独统计, 此时前缀和本身就是子数组和K
         int s = 0;
         int ans = 0;
         for (int x : nums) {
