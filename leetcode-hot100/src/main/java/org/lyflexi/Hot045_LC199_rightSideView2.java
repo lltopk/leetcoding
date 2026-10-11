@@ -54,20 +54,29 @@ import java.util.*;
  * 先递归右子树，再递归左子树，当某个深度首次到达时，对应的节点就在右视图中。
  */
 public class Hot045_LC199_rightSideView2 {
-    public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> ans = new ArrayList<>();
-        dfs(root, 0, ans);
-        return ans;
-    }
+    List<Integer> ret = new ArrayList<>();
+    Deque<TreeNode> deque = new ArrayDeque<>();
 
-    private void dfs(TreeNode root, int depth, List<Integer> ans) {
-        if (root == null) {
-            return;
+    public List<Integer> rightSideView(TreeNode root) {
+        if(root == null){
+            return List.of();
         }
-        if (depth == ans.size()) { // 这个深度首次遇到
-            ans.add(root.val);
+        deque.offer(root);
+        while(! deque.isEmpty()){
+            int n = deque.size();
+            int lastV = 0;
+            while(n-- > 0){
+                TreeNode node = deque.poll();
+                lastV = node.val;
+                if(node.left != null){
+                    deque.offer(node.left);
+                }
+                if(node.right !=null){
+                    deque.offer(node.right);
+                }
+            }
+            ret.add(lastV);
         }
-        dfs(root.right, depth + 1, ans); // 先递归右子树，保证首次遇到的一定是最右边的节点
-        dfs(root.left, depth + 1, ans);
+        return ret;
     }
 }

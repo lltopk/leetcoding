@@ -44,6 +44,11 @@ public class Hot040_LC543_diameterOfBinaryTree2 {
         return ans;
     }
 
+    /**
+     * 求树的最大高度
+     * @param node
+     * @return
+     */
     private int dfs(TreeNode node) {
         if (node == null) {
             return 0;

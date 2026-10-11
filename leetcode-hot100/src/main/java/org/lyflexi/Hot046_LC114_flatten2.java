@@ -59,6 +59,13 @@ public class Hot046_LC114_flatten2 {
         dfs(root);
     }
 
+    /**
+     * 别出心裁的dfs, 返回的是树的尾节点
+     *
+     * 这个dfs计算过程是自底向上的, 因此可以"安全"的在递归的过程中修改节点指向
+     * @param root
+     * @return
+     */
     private TreeNode dfs(TreeNode root) {
         if (root == null) {
             return null;

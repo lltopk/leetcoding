@@ -68,8 +68,11 @@ public class Hot031_LC25_reverseKGroup {
             // lastTail 是上一组的尾节点
             // lastTail.next 是当前组的尾节点
             ListNode tail = lastTail.next;
+
+            //下面两行是将翻转后的当前段 拼接加入链表当中
             tail.next = cur; // 当前组的尾节点指向下一组的起始节点
             lastTail.next = pre; // 上一组的尾节点指向当前组的头节点
+
             lastTail = tail;
         }
 

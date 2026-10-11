@@ -39,6 +39,11 @@ import java.util.*;
  * 认识链表 & 哨兵技巧【基础算法精讲 06】
  */
 public class Hot030_LC24_swapPairs {
+    /**
+     * 穿针引线
+     * @param head
+     * @return
+     */
     public ListNode swapPairs(ListNode head) {
         ListNode dummy = new ListNode(0, head); // 用哨兵节点简化代码逻辑
         ListNode node0 = dummy;

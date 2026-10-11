@@ -34,7 +34,7 @@ import java.util.*;
  */
 
 /**
- * 写法一
+ * 写法一, 相当于自底向上
  */
 public class Hot038_LC226_invertTree {
     public TreeNode invertTree(TreeNode root) {

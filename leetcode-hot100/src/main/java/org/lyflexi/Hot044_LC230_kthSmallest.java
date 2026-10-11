@@ -47,6 +47,10 @@ public class Hot044_LC230_kthSmallest {
         return ans;
     }
 
+    /**
+     * 中序遍历即可
+     * @param node
+     */
     private void dfs(TreeNode node) {
         if (node == null || k <= 0) {
             return;

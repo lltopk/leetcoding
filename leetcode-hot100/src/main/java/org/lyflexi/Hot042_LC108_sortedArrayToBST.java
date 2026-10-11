@@ -50,6 +50,10 @@ import java.util.*;
  * 
  * ⚠注意：答案可能不是唯一的。如果 $n$ 是偶数，我们可以取数组正中间左边那个数作为根节点的值，也可以取数组正中间右边那个数作为根节点的值。下面代码取的是正中间右边那个数，即下标为 $\dfrac{n}{2}$ 的数（当 $n$ 是偶数时）。
  */
+
+/**
+ * 自顶向下
+ */
 public class Hot042_LC108_sortedArrayToBST {
     public TreeNode sortedArrayToBST(int[] nums) {
         return dfs(nums, 0, nums.length);

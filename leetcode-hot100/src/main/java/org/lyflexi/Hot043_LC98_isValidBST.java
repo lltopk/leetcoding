@@ -53,6 +53,8 @@ public class Hot043_LC98_isValidBST {
         if (node == null) {
             return true;
         }
+
+        //BST的性质是, 当前节点大于左节点且小于右节点, 下面相当于前序遍历了
         long x = node.val;
         return left < x && x < right &&
                isValidBST(node.left, left, x) &&

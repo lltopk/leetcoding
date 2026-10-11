@@ -41,20 +41,24 @@ import java.util.*;
  * 如果你觉得这样写有些奇怪，可以看等价的写法二。
  */
 public class Hot040_LC543_diameterOfBinaryTree {
-    private int ans;
+    private int ans;//左右链长相加的结果
 
     public int diameterOfBinaryTree(TreeNode root) {
         dfs(root);
         return ans;
     }
 
-    // 返回 node 子树的最大链长
+    /**
+     * 求树的最大链长
+     * @param node
+     * @return
+     */
     private int dfs(TreeNode node) {
         if (node == null) {
             return -1; // 对于叶子来说，链长就是 -1+1=0
         }
-        int lLen = dfs(node.left) + 1; // 左子树最大链长+1
-        int rLen = dfs(node.right) + 1; // 右子树最大链长+1
+        int lLen = dfs(node.left) + 1; // 左链长 = 左子树最大链长+1
+        int rLen = dfs(node.right) + 1; // 右链长 = 右子树最大链长+1
         ans = Math.max(ans, lLen + rLen); // 两条链拼成路径
         return Math.max(lLen, rLen); // 当前子树最大链长
     }

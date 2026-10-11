@@ -47,6 +47,11 @@ import java.util.*;
 public class Hot043_LC98_isValidBST2 {
     private long pre = Long.MIN_VALUE;
 
+    /**
+     * 中序遍历写法, 只需要定义一个long pre
+     * @param root
+     * @return
+     */
     public boolean isValidBST(TreeNode root) {
         if (root == null) {
             return true;

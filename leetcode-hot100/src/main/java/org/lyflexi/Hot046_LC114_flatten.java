@@ -53,13 +53,18 @@ import java.util.*;
 public class Hot046_LC114_flatten {
     private TreeNode head;
 
+    /**
+     * 别出心裁的遍历方式:  先序遍历的逆序
+     * @param root
+     */
     public void flatten(TreeNode root) {
         if (root == null) {
             return;
         }
-        // 右 - 左 - 根
+        // 先序遍历的逆序为: 右 - 左 - 根
         flatten(root.right);
         flatten(root.left);
+        //当前遍历到的节点: root
         root.left = null;
         root.right = head; // 在头节点 head 的前面插入 root
         head = root; // 现在头节点是 root
