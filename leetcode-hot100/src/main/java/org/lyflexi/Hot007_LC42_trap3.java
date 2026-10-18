@@ -50,10 +50,12 @@ public class Hot007_LC42_trap3 {
         for (int i = 0; i < height.length; i++) {
             int h = height[i];
             while (!st.isEmpty() && height[st.peek()] <= h) {
+                //低于当前h的作为中部高
                 int bottomH = height[st.pop()];
                 if (st.isEmpty()) {
                     break;
                 }
+                //大于当前h作为两侧高
                 int left = st.peek();
                 int dh = Math.min(height[left], height[i]) - bottomH; // 面积的高
                 ans += dh * (i - left - 1);

@@ -38,8 +38,8 @@ import java.util.*;
  * 
  * 分类讨论：
  * 
- * - 如果 $preMax[left] <= sufMax[right]$，由于 $sufMax[right]<= sufMax[left]$（包含的数越多，最大值越大），所以 $preMax[left] <= sufMax[right]<= sufMax[left]$，所以 $min(preMax[left],sufMax[left]) = preMax[left]$，$left$ 处的接水量就是 $preMax[left] - height[left]$。
- * - 如果 $preMax[left] >= sufMax[right]$，由于 $preMax[left]<= preMax[right]$（包含的数越多，最大值越大），所以 $sufMax[right] <= preMax[left]<= preMax[right]$，所以 $min(preMax[right],sufMax[right]) = sufMax[right]$，$right$ 处的接水量就是 $sufMax[right] - height[right]$。
+ * - 如果 $preMax[left] <= sufMax[right]$，那么 $preMax[left] <= sufMax[right]<= sufMax[left]$，所以 $min(preMax[left],sufMax[left]) = preMax[left]$，$left$ 处的接水量就是 $preMax[left] - height[left]$。
+ * - 如果 $preMax[left] >= sufMax[right]$，那么 $sufMax[right] <= preMax[left]<= preMax[right]$，所以 $min(preMax[right],sufMax[right]) = sufMax[right]$，$right$ 处的接水量就是 $sufMax[right] - height[right]$。
  * 
  * 这意味着，在没有遍历完 $height$ 数组的情况下，也能算出接水量。这引出了如下相向双指针（一次遍历）做法。
  * 注：代码实现时，$while$ 循环可以不加等号。因为在「谁小移动谁」的规则下，相遇的位置一定是最高的柱子，这个柱子是无法接水的。

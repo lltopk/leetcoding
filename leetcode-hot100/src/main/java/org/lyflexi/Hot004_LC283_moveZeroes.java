@@ -32,37 +32,14 @@ import java.util.*;
  * 进阶：你能尽量减少完成的操作次数吗？
  */
 
-/**
- * 方法一：把 nums 当作栈
- * 
- * 用一个栈记录非零元素。
- * 
- * 看示例 1，$nums=[0,1,0,3,12]$。
- * 
- * |  $i$ | $nums[i]$  |  $nums[i]$ 是否入栈 | 栈 |
- * |---|:---:|:---:|---|
- * | $0$  |  $0$ | 否 | $[]$ |
- * | $1$  |  $1$ | 是 | $[1]$ |
- * | $2$  |  $0$ | 否 | $[1]$ |
- * | $3$  |  $3$ | 是 | $[1,3]$ |
- * | $4$  |  $12$ | 是 | $[1,3,12]$ |
- * 
- * 最后，在栈的末尾添加两个 $0$，即为答案 $[1,3,12,0,0]$。
- * 
- * 为了做到 $O(1)$ 空间复杂度，直接把 $nums$ 当作栈，用一个变量 $stackSize$ 表示栈的大小，初始值为 $0$。
- * 
- * 入栈就是把 $nums[stackSize]$ 置为 $nums[i]$，然后把 $stackSize$ 加一。
- * 
- * 最后把 $nums$ 中的下标从 $stackSize$ 到 $n-1$ 的数都置为 $0$。
- */
 public class Hot004_LC283_moveZeroes {
     public void moveZeroes(int[] nums) {
-        int stackSize = 0;
-        for (int x : nums) {
-            if (x != 0) {
-                nums[stackSize++] = x; // 把 x 入栈
+        int i = 0;
+        for(int x: nums){
+            if(x != 0){
+                nums[i++] = x;
             }
         }
-        Arrays.fill(nums, stackSize, nums.length, 0);
+        Arrays.fill(nums, i, nums.length, 0);
     }
 }

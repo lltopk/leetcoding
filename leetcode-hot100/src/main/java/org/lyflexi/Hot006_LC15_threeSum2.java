@@ -43,13 +43,6 @@ import java.util.*;
  * - -10^5 <= nums[i] <= 10^5
  */
 
-/**
- * 写法二
- * 
- * 上面跳过重复数字的循环，也可以这样写：如果 $nums[i] + nums[j] + nums[k] = 0$，并且 $j>i+1$ 且 $nums[j] = nums[j-1]$，则说明我们在之前找到了一样的三元组。
- * 
- * 比如 $nums=[-3,1,1,2,2]$，首先我们找到 $nums[0] + nums[1] + nums[4] = 0$，在 $j$ 加一，$k$ 减一后，发现 $nums[0] + nums[2] + nums[3]$ 也等于 $0$，但 $nums[2] = nums[1]$（这同时说明 $nums[3] = nums[4]$），是重复的三元组，不能加入答案。
- */
 public class Hot006_LC15_threeSum2 {
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
@@ -69,13 +62,12 @@ public class Hot006_LC15_threeSum2 {
                 } else if (s < 0) {
                     j++;
                 } else { // 三数之和为 0
-                    // j = i+1 表示刚开始双指针，此时 j 左边没有数字
-                    // nums[j] != nums[j-1] 说明与上一轮循环的三元组不同
-                    if (j == i + 1 || nums[j] != nums[j - 1]) {
-                        ans.add(Arrays.asList(x, nums[j], nums[k]));
-                    }
+                    ans.add(Arrays.asList(x, nums[j], nums[k]));
+                    //跳过重复数字
                     j++;
+                    while(j < k && nums[j] == nums[j - 1]) j++;
                     k--;
+                    while(k > j && nums[k] == nums[k + 1]) k--;
                 }
             }
         }
