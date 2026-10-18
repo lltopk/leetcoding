@@ -54,10 +54,10 @@ package org.lyflexi;
 public class Hot012_LC76_minWindow3 {
 
      /**
-     * 不定长滑动窗口求最小
      *
+     * 依然滑动窗口的收缩条件为geCnt == kinds为覆盖
      *
-     * 进一步合并两个dict数组为一个
+     * 可以进一步合并两个dict数组为一个
      *
      * 差距字典diff[], 表示原有的任意字符在dictS中出现的次数, 比dictT中出现的少的次数
      */

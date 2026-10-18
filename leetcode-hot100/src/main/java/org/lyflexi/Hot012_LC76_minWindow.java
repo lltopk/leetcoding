@@ -57,17 +57,14 @@ public class Hot012_LC76_minWindow {
         }
 
         char[] s = S.toCharArray();
-        int m = s.length;
-        int ansLeft = -1;
-        int ansRight = m;
-        int left = 0;
+        int m = s.length, ansLeft = -1, ansRight = m, left = 0;
 
-        for (int right = 0; right < m; right++) { // 移动子串右端点
-            cntS[s[right]]++; // 右端点字母移入子串
+        for (int r = 0; r < m; r++) { // 移动子串右端点
+            cntS[s[r]]++; // 右端点字母移入子串
             while (isCovered(cntS, cntT)) { // 涵盖
-                if (right - left < ansRight - ansLeft) { // 找到更短的子串
+                if (r - left < ansRight - ansLeft) { // 找到更短的子串
                     ansLeft = left; // 记录此时的左右端点
-                    ansRight = right;
+                    ansRight = r;
                 }
                 cntS[s[left]]--; // 左端点字母移出子串
                 left++;

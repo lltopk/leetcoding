@@ -39,7 +39,7 @@ import java.util.*;
  */
 
 /**
- * 优化前
+ * 优化前 动态规划
  */
 public class Hot013_LC53_maxSubArray2 {
     public int maxSubArray(int[] nums) {

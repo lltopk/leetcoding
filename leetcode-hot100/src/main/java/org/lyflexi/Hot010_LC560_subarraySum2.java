@@ -39,18 +39,17 @@ import java.util.*;
  * 
  * 在遍历 $nums$ 之前，我们需要先统计 $s[0]=0$，即空前缀的元素和等于 $0$。往 $cnt$ 中添加 $cnt[0]=1$。
  * 
- * 对比一下，两次遍历的代码循环了 $n+1$ 次，下面的代码循环了 $n$ 次，少的那一次是什么？就是对 $s[0]=0$ 的统计。
  */
 public class Hot010_LC560_subarraySum2 {
     public int subarraySum(int[] nums, int k) {
         Map<Integer, Integer> cnt = new HashMap<>(nums.length + 1, 1); // 预分配空间
-        cnt.put(0, 1); // s[0]=0 单独统计, 此时前缀和本身就是子数组和K
-        int s = 0;
+        cnt.put(0, 1); // 此时前缀和本身就是子数组和K
+        int preS = 0;
         int ans = 0;
         for (int x : nums) {
-            s += x;
-            ans += cnt.getOrDefault(s - k, 0);
-            cnt.merge(s, 1, Integer::sum); // cnt[s]++
+            preS += x;
+            ans += cnt.getOrDefault(preS - k, 0);
+            cnt.merge(preS, 1, Integer::sum); // cnt[preS]++
         }
         return ans;
     }
