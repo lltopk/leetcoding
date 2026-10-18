@@ -46,8 +46,8 @@ import java.util.*;
 public class Hot016_LC238_productExceptSelf2 {
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
-        int[] suf = new int[n];
-        suf[n - 1] = 1;
+        int[] suf = new int[n]; // 左闭右开前缀和, 由于不包含自己, 所以长度初始化为n - 1 + 1 = n
+        suf[n - 1] = 1;// 由于计算累乘, 因此1就相当于初始化的0
         for (int i = n - 2; i >= 0; i--) {
             suf[i] = suf[i + 1] * nums[i + 1];
         }
