@@ -47,9 +47,7 @@ public class Hot019_LC54_spiralOrder {
         int m = matrix.length;
         int n = matrix[0].length;
         List<Integer> ans = new ArrayList<>(m * n); // 预分配空间
-        int i = 0;
-        int j = 0;
-        int di = 0;
+        int i = 0, j = 0, di = 0;
         for (int k = 0; k < m * n; k++) { // 一共走 mn 步
             ans.add(matrix[i][j]);
             matrix[i][j] = Integer.MAX_VALUE; // 标记，表示已经访问过（已经加入答案）

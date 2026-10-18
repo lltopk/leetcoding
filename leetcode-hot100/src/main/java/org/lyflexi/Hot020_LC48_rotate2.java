@@ -34,25 +34,24 @@ import java.util.*;
 
 /**
  * 写法二
- * 
- * 把两个循环合并成一个循环。
- * 
- * 需要把遍历顺序调整为遍历对角线上方元素，这样每行遍历完后，这一行的元素后面不会再访问到，可以直接做行翻转。
  */
 public class Hot020_LC48_rotate2 {
     public void rotate(int[][] matrix) {
         int n = matrix.length;
-        for (int i = 0; i < n; i++) {
-            int[] row = matrix[i];
-            for (int j = i + 1; j < n; j++) { // 遍历对角线上方元素，做转置
-                int tmp = row[j];
-                row[j] = matrix[j][i];
-                matrix[j][i] = tmp;
+        // 上下翻转
+        for (int i = 0; i < n / 2; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[n - i - 1][j];
+                matrix[n - i - 1][j] = temp;
             }
-            for (int j = 0; j < n / 2; j++) { // 遍历左半元素，做行翻转
-                int tmp = row[j];
-                row[j] = row[n - 1 - j];
-                row[n - 1 - j] = tmp;
+        }
+        // 转置
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
             }
         }
     }

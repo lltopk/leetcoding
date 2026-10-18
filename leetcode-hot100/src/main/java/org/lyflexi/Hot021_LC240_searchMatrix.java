@@ -47,11 +47,16 @@ import java.util.*;
  * 
  * 注：也可以从左下角开始，方法类似。
  * 
- * 总结：利用 $matrix$ 行列有序的性质，我们可以用 $O(1)$ 的时间获取 $O(m)$ 或 $O(n)$ 的信息。相比之下，$O(mn)$ 的暴力查找（一个一个地找），每次花费 $O(1)$ 的时间，只获取了 $O(1)$ 的信息。
- * 
- * 这就是为什么我们可以把 $O(mn)$ 的暴力查找优化成 $O(m+n)$。
+ * 总结：利用 $matrix$ 行列有序的性质，可以把 $O(mn)$ 的暴力查找优化成 $O(m+n)$。
  */
 public class Hot021_LC240_searchMatrix {
+
+    /**
+     * 从右上角开始
+     * @param matrix
+     * @param target
+     * @return
+     */
     public boolean searchMatrix(int[][] matrix, int target) {
         int i = 0;
         int j = matrix[0].length - 1; // 从右上角开始
@@ -59,6 +64,8 @@ public class Hot021_LC240_searchMatrix {
             if (matrix[i][j] == target) {
                 return true; // 找到 target
             }
+
+            //目标方向, 向左下角收敛
             if (matrix[i][j] < target) {
                 i++; // 这一行剩余元素全部小于 target，排除
             } else {

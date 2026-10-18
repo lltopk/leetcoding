@@ -48,7 +48,7 @@ public class Hot020_LC48_rotate {
             }
         }
 
-        // 第二步：行翻转 (列置换)
+        // 第二步：左右翻转
         for (int[] row : matrix) {
             for (int j = 0; j < n / 2; j++) { // 遍历左半元素
                 int tmp = row[j];
