@@ -53,7 +53,7 @@ public class LC637_averageOfLevels {
     Deque<TreeNode> deque = new ArrayDeque<>();
     public List<Double> averageOfLevels(TreeNode root) {
         if(root == null){
-            return List.of();
+            return new ArrayList<>();
         }
         deque.offer(root);
         while(! deque.isEmpty()){

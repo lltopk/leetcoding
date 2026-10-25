@@ -59,7 +59,7 @@ public class Hot045_LC199_rightSideView2 {
 
     public List<Integer> rightSideView(TreeNode root) {
         if(root == null){
-            return List.of();
+            return new ArrayList<>();
         }
         deque.offer(root);
         while(! deque.isEmpty()){

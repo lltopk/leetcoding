@@ -71,7 +71,7 @@ public class LC199_rightSideView {
     Deque<TreeNode> deque = new ArrayDeque<>();
     public List<Integer> rightSideView(TreeNode root) {
         if(root == null){
-            return List.of();
+            return new ArrayList<>();
         }
         deque.offer(root);
         while(! deque.isEmpty()){

@@ -51,7 +51,7 @@ public class LC515_largestValues {
     Deque<TreeNode> deque = new ArrayDeque<>();
     public List<Integer> largestValues(TreeNode root) {
         if(root == null){
-            return List.of();
+            return new ArrayList<>();
         }
         deque.offer(root);
         while(! deque.isEmpty()){
