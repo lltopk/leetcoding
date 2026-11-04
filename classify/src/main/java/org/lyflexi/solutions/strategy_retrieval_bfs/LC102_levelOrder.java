@@ -57,7 +57,7 @@ public class LC102_levelOrder {
     Deque<TreeNode> deque = new ArrayDeque<>();
     public List<List<Integer>> levelOrder(TreeNode root) {
         if(root == null){
-            return new ArrayList<>();
+            return List.of();
         }
         deque.offer(root);
         while(! deque.isEmpty()){

@@ -58,7 +58,7 @@ public class LC102_levelOrder2 {
 
     public List<List<Integer>> levelOrder(TreeNode root) {
         if(root == null){
-            return new ArrayList<>();
+            return List.of();
         }
         curList.add(root);
         while(! curList.isEmpty()){
